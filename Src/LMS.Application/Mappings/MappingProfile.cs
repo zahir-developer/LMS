@@ -6,7 +6,7 @@ namespace LMS.Application.Mappings;
 
 public class MappingProfile : Profile
 {
-    MappingProfile()
+    public MappingProfile()
     {
         CreateMap<User, UserDto>().ReverseMap();
     }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using LMS.Application.DTO;
 using LMS.Domain.Entities;
+using LMS.Application.IServiceMappings;
 
 namespace LMS.API.Controllers;
 
@@ -15,10 +16,14 @@ namespace LMS.API.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
+    private readonly IUserMapping _userService;
     private readonly ILogger<UserController> _logger;
-    public UserController(ILogger<UserController> logger)
+
+
+    public UserController(ILogger<UserController> logger, IUserMapping userMapping)
     {
         _logger = logger;
+        _userService = userMapping;
     }
 
     [HttpPost]
@@ -26,7 +31,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> RegisterUser(UserDto user)
     {
         _logger.LogInformation("User {0} create begins", user.UserName);
-
+        _userService.GetAllAsync();
         return Ok();
     }
 
