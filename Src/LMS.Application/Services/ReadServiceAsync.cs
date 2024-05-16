@@ -26,21 +26,12 @@ namespace LMS.Application.Services
 
         public async Task<IEnumerable<TDto>> GetAllAsync()
         {
-            try
-            {
                 var result = await _genericRepository.GetAllAsync();
 
                 if (result.Any())
                 {
                     return _mapper.Map<IEnumerable<TDto>>(result);
                 }
-            }
-            catch (Exception ex)
-            {
-                var message = $"Error retrieving all {typeof(TDto).Name}s";
-
-                throw ex;
-            }
 
             return null;
         }

@@ -13,7 +13,7 @@ using LMS.Application.DTO;
 
 namespace LMS.Application.Mappings
 {
-    public class UserMapping : ReadServiceAsync<User, UserDto>, IUserMapping
+    public class UserMapping : GenericServiceAsync<User, UserDto>, IUserMapping
     {
         public UserMapping(IGenericRepository<User> genericRepository, IMapper mapper) : base(genericRepository, mapper)
         {

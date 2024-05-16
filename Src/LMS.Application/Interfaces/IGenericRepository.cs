@@ -9,6 +9,7 @@ public interface IGenericRepository<T> where T : class
     Task<IEnumerable<T>> GetAllAsync();
     Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<T?> GetByIdAsync(int Id, CancellationToken cancellationToken = default);
-    void AddAsync(T entity, CancellationToken cancellationToken);
-    void DeleteByIdAsync(int Id, CancellationToken cancellationToken);
+    Task AddAsync(T entity, CancellationToken cancellationToken = default);
+    Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
+    Task DeleteByIdAsync(int Id, CancellationToken cancellationToken = default);
 }

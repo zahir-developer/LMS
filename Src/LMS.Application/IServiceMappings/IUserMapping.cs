@@ -9,7 +9,7 @@ using LMS.Application.Interfaces;
 
 namespace LMS.Application.IServiceMappings
 {
-    public interface IUserMapping : IReadServiceAsync<User, UserDto>
+    public interface IUserMapping : IReadServiceAsync<User, UserDto>, IGenericServiceAsync<User, UserDto>
     {
         
     }

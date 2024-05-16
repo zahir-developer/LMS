@@ -6,7 +6,6 @@ using LMS.Application.Mappings;
 using LMS.Application.IServiceMappings;
 
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +15,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// builder.Services.AddDbContext<LMSDbContext>(options => 
+// options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+
 builder.Services.AddDbContext<LMSDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
 //AutoMapper Configuration
 builder.Services.AddAutoMapper(typeof(MappingProfile));

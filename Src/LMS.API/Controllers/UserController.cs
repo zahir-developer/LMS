@@ -28,11 +28,22 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
+    [Route("user")]
     public async Task<IActionResult> RegisterUser(UserDto user)
     {
         _logger.LogInformation("User {0} create begins", user.UserName);
-        _userService.GetAllAsync();
+
+        await _userService.AddAsync(user);
         return Ok();
     }
 
+    [HttpGet]
+    [AllowAnonymous]
+    [Route("users")]
+    public async Task<IActionResult> GetAllUser()
+    {
+        var result = await _userService.GetAllAsync();
+
+        return Ok();
+    }
 }
