@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "Src/LMS.API"
+		},
+		{
+			"path": "Src/LMS.Application"
+		},
+		{
+			"path": "Src/LMS.Core"
+		},
+		{
+			"path": "Src/LMS.Domain"
+		},
+		{
+			"path": "Src/LMS.Infrastructure"
+		},
+		{
+			"path": "UI"
+		}
+	],
+	"settings": {}
+}
