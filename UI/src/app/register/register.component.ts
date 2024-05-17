@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { user } from '../model/user.model';
+import { User } from '../model/user.model';
 import { last } from 'rxjs';
 import { RegisterService } from '../services/register.service';
 @Component({
@@ -19,16 +19,16 @@ export class RegisterComponent {
 
   public regForm: any;
 
-  regData: user = {
-    firstName: '',
-    lastName: '',
-    password: '',
-    mobileNo: '',
-    emailId: '',
+  regData: User = {
+    firstName: "",
+    lastName: "",
+    password: "",
+    mobileNo: "",
+    emailId: "",
     address:
     {
-      country: '',
-      state: ''
+      country: "",
+      state: ""
     }
   }
 
