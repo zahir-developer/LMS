@@ -41,9 +41,10 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 //Generic Services
 builder.Services.AddScoped(typeof(IReadServiceAsync<,>), typeof(ReadServiceAsync<,>));
+builder.Services.AddScoped(typeof(IGenericServiceAsync<,>), typeof(GenericServiceAsync<,>));
 
-// Services
-builder.Services.AddScoped(typeof(IUserMapping), typeof(UserMapping));
+// Asset mapping
+builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

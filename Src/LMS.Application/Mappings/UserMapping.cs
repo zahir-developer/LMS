@@ -13,9 +13,9 @@ using LMS.Application.DTO;
 
 namespace LMS.Application.Mappings
 {
-    public class UserMapping : GenericServiceAsync<User, UserDto>, IUserMapping
+    public class UserService : GenericServiceAsync<User, UserDto>, IUserService
     {
-        public UserMapping(IGenericRepository<User> genericRepository, IMapper mapper) : base(genericRepository, mapper)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
     }

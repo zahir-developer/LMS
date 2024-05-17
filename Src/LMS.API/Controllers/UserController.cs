@@ -11,19 +11,17 @@ using LMS.Application.IServiceMappings;
 
 namespace LMS.API.Controllers;
 
-
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly IUserMapping _userService;
+    private readonly IUserService _userService;
     private readonly ILogger<UserController> _logger;
 
-
-    public UserController(ILogger<UserController> logger, IUserMapping userMapping)
+    public UserController(ILogger<UserController> logger, IUserService userService)
     {
         _logger = logger;
-        _userService = userMapping;
+        _userService = userService;
     }
 
     [HttpPost]

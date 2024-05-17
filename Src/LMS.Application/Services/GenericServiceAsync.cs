@@ -13,28 +13,28 @@ namespace LMS.Application.Services
         where TDto : class
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<TEntity> _genericRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GenericServiceAsync(IGenericRepository<TEntity> genericRepository, IMapper mapper) : base(genericRepository, mapper)
+        public GenericServiceAsync(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _genericRepository = genericRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task AddAsync(TDto dto, CancellationToken cancellationToken)
         {
-            await _genericRepository.AddAsync(_mapper.Map<TEntity>(dto));
+            await _unitOfWork.Repository<TEntity>().AddAsync(_mapper.Map<TEntity>(dto));
         }
 
         public async Task DeleteByIdAsync(int id)
         {
-            await _genericRepository.DeleteByIdAsync(id);
+            await _unitOfWork.Repository<TEntity>().DeleteByIdAsync(id);
         }
 
         public async Task UpdateAsync(TDto dto, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<TEntity>(dto);
-            await _genericRepository.UpdateAsync(entity);
+            await _unitOfWork.Repository<TEntity>().UpdateAsync(entity);
         }
     }
 }
