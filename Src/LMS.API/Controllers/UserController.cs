@@ -29,9 +29,9 @@ public class UserController : ControllerBase
     [HttpPost]
     [AllowAnonymous]
     [Route("user")]
-    public async Task<IActionResult> RegisterUser(UserDto user)
+    public async Task<IActionResult> RegisterUser([FromBody] UserDto user)
     {
-        _logger.LogInformation("User {0} create begins", user.UserName);
+        _logger.LogInformation("User {0} create begins", user.Email);
 
         await _userService.AddAsync(user);
         return Ok();
