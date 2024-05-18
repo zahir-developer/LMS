@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 using LMS.Application.Interfaces;
 using LMS.Infrastructure.Database;
@@ -26,6 +27,29 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return await dbContext.Set<T>().ToListAsync(cancellationToken);
     }
+
+    public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>>? filter = null, IOrderedQueryable<T> orderBy = null, string includeProperties = "")
+    {
+        IQueryable<T> query;
+
+        if (filter != null)
+        {
+            query = dbContext.Set<T>().Where(filter);
+        }
+        else
+        {
+            query = dbContext.Set<T>();
+        }
+
+        foreach (var includeProperty in includeProperties.Split
+            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            query = query.Include(includeProperty);
+        }
+
+        return await query.ToListAsync();
+    }
+
 
     public async Task<T?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
     {

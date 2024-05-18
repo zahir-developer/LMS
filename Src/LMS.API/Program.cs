@@ -3,7 +3,10 @@ using LMS.Infrastructure.Database;
 using LMS.Application.Interfaces;
 using LMS.Application.Services;
 using LMS.Application.Mappings;
+using LMS.Application.ServiceMappings;
 using LMS.Application.IServiceMappings;
+using LMS.Application.Interfaces.IServices;
+using Microsoft.Extensions.Configuration;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +46,8 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped(typeof(IReadServiceAsync<,>), typeof(ReadServiceAsync<,>));
 
 // Services
-builder.Services.AddScoped(typeof(IUserMapping), typeof(UserMapping));
+builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
+builder.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
