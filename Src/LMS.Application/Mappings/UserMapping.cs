@@ -8,7 +8,7 @@ using AutoMapper;
 using LMS.Application.Interfaces;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Services;
-using LMS.Application.DTO;
+using LMS.Application.DTOs;
 
 
 namespace LMS.Application.Mappings
