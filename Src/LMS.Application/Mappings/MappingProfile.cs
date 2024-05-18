@@ -9,6 +9,11 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<User, UserDto>().ReverseMap();
+
+        CreateMap<UserDto, User>().ReverseMap();
+        //.ForMember(dest => dest.PasswordHash, act => act.Ignore())
+        //.ForMember(dest => dest.PasswordSalt, act => act.Ignore());
+
         CreateMap<AddUserDto, UserDto>().ReverseMap();
     }
 }

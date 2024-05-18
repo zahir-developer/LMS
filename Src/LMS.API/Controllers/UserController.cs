@@ -12,17 +12,16 @@ using LMS.Application.Interfaces.IServices;
 
 namespace LMS.API.Controllers;
 
-
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly IUserMapping _userService;
+    private readonly IUserService _userService;
     private readonly ILogger<UserController> _logger;
     private readonly IConfiguration _config;
     private readonly IAuthTokenService _authTokenService;
 
-    public UserController(ILogger<UserController> logger, IUserMapping userService, IConfiguration config, IAuthTokenService authTokenService)
+    public UserController(ILogger<UserController> logger, IUserService userService, IConfiguration config, IAuthTokenService authTokenService)
     {
         _logger = logger;
         _userService = userService;
@@ -33,7 +32,7 @@ public class UserController : ControllerBase
     [HttpPost]
     [AllowAnonymous]
     [Route("user")]
-    public async Task<UserDto> RegisterUser([FromBody] AddUserDto user)
+    public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
     {
         _logger.LogInformation("User {0} create begins", user.Email);
 
@@ -42,12 +41,24 @@ public class UserController : ControllerBase
         return userAuth;
     }
 
-    [HttpGet]
+    [HttpPost]
     [AllowAnonymous]
-    public async Task<AuthTokenDto> Login(LoginDto login)
+    [Route("Login")]
+    public async Task<ActionResult<AuthTokenDto>> Login(LoginDto login)
     {
         AuthTokenDto tokenDto = new AuthTokenDto();
-        return tokenDto;
+
+        var result = _authTokenService.ValidateUser(login);
+        if (result == null)
+        {
+            return Unauthorized("Unauthorized user.");
+        }
+        else
+        {
+            return result;
+        }
+
+        return Unauthorized("Unauthorized user");
     }
 
     [HttpGet]

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Infrastructure.Migrations
 {
     [DbContext(typeof(LMSDbContext))]
-    [Migration("20240518100944_InitialCreate")]
+    [Migration("20240518201600_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -98,12 +98,13 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("BLOB");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
 
                     b.HasKey("Id");
 
