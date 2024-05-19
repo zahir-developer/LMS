@@ -14,6 +14,7 @@ namespace LMS.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -30,7 +31,6 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous]
     [Route("user")]
     public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
     {
@@ -57,17 +57,14 @@ public class UserController : ControllerBase
         {
             return result;
         }
-
-        return Unauthorized("Unauthorized user");
     }
 
     [HttpGet]
-    [AllowAnonymous]
     [Route("users")]
-    public async Task<IActionResult> GetAllUser()
+    public async Task<ActionResult<List<UserDto>>> GetAllUser()
     {
-        var result = await _userService.GetAllAsync();
+        var result = _userService.GetAllAsync().Result.ToList();
 
-        return Ok();
+        return result;
     }
 }
