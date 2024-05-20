@@ -1,4 +1,4 @@
-namespace LMS.Application.DTO;
+namespace LMS.Application.DTOs;
 
 public class RoleDto
 {

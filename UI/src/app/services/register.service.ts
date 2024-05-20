@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-import { url } from '../config/config';
 import { User } from '../model/user.model';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpUtilsService } from '../Util/http-utils.service';
+import { apiEndPoint } from '../config/url.config';
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpUtilService: HttpUtilsService) { }
 
-  registerUser(userObj: User)
-  {
-    console.log(userObj);
-
-    this.httpClient.post(url.dev + 'User/user', userObj).subscribe(
+  registerUser(userObj: User) {
+    this.httpUtilService.post(apiEndPoint.User.add, userObj).subscribe(
       result => {
-        alert('User added successfully')
+        alert("Operation completed successfully");
       }
-    )
+    );
   }
 }
