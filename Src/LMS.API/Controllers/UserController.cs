@@ -30,35 +30,6 @@ public class UserController : ControllerBase
         _authTokenService = authTokenService;
     }
 
-    [HttpPost]
-    [Route("user")]
-    public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
-    {
-        _logger.LogInformation("User {0} create begins", user.Email);
-
-        var userAuth = _authTokenService.RegisterAuthUser(user);
-        
-        return userAuth;
-    }
-
-    [HttpPost]
-    [AllowAnonymous]
-    [Route("Login")]
-    public async Task<ActionResult<AuthTokenDto>> Login(LoginDto login)
-    {
-        AuthTokenDto tokenDto = new AuthTokenDto();
-
-        var result = _authTokenService.ValidateUser(login);
-        if (result == null)
-        {
-            return Unauthorized("Unauthorized user.");
-        }
-        else
-        {
-            return result;
-        }
-    }
-
     [HttpGet]
     [Route("users")]
     public async Task<ActionResult<List<UserDto>>> GetAllUser()
