@@ -1,0 +1,14 @@
+1. Initial Add
+dotnet ef migrations add InitialCreate --startup-project ../LMS.API
+
+2. Change or Update command
+dotnet ef migrations add CHANGE_ROLE --startup-project ../LMS.API
+
+3. Update database
+dotnet ef database update --startup-project ../LMS.API
+
+4. Remove migration which is not applied to database:
+dotnet ef migrations remove --startup-project ../LMS.API
+
+Note:
+CHANGE_ROLE is a custome name for this particular migration

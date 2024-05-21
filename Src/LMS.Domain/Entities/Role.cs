@@ -7,5 +7,5 @@ public class Role : BaseEntity
 
     public string? Description { get; set; }
 
-    public ICollection<RolePrivilege> RolePrivilege { get; set; }
+    public ICollection<RolePrivilege> RolePrivileges { get; set; }
 }
