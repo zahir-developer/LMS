@@ -1,11 +1,8 @@
 export const apiEndPoint = 
 {
-    Auth:
-    {
-        login: `Auth/login`
-    },
     User:
     {
+        login: `user/login`,
         add: `user/user`,
         getAll: `user/users`
     }
