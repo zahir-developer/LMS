@@ -17,7 +17,7 @@ export class AccountService {
   constructor(private httpUtilService: HttpUtilsService, private http: HttpClient) { }
 
   registerUser(userObj: User) {
-    this.httpUtilService.post(apiEndPoint.User.add, userObj).subscribe(
+    this.httpUtilService.post(apiEndPoint.Auth.signup, userObj).subscribe(
       result => {
         alert("Operation completed successfully");
       }
@@ -26,12 +26,12 @@ export class AccountService {
 
   login_Old(model: any)
   {
-    return this.http.post(apiBaseUrl.url + apiEndPoint.User.login.toString(), model);
+    return this.http.post(apiBaseUrl.url + apiEndPoint.Auth.login.toString(), model);
   }
 
   login(model: any)
   {
-    return this.http.post<LoginUser>(apiBaseUrl.url + apiEndPoint.User.login, model).pipe(
+    return this.http.post<LoginUser>(apiBaseUrl.url + apiEndPoint.Auth.login, model).pipe(
       map((response: LoginUser) =>
         {
           const user = response;
