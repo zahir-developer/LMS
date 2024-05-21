@@ -103,7 +103,12 @@ namespace LMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
                 });
@@ -111,15 +116,26 @@ namespace LMS.Infrastructure.Migrations
             modelBuilder.Entity("LMS.Domain.Entities.RolePrivilege", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.Role", null)
-                        .WithMany("RolePrivilege")
+                        .WithMany("RolePrivileges")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.User", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.Role", b =>
                 {
-                    b.Navigation("RolePrivilege");
+                    b.Navigation("RolePrivileges");
                 });
 #pragma warning restore 612, 618
         }
