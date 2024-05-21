@@ -1,12 +1,7 @@
-
-using LMS.Application.ServiceMappings;
-using LMS.Application.IServiceMappings;
-using LMS.Application.Interfaces.IServices;
-
-
-using System.Text;
-using Microsoft.OpenApi.Models;
 using LMS.API.Extensions;
+using LMS.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+using LMS.Infrastructure.SeedData;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -41,6 +36,17 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//EF SQL Migration and Data
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try {
+    var context = services.GetRequiredService<LMSDbContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedRoleData(context);
+    //await Seed.SeedUserData(context);
+}
+catch (Exception ex){}
 
 app.Run();
 
