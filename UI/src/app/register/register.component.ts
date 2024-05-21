@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../model/user.model';
 import { last } from 'rxjs';
-import { RegisterService } from '../services/register.service';
+import { AccountService } from '../services/account.service';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -12,7 +12,7 @@ import { RegisterService } from '../services/register.service';
 })
 export class RegisterComponent {
 
-  constructor(private regService: RegisterService)
+  constructor(private accService: AccountService)
   {
 
   }
@@ -45,6 +45,6 @@ export class RegisterComponent {
 
 
   onSubmit() {
-    this.regService.registerUser(this.regForm.value)
+    this.accService.registerUser(this.regForm.value)
   }
 }
