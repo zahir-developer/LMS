@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ export class LoginComponent {
 
   model: any = {}
   isLoggenIn = false;
-  constructor(private accService: AccountService) {
+  constructor(private accService: AccountService, private router: Router) {
 
   }
 
@@ -31,8 +33,8 @@ export class LoginComponent {
       next: result => {
         console.log(result);
         this.isLoggenIn = true;
-        localStorage.setItem("IsloggedIn", "true");
-        alert("Login successful !")
+        this.router.navigateByUrl('/home')
+        
       },
       error: error => console.log(error)
     })
