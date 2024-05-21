@@ -1,0 +1,17 @@
+[{
+    "Id": 1,
+    "RoleName": "Admin",
+    "Description": "Admistrator user having all the access",
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 2,
+    "RoleName": "User",
+    "Description": "Users having restricted access.",
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+}]
+

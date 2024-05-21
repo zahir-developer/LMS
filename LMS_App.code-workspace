@@ -1,12 +1,15 @@
 {
 	"folders": [
 		{
+			"name": "Src",
 			"path": "Src"
 		},
 		{
+			"name": "UI",
 			"path": "UI"
 		},
 		{
+			"name": "LMS.API",
 			"path": "Src/LMS.API"
 		}
 	],

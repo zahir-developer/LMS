@@ -13,5 +13,6 @@ namespace LMS.Infrastructure.Database
         {
         }
         public virtual DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set;}
     }
 }
