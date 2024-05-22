@@ -68,9 +68,7 @@ public class AuthTokenService : IAuthTokenService
 
     public UserDto RegisterAuthUser(AddUserDto addUser)
     {
-
-        UserDto user = new();
-
+        UserDto user = _autoMapper.Map<UserDto>(addUser);
         var token = GenerateToken(addUser.Email);
 
         using var hmac = new HMACSHA512();
@@ -79,6 +77,7 @@ public class AuthTokenService : IAuthTokenService
         user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password));
         user.PasswordSalt = hmac.Key;
         user.Token = token;
+        
 
         _userService.AddAsync(user);
 

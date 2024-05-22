@@ -9,6 +9,7 @@ using LMS.Application.DTOs;
 using LMS.Domain.Entities;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
+using LMS.API.Constants;
 
 namespace LMS.API.Controllers;
 
@@ -37,6 +38,7 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("Resister Admin begins {0} create begins", user.Email);
 
+        user.RoleId = (int)Roles.Admin;
         var userAuth = _authTokenService.RegisterAuthUser(user);
         
         return userAuth;
@@ -47,6 +49,8 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
     {
         _logger.LogInformation("User {0} create begins", user.Email);
+
+        user.RoleId = (int)Roles.User;
 
         var userAuth = _authTokenService.RegisterAuthUser(user);
         
