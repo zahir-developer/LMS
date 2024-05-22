@@ -3,8 +3,6 @@
     "FirstName": "Admin",
     "LastName": "User",
     "Email": "admin@lms.com",
-    "PasswordHash": "Admin@123",
-    "PasswordSalt": "", 
     "RoleId": 1,
     "IsEnabled": true,
     "CreatedOn": "2024-05-20",
