@@ -13,7 +13,8 @@ public class MappingProfile : Profile
         CreateMap<UserDto, User>().ReverseMap();
         //.ForMember(dest => dest.PasswordHash, act => act.Ignore())
         //.ForMember(dest => dest.PasswordSalt, act => act.Ignore());
-
         CreateMap<AddUserDto, UserDto>().ReverseMap();
+        CreateMap<LeaveType, LeaveTypeDto>().ReverseMap();
+        CreateMap<UserLeave, UserLeaveDto>().ReverseMap();
     }
 }

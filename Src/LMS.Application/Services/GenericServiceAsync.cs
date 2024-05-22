@@ -36,5 +36,10 @@ namespace LMS.Application.Services
             var entity = _mapper.Map<TEntity>(dto);
             await _genericRepository.UpdateAsync(entity);
         }
+
+        public async Task<bool> SaveAsync()
+        {
+            return await _genericRepository.SaveAsync();
+        }
     }
 }
