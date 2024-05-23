@@ -31,8 +31,11 @@ public class LeaveController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Retrieves all the user leaves with status
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
-    [Route("UserLeave")]
     public async Task<ActionResult<List<UserLeaveListDto>>> GetAllUserLeaves()
     {
         var result = _userLeaveService.GetAllUserLeaveList();
@@ -40,8 +43,27 @@ public class LeaveController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Retrieves all the leave againts given userId
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("{userId}")]
+    public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeaves(int userId)
+    {
+        var result = _userLeaveService.GetAllUserLeaveList();
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Applies leave for given userId with leave detail
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     [HttpPost]
-    [Route("UserLeave")]
+    [Route("Add")]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);

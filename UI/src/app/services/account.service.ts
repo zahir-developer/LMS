@@ -3,9 +3,9 @@ import { User } from '../model/user.model';
 import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
-import { apiBaseUrl } from '../config/environment';
 import { BehaviorSubject, map } from 'rxjs';
 import { LoginUser } from '../model/login.user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,17 +27,16 @@ export class AccountService {
   getAllUser() {
     this.httpUtilService.get(apiEndPoint.User.getAll).subscribe(
       result => {
-        alert("Operation completed successfully");
       }
     );
   }
 
   login_Old(model: any) {
-    return this.http.post(apiBaseUrl.url + apiEndPoint.Auth.login.toString(), model);
+    return this.http.post(environment.apiUrl + apiEndPoint.Auth.login.toString(), model);
   }
 
   login(model: any) {
-    return this.http.post<LoginUser>(apiBaseUrl.url + apiEndPoint.Auth.login, model).pipe(
+    return this.http.post<LoginUser>(environment.apiUrl + apiEndPoint.Auth.login, model).pipe(
       map((response: LoginUser) => {
         const user = response;
         if (user) {
