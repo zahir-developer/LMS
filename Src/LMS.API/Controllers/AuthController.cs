@@ -31,6 +31,7 @@ public class AuthController : ControllerBase
         _authTokenService = authTokenService;
     }
 
+    /*
     [HttpPost]
     [Route("AddAdmin")]
     [AllowAnonymous]
@@ -43,7 +44,12 @@ public class AuthController : ControllerBase
         
         return userAuth;
     }
-
+    */
+    /// <summary>
+    /// Register user detail for signup 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     [HttpPost]
     [Route("Signup")]
     public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
@@ -57,6 +63,11 @@ public class AuthController : ControllerBase
         return userAuth;
     }
 
+    /// <summary>
+    /// Validates login credentails and generates JWT token
+    /// </summary>
+    /// <param name="login"></param>
+    /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
     [Route("Login")]
@@ -65,6 +76,7 @@ public class AuthController : ControllerBase
         AuthTokenDto tokenDto = new AuthTokenDto();
 
         var result = _authTokenService.ValidateUser(login);
+
         if (result == null)
         {
             return Unauthorized("Unauthorized user.");

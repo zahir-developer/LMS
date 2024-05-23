@@ -1,0 +1,28 @@
+<h3>Leaves<h3>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">From</th>
+        <th scope="col">To</th>
+        <th scope="col">Status</th>
+        <th scope="col">Comments</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of leaves">
+        <th scope="row">{{ i.name }}</th>
+        <td>{{ i.fromDate | date }}</td>
+        <td>{{ i.toDate | date }}</td>
+        <td><span class="badge" 
+            [ngClass]="{'badge-warning': i.status === 'Pending',
+            'badge-btn-success' : i.status === 'Approved',
+            'badge-danger' : i.status === 'Rejected' }">{{ i.status }} </span></td>
+        <td>{{ i.comments }}</td>
+        <td><button type="button" class="btn btn-primary">Approve</button>
+            <button type="button" class="btn btn-danger">Reject</button></td>
+      </tr>
+    </tbody>
+</table>

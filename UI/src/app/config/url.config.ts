@@ -9,5 +9,11 @@ export const apiEndPoint =
     User:
     {
         getAll: `user/users`
+    },
+    Leave:
+    {
+        add: `leave/`,
+        get: `leave/{userId}`,
+        getAll: `leave/`
     }
 }

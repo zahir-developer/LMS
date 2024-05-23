@@ -10,7 +10,7 @@ import { AccountService } from '../services/account.service';
 })
 export class HomeComponent {
   loggedInUser: string = "";
-
+  allUser: any = [];
   constructor(private accountService: AccountService)
   {
 
@@ -18,6 +18,7 @@ export class HomeComponent {
 
   ngOnInit() {
     this.getCurrentUser();
+    this.allUser = this.accountService.getAllUser();
   }
 
   getCurrentUser() {
