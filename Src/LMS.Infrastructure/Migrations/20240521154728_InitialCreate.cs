@@ -95,8 +95,8 @@ namespace LMS.Infrastructure.Migrations
             migrationBuilder.DropTable(
                 name: "RolePrivilege");
 
-            migrationBuilder.DropTable(
-                name: "User");
+            // migrationBuilder.DropTable(
+            //     name: "User");
 
             migrationBuilder.DropTable(
                 name: "Role");

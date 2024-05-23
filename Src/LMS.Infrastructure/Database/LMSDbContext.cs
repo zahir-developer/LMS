@@ -13,6 +13,8 @@ namespace LMS.Infrastructure.Database
         {
         }
         public virtual DbSet<User> User { get; set; }
-        public DbSet<Role> Role { get; set;}
+        public DbSet<Role> Role { get; set; }
+        public DbSet<LeaveType> LeaveType { get; set; }
+        public DbSet<UserLeave> UserLeave { get; set; }
     }
 }

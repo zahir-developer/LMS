@@ -3,6 +3,7 @@ using System;
 using LMS.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Infrastructure.Migrations
 {
     [DbContext(typeof(LMSDbContext))]
-    partial class LMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522163635_UserLeaveEntityChange")]
+    partial class UserLeaveEntityChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
@@ -169,9 +172,6 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<int>("LeaveTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("ToDate")
                         .HasColumnType("TEXT");
 
@@ -215,15 +215,13 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMS.Domain.Entities.User", "User")
+                    b.HasOne("LMS.Domain.Entities.User", null)
                         .WithMany("UserLeave")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("LeaveType");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.Role", b =>

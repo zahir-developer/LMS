@@ -3,6 +3,7 @@ using LMS.Infrastructure.Database;
 using LMS.Application.Interfaces;
 using LMS.Application.Services;
 using LMS.Application.ServiceMappings;
+using LMS.Application.Interfaces.ServiceMappings;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using LMS.Application.Mappings;
@@ -12,15 +13,18 @@ namespace LMS.API.Extensions
 {
     public static class ApplicationServicesExtension
     {
+        
         public static IServiceCollection AddApplicationServices(this IServiceCollection services,
         IConfiguration config)
         {
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
             services.AddDbContext<LMSDbContext>(options =>
             options.UseSqlite(config.GetConnectionString("SqliteConnection")));
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: "MyAllowSpecificOrigins",
+                options.AddPolicy(name: MyAllowSpecificOrigins,
                 policy =>
                 {
                     policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
@@ -41,6 +45,10 @@ namespace LMS.API.Extensions
             // Services
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddScoped<IAuthTokenService, AuthTokenService>();
+            services.AddScoped(typeof(ILeaveTypeService), typeof(LeaveTypeService));
+            //services.AddScoped(typeof(IUserLeaveService), typeof(UserLeaveService));
+            services.AddScoped(typeof(IUserLeaveServiceMapping), typeof(UserLeaveServiceMapping));
+            services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));
 
             return services;
         }

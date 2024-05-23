@@ -3,6 +3,7 @@ using System;
 using LMS.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Infrastructure.Migrations
 {
     [DbContext(typeof(LMSDbContext))]
-    partial class LMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522163132_UserLeaveDateTimeChange")]
+    partial class UserLeaveDateTimeChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
@@ -145,48 +148,6 @@ namespace LMS.Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("LMS.Domain.Entities.UserLeave", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("LeaveTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("ToDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeaveTypeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserLeave");
-                });
-
             modelBuilder.Entity("LMS.Domain.Entities.RolePrivilege", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.Role", null)
@@ -207,33 +168,9 @@ namespace LMS.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("LMS.Domain.Entities.UserLeave", b =>
-                {
-                    b.HasOne("LMS.Domain.Entities.LeaveType", "LeaveType")
-                        .WithMany()
-                        .HasForeignKey("LeaveTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LMS.Domain.Entities.User", "User")
-                        .WithMany("UserLeave")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LeaveType");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("LMS.Domain.Entities.Role", b =>
                 {
                     b.Navigation("RolePrivileges");
-                });
-
-            modelBuilder.Entity("LMS.Domain.Entities.User", b =>
-                {
-                    b.Navigation("UserLeave");
                 });
 #pragma warning restore 612, 618
         }

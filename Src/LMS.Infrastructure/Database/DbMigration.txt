@@ -10,5 +10,8 @@ dotnet ef database update --startup-project ../LMS.API
 4. Remove migration which is not applied to database:
 dotnet ef migrations remove --startup-project ../LMS.API
 
+5. Remove database
+dotnet ef database drop --startup-project ../LMS.API
+
 Note:
 CHANGE_ROLE is a custome name for this particular migration

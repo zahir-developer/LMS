@@ -3,8 +3,6 @@ using LMS.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using LMS.Infrastructure.SeedData;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -44,9 +42,11 @@ try {
     var context = services.GetRequiredService<LMSDbContext>();
     await context.Database.MigrateAsync();
     await Seed.SeedRoleData(context);
-    //await Seed.SeedUserData(context);
+    await Seed.SeedUserData(context);
+    await Seed.SeedLeaveType(context);
 }
-catch (Exception ex){}
+catch (Exception ex)
+{ throw ex; }
 
 app.Run();
 
