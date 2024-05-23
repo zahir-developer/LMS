@@ -9,9 +9,7 @@ using LMS.Application.DTOs;
 using LMS.Domain.Entities;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
-using LMS.API.Constants;
 using LMS.Application.Interfaces.ServiceMappings;
-using System.Linq;
 
 namespace LMS.API.Controllers;
 

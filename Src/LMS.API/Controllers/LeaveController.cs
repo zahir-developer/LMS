@@ -9,9 +9,10 @@ using LMS.Application.DTOs;
 using LMS.Domain.Entities;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
-using LMS.API.Constants;
+using LMS.Application.Constants;
 using LMS.Application.Interfaces.ServiceMappings;
 using System.Linq;
+using AutoMapper;
 
 namespace LMS.API.Controllers;
 
@@ -20,29 +21,32 @@ namespace LMS.API.Controllers;
 public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
+    private readonly IMapper _mapper;
+    private readonly IUserLeaveServiceMapping _userLeaveService;
 
-    private readonly IUserLeaveService _userLeaveService;
-
-    public LeaveController(ILogger<LeaveController> logger, IUserLeaveService userLeaveService, IAuthTokenService authTokenService)
+    public LeaveController(ILogger<LeaveController> logger, IUserLeaveServiceMapping userLeaveService, IMapper mapper)
     {
         _logger = logger;
         _userLeaveService = userLeaveService;
+        _mapper = mapper;
     }
 
     [HttpGet]
     [Route("UserLeave")]
-    public async Task<ActionResult<List<UserLeaveDto>>> GetAllUserLeaves()
+    public async Task<ActionResult<List<UserLeaveListDto>>> GetAllUserLeaves()
     {
-        return _userLeaveService.GetAllAsync().Result.ToList();
+        var result = _userLeaveService.GetAllUserLeaveList();
+
+        return Ok(result);
     }
 
     [HttpPost]
     [Route("UserLeave")]
-    public async Task<ActionResult<bool>> AddUserLeave(UserLeaveDto dto)
+    public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
-        _userLeaveService.AddAsync(dto);
+        var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
+        _userLeaveService.AddAsync(userLeaveDto);
 
-        return _userLeaveService.SaveAsync().Result;
+        return true;
     }
-
 }
