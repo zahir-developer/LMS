@@ -3,11 +3,12 @@ import { LeaveService } from '../services/leave.service';
 import { UserLeave } from '../model/leave/user.leave';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-leave',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './leave.component.html',
   styleUrl: './leave.component.css'
 })

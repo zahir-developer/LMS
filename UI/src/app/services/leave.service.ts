@@ -31,5 +31,10 @@ export class LeaveService {
       }
     );
   }
+
+  getLeaveType()
+  {
+    return this.httpUtilService.get(apiEndPoint.Leave.getType);
+  }
   
 }
