@@ -1,8 +1,7 @@
 export interface UserLeaveAdd {
     leaveTypeId: number;
-    userId: number;
-    fromDate: string;
-    toDate: string;
-    comments: string | null;
-    status: number;
+    userId: number | undefined;
+    fromDate: Date;
+    toDate: Date;
+    comments: string | undefined;
 }

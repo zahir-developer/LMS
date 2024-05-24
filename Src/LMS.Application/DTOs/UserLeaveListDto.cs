@@ -1,6 +1,7 @@
 namespace LMS.Application.DTOs;
 public class UserLeaveListDto
 {
+    public int UserId { get; set; }
     public string Name { get; set; }
     public string LeaveTypeName { get; set; }
     public DateTime FromDate { get; set; }

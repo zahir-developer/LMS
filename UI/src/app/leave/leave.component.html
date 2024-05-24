@@ -1,12 +1,14 @@
 <div class="p-3">
-    <button class="btn btn-primary" [routerLink]="'/leave-request'" >Apply Leave</button>
+    <button class="btn btn-primary" [routerLink]="'/leave-request'">Apply Leave</button>
 </div>
 <table class="table">
     <thead class="thead-light">
         <tr>
+            <th scope="col">User Id</th>
             <th scope="col">Name</th>
             <th scope="col">From</th>
             <th scope="col">To</th>
+            <th scope="col">Leave Type</th>
             <th scope="col">Status</th>
             <th scope="col">Comments</th>
             <th scope="col">Actions</th>
@@ -14,15 +16,18 @@
     </thead>
     <tbody>
         <tr *ngFor="let i of leaves">
-            <th scope="row">{{ i.name }}</th>
+            <td scope="row">{{ i.userId }}</td>
+            <td scope="row">{{ i.name }}</td>
             <td>{{ i.fromDate | date }}</td>
             <td>{{ i.toDate | date }}</td>
+            <td>{{ i.leaveTypeName }}</td>
             <td><span class="badge" [ngClass]="{'badge-warning': i.status === 'Pending',
             'badge-btn-success' : i.status === 'Approved',
             'badge-danger' : i.status === 'Rejected' }">{{ i.status }} </span></td>
             <td>{{ i.comments }}</td>
-            <td><button type="button" class="btn btn-primary">Approve</button>
-                <button type="button" class="btn btn-danger">Reject</button>
+            <td>
+                <button class="btn btn-primary" (click)="openApproveDialog()">Approve</button>
+                <button class="btn btn-warning" (click)="openRejectDialog()">Reject</button>
             </td>
         </tr>
     </tbody>
