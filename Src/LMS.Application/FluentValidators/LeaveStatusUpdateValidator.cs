@@ -1,7 +1,7 @@
 using LMS.Application.DTOs;
 using FluentValidation;
 
-namespace LMS.API.FluentValidators
+namespace LMS.Application.FluentValidators
 {
     public class LeaveStatusUpdateValidator : AbstractValidator<LeaveStatusUpdateDto>
     {

@@ -1,7 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LMS.Application.DTOs;
-using LMS.API.FluentValidators;
+using LMS.Application.FluentValidators;
 
 namespace LMS.API.Extensions;
 
