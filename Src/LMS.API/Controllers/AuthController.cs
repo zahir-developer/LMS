@@ -52,6 +52,7 @@ public class AuthController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [Route("Signup")]
+    [Authorize("User_Signup")]
     public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
     {
         _logger.LogInformation("User {0} create begins", user.Email);
