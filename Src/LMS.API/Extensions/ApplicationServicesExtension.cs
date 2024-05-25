@@ -46,10 +46,11 @@ namespace LMS.API.Extensions
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddScoped<IAuthTokenService, AuthTokenService>();
             services.AddScoped(typeof(ILeaveTypeService), typeof(LeaveTypeService));
-            //services.AddScoped(typeof(IUserLeaveService), typeof(UserLeaveService));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IUserLeaveServiceMapping), typeof(UserLeaveServiceMapping));
-            services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));
-
+            services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));            
+            //services.AddScoped(typeof(IRoleServiceMapping), typeof(RoleServiceMapping));
+            
             return services;
         }
     }

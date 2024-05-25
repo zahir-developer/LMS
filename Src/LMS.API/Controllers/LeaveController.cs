@@ -18,6 +18,7 @@ namespace LMS.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
@@ -63,12 +64,11 @@ public class LeaveController : ControllerBase
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost]
-    [Route("Add")]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
-        _userLeaveService.AddAsync(userLeaveDto);
-
+        await _userLeaveService.AddAsync(userLeaveDto);
+        await _userLeaveService.SaveAsync();
         return true;
     }
 }

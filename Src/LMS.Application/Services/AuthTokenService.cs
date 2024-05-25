@@ -33,13 +33,14 @@ public class AuthTokenService : IAuthTokenService
         _autoMapper = autoMapper;
     }
 
-    public AuthTokenDto ValidateUser(LoginDto login)
+    public LoginResultDto ValidateUser(LoginDto login)
     {
+        var loginResultDto = new LoginResultDto();
         AuthTokenDto token = null;
 
         if (login != null)
         {
-            var user = _userService.GetUserByEmail(login.Email);
+            var user = _userService.GetUserByEmail(login.Email);            
 
             if (user != null && user?.PasswordSalt != null)
             {
@@ -54,16 +55,21 @@ public class AuthTokenService : IAuthTokenService
                     if (computeHash[i] != user.PasswordHash[i])
                         return null;
                 }
-
+                token.UserId = user.Id;
                 token.Token = GenerateToken(login.Email);
                 token.RefreshToken = string.Empty;
                 token.Email = login.Email;
 
-                return token;
+                loginResultDto = _userService.GetUserRolePrvilegeDetail(user.Id).Result;
+                loginResultDto.AuthToken = token;
+                loginResultDto.Password = null;
+                loginResultDto.PasswordHash = null;
+                
+                return loginResultDto;
             }            
         }
 
-        return token;
+        return loginResultDto;
     }
 
     public UserDto RegisterAuthUser(AddUserDto addUser)
@@ -78,8 +84,8 @@ public class AuthTokenService : IAuthTokenService
         user.PasswordSalt = hmac.Key;
         user.Token = token;
         
-
         _userService.AddAsync(user);
+        _userService.SaveAsync();
 
         return user;
     }

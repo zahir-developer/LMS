@@ -190,7 +190,7 @@ namespace LMS.Infrastructure.Migrations
             modelBuilder.Entity("LMS.Domain.Entities.RolePrivilege", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.Role", null)
-                        .WithMany("RolePrivileges")
+                        .WithMany("RolePrivilege")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -226,7 +226,7 @@ namespace LMS.Infrastructure.Migrations
 
             modelBuilder.Entity("LMS.Domain.Entities.Role", b =>
                 {
-                    b.Navigation("RolePrivileges");
+                    b.Navigation("RolePrivilege");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.User", b =>

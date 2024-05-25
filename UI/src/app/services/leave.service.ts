@@ -13,11 +13,7 @@ export class LeaveService {
   constructor(private httpUtilService: HttpUtilsService, private http: HttpClient) { }
 
   addLeave(userLeaveObj: UserLeaveAdd) {
-    this.httpUtilService.post(apiEndPoint.Leave.add, userLeaveObj).subscribe(
-      result => {
-        alert("Leave applied successfully");
-      }
-    );
+    return this.httpUtilService.post(apiEndPoint.Leave.add, userLeaveObj);
   }
 
   getAllLeave() {
@@ -30,6 +26,11 @@ export class LeaveService {
         alert("Retrieved leaves successfully");
       }
     );
+  }
+
+  getLeaveType()
+  {
+    return this.httpUtilService.get(apiEndPoint.Leave.getType);
   }
   
 }

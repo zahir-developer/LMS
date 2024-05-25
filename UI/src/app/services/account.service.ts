@@ -11,6 +11,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AccountService {
+  LoggedInUserId: number = 0;
+
   private currentUserSource = new BehaviorSubject<LoginUser | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -41,6 +43,7 @@ export class AccountService {
         const user = response;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
+          this.LoggedInUserId = user.id;
           this.currentUserSource.next(user);
         }
       }
@@ -55,6 +58,7 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.LoggedInUserId = 0;
   }
 
   getToken() {
@@ -65,5 +69,17 @@ export class AccountService {
     const user = JSON.parse(userTokenString);
 
     return user.token;
+  }
+
+  getUserId() {
+    return this.LoggedInUserId;
+  }
+
+  getCurrentUser() {
+    var user: any;
+    this.currentUser$.subscribe({
+      next: user => { user = user; }
+    });
+    return user;
   }
 }

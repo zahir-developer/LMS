@@ -12,8 +12,7 @@ import { AccountService } from '../services/account.service';
 })
 export class RegisterComponent {
 
-  constructor(private accService: AccountService)
-  {
+  constructor(private accService: AccountService) {
 
   }
 
@@ -37,7 +36,7 @@ export class RegisterComponent {
       {
         firstName: new FormControl(this.regData.firstName, [Validators.required]),
         lastName: new FormControl(this.regData.lastName, Validators.required),
-        email: new FormControl(this.regData.emailId, [Validators.required,Validators.email]),
+        email: new FormControl(this.regData.emailId, [Validators.required, Validators.email]),
         password: new FormControl(this.regData.password, Validators.required)
       }
     );
@@ -45,6 +44,7 @@ export class RegisterComponent {
 
 
   onSubmit() {
-    this.accService.registerUser(this.regForm.value)
+    if (this.regForm.valid)
+      this.accService.registerUser(this.regForm.value)
   }
 }

@@ -19,7 +19,6 @@ export class NavComponent {
 
   }
 
-  
   getCurrentUser() {
     this.accountService.currentUser$.subscribe({
       next: user => this.isLoggedIn = !!user
@@ -34,13 +33,7 @@ export class NavComponent {
 
   ngOnInit(): void
   {
-    console.log('OnInit - Nav')
     this.getCurrentUser();
-
-    // if(localStorage.getItem("IsloggedIn") === 'true')
-    //     this.isLoggedIn = true;
-    //   else
-    //     this.isLoggedIn = false;
   }
 
 }

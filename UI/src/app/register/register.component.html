@@ -1,6 +1,6 @@
 <form class="register-form" [formGroup]="regForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-        <label for="firstName"><h3>Register User</h3></label>
+        <label for="firstName"><h2>Register User</h2></label>
     </div>
     <div class="form-group">
         <label for="firstName">First Name</label>
@@ -19,6 +19,6 @@
         <input type="password" name="password" formControlName="password" class="form-control">
     </div>
     <div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary" [disabled]="!this.regForm.valid" type="submit">Submit</button>
     </div>
 </form>

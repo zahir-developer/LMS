@@ -13,7 +13,7 @@ import { LoginUser } from './model/login.user';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'lms';
+  title = 'LMS';
 
   constructor(private accountService: AccountService) {
 

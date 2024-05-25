@@ -11,5 +11,5 @@ public interface IAuthTokenService
 {
     string GenerateToken(string emailId);
     UserDto RegisterAuthUser(AddUserDto userDto);
-    AuthTokenDto ValidateUser(LoginDto loginDto);
+    LoginResultDto ValidateUser(LoginDto loginDto);
 }

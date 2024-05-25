@@ -42,6 +42,7 @@ try {
     var context = services.GetRequiredService<LMSDbContext>();
     await context.Database.MigrateAsync();
     await Seed.SeedRoleData(context);
+    await Seed.SeedRolePrivilegeData(context);
     await Seed.SeedUserData(context);
     await Seed.SeedLeaveType(context);
 }
