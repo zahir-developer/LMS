@@ -15,6 +15,7 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddSwaggerConfigration();
+builder.Services.AddAuthorizationPolicyServices();
 
 var app = builder.Build();
 

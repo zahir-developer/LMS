@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 namespace LMS.Application.Interfaces.IServices;
 public interface IAuthTokenService
 {
-    string GenerateToken(string emailId);
+    string GenerateToken(string emailId, string? roleName = null);
     UserDto RegisterAuthUser(AddUserDto userDto);
     LoginResultDto ValidateUser(LoginDto loginDto);
 }

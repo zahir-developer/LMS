@@ -37,6 +37,7 @@ public class LeaveController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<List<UserLeaveListDto>>> GetAllUserLeaves()
     {
         var result = _userLeaveService.GetAllUserLeaveList();
@@ -64,6 +65,7 @@ public class LeaveController : ControllerBase
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost]
+    [Authorize("Leave_Apply")]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
