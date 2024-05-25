@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using LMS.Application.DTOs;
-using LMS.Domain.Entities;
-using LMS.Application.IServiceMappings;
-using LMS.Application.Interfaces.IServices;
-using LMS.Application.Constants;
 using LMS.Application.Interfaces.ServiceMappings;
-using System.Linq;
 using AutoMapper;
 
 namespace LMS.API.Controllers;
@@ -71,6 +62,28 @@ public class LeaveController : ControllerBase
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
         await _userLeaveService.AddAsync(userLeaveDto);
         await _userLeaveService.SaveAsync();
+        return true;
+    }
+
+    /// <summary>
+    /// Updates leave status: Approve/Reject
+    /// </summary>
+    /// <param name="leaveStatusUpdateDto"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [Route("StatusUpdate")]
+    [Authorize("Leave_Approve_Reject")]
+    public async Task<ActionResult<bool>> LeaveStatusUpdate(LeaveStatusUpdateDto statusUpdateDto)
+    {
+        var userLeave = _userLeaveService.GetByIdAsync(statusUpdateDto.UserLeaveId).Result;
+        
+        if(userLeave != null)
+        {
+            userLeave.Status = (int)statusUpdateDto.Status;
+            _userLeaveService.UpdateAsync(userLeave);
+            _userLeaveService.SaveAsync();
+        }
+        
         return true;
     }
 }

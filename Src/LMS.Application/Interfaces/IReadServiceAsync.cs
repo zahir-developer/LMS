@@ -11,5 +11,5 @@ where TEntity : class
 where TDto : class
 {
     Task<IEnumerable<TDto>> GetAllAsync();
-    //Task<User> GetUserByIdAsync(int Id);
+    Task<TDto> GetByIdAsync(int id);
 }

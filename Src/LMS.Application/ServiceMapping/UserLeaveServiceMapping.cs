@@ -28,6 +28,7 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         var userLeaveResult = (from u in result
                                select new UserLeaveListDto()
                                {
+                                   Id = u.Id,
                                    UserId = u.UserId,
                                    Name = (u.User.FirstName + " " + u.User.LastName),
                                    LeaveTypeName = u.LeaveType?.LeaveTypeName,

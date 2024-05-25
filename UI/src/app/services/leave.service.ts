@@ -5,6 +5,7 @@ import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
 import { UserLeaveAdd } from '../model/leave/user.leave.add';
+import { LeaveUpdate } from '../model/leave/leave.update';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,12 @@ export class LeaveService {
     );
   }
 
-  getLeaveType()
-  {
+  getLeaveType() {
     return this.httpUtilService.get(apiEndPoint.Leave.getType);
   }
-  
+
+  updateLeaveStatus(obj: LeaveUpdate) {
+    return this.httpUtilService.put(apiEndPoint.Leave.updateStatus, obj);
+  }
+
 }

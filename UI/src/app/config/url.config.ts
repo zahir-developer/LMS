@@ -12,9 +12,10 @@ export const apiEndPoint =
     },
     Leave:
     {
+        getType: `common/leaveTypes`,
         add: `leave/`,
         get: `leave/{userId}`,
         getAll: `leave/`,
-        getType: `common/leaveTypes`
+        updateStatus: `leave/StatusUpdate`
     }
 }
