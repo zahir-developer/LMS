@@ -1,4 +1,5 @@
 export interface UserLeave {
+    id: number;
     userId: number;
     name: string;
     leaveTypeName: string;

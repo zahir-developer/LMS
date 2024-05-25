@@ -8,6 +8,7 @@ import {
   MatDialogContent,
   MatDialogRef
 } from '@angular/material/dialog';
+import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
 
 @Component({
   selector: 'app-mat-dialog-confirmation',
@@ -22,17 +23,18 @@ export class MatDialogConfirmationComponent {
   cancelButtonText = "Cancel"
 
   constructor(public dialogRef: MatDialogRef<MatDialogConfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { title: string, description: string }
+    @Inject(MAT_DIALOG_DATA) public data: { title: string, description: string, data: any }
   ) {
 
   }
   onConfirm(type: string, action: any): void {
-    var result =
+    const response: ConfirmDialogeResponse =
     {
       type: type,
-      action: action
+      action: action,
+      data: this.data.data
     }
-    this.dialogRef.close(result);
+    this.dialogRef.close(response);
   }
 }
 

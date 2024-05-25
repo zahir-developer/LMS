@@ -26,8 +26,8 @@
             'badge-danger' : i.statusName === 'Rejected' }">{{ i.statusName }} </span></td>
             <td>{{ i.comments }}</td>
             <td>
-                <button class="btn btn-primary" (click)="openApproveDialog()">Approve</button>
-                <button class="btn btn-warning" (click)="openRejectDialog()">Reject</button>
+                <button class="btn btn-primary" (click)="openApproveDialog(i.id)">Approve</button>
+                <button class="btn btn-warning" (click)="openRejectDialog(i.id)">Reject</button>
             </td>
         </tr>
     </tbody>

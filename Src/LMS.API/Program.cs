@@ -16,8 +16,14 @@ builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddSwaggerConfigration();
 builder.Services.AddAuthorizationPolicyServices();
+builder.Services.AddFluentValidationServicesExtension();
+//builder.Services.AddValidatorsFromAssemblyContaining<LeaveStatusUpdateDto>();
+//builder.Services.AddScoped<IValidator<LeaveStatusUpdateDto>, LeaveStatusUpdateValidator>();
 
+        
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

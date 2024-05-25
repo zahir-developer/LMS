@@ -26,12 +26,24 @@ namespace LMS.Application.Services
 
         public async Task<IEnumerable<TDto>> GetAllAsync()
         {
-                var result = await _genericRepository.GetAllAsync();
+            var result = await _genericRepository.GetAllAsync();
 
-                if (result.Any())
-                {
-                    return _mapper.Map<IEnumerable<TDto>>(result);
-                }
+            if (result.Any())
+            {
+                return _mapper.Map<IEnumerable<TDto>>(result);
+            }
+
+            return null;
+        }
+
+        public async Task<TDto> GetByIdAsync(int id)
+        {
+            var result = await _genericRepository.GetByIdAsync(id);
+
+            if (result != null)
+            {
+                return _mapper.Map<TDto>(result);
+            }
 
             return null;
         }
