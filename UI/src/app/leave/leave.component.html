@@ -21,9 +21,9 @@
             <td>{{ i.fromDate | date }}</td>
             <td>{{ i.toDate | date }}</td>
             <td>{{ i.leaveTypeName }}</td>
-            <td><span class="badge" [ngClass]="{'badge-warning': i.status === 'Pending',
-            'badge-btn-success' : i.status === 'Approved',
-            'badge-danger' : i.status === 'Rejected' }">{{ i.status }} </span></td>
+            <td><span class="badge" [ngClass]="{'badge-warning': i.statusName === 'Pending',
+            'badge-btn-success' : i.statusName === 'Approved',
+            'badge-danger' : i.statusName === 'Rejected' }">{{ i.statusName }} </span></td>
             <td>{{ i.comments }}</td>
             <td>
                 <button class="btn btn-primary" (click)="openApproveDialog()">Approve</button>

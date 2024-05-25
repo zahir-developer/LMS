@@ -22,6 +22,14 @@ public class MappingProfile : Profile
         CreateMap<UserLeaveDto, UserLeave>().ReverseMap();
         CreateMap<UserLeaveDto, UserLeaveAddDto>().ReverseMap();
         CreateMap<UserLeaveListDto, UserLeaveDto>().ReverseMap();
+        CreateMap<User,LoginResultDto>()
+        .ForPath(s => s.RolePrivilege, opt => opt.MapFrom(src =>src.Role.RolePrivilege));
+        CreateMap<Role,RoleDto>();
+        CreateMap<RolePrivilege,RolePrivilegeDto>();
+        
+        //
+        //.ForMember(d => d.User.Id, opt => opt.MapFrom(src => src.Id));
+        //.ReverseMap()
 
         //CreateMap<UserLeaveListDto, UserLeaveDto>().ReverseMap();
         //.Include<User, UserDto>()

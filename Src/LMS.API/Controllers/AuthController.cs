@@ -71,10 +71,8 @@ public class AuthController : ControllerBase
     [HttpPost]
     [AllowAnonymous]
     [Route("Login")]
-    public async Task<ActionResult<AuthTokenDto>> Login(LoginDto login)
+    public async Task<ActionResult<LoginResultDto>> Login(LoginDto login)
     {
-        AuthTokenDto tokenDto = new AuthTokenDto();
-
         var result = _authTokenService.ValidateUser(login);
 
         if (result == null)

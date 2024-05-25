@@ -43,16 +43,15 @@ namespace LMS.Infrastructure.SeedData
 
         public static async Task SeedRolePrivilegeData(LMSDbContext context)
         {
-            
             if (await context.RolePrivilege.AnyAsync()) return;
 
             var RolePrivilegeData = await File.ReadAllTextAsync("Data/RolePrivilegeSeedData.json");
 
-            var RolePrivileges = JsonSerializer.Deserialize<List<RolePrivilege>>(RolePrivilegeData);
+            var RolePrivilege = JsonSerializer.Deserialize<List<RolePrivilege>>(RolePrivilegeData);
 
-            foreach (var RolePrivilege in RolePrivileges)
+            foreach (var privilege in RolePrivilege)
             {
-                context.RolePrivilege.Add(RolePrivilege);
+                context.RolePrivilege.Add(privilege);
             }
 
             await context.SaveChangesAsync();

@@ -5,5 +5,5 @@ export interface UserLeave {
     fromDate: string;
     toDate: string;
     comments: string | null;
-    status: string;
+    statusName: string;
 }

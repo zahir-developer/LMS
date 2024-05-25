@@ -10,6 +10,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { AccountService } from '../../services/account.service';
 import { UserLeaveAdd } from '../../model/leave/user.leave.add';
 import { Router } from '@angular/router';
+import { LoginUser } from '../../model/login.user';
 @Component({
   selector: 'app-leave-request',
   standalone: true,
@@ -82,9 +83,8 @@ export class LeaveRequestComponent {
   }
 
   getCurrentUser() {
-    this.accountService.currentUser$.subscribe({
-      next: user => this.userId = user?.userId
-    });
+    var user = this.accountService.getCurrentUser();
+    this.userId = user?.id;
   }
 
 }

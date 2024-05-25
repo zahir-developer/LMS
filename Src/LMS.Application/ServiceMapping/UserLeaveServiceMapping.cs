@@ -34,7 +34,7 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
                                    FromDate = u.FromDate,
                                    ToDate = u.ToDate,
                                    Comments = u.Comments,
-                                   Status = ((ConstEnum.LeaveStatus)u.Status).ToString()
+                                   StatusName = ((ConstEnum.LeaveStatus)u.Status).ToString()
                                }).ToList();
 
         return userLeaveResult;

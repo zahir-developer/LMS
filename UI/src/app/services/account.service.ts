@@ -43,7 +43,7 @@ export class AccountService {
         const user = response;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          this.LoggedInUserId = user.userId;
+          this.LoggedInUserId = user.id;
           this.currentUserSource.next(user);
         }
       }
@@ -73,5 +73,13 @@ export class AccountService {
 
   getUserId() {
     return this.LoggedInUserId;
+  }
+
+  getCurrentUser() {
+    var user: any;
+    this.currentUser$.subscribe({
+      next: user => { user = user; }
+    });
+    return user;
   }
 }

@@ -33,8 +33,9 @@ public class AuthTokenService : IAuthTokenService
         _autoMapper = autoMapper;
     }
 
-    public AuthTokenDto ValidateUser(LoginDto login)
+    public LoginResultDto ValidateUser(LoginDto login)
     {
+        var loginResultDto = new LoginResultDto();
         AuthTokenDto token = null;
 
         if (login != null)
@@ -59,11 +60,16 @@ public class AuthTokenService : IAuthTokenService
                 token.RefreshToken = string.Empty;
                 token.Email = login.Email;
 
-                return token;
+                loginResultDto = _userService.GetUserRolePrvilegeDetail(user.Id).Result;
+                loginResultDto.AuthToken = token;
+                loginResultDto.Password = null;
+                loginResultDto.PasswordHash = null;
+                
+                return loginResultDto;
             }            
         }
 
-        return token;
+        return loginResultDto;
     }
 
     public UserDto RegisterAuthUser(AddUserDto addUser)

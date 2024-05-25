@@ -1,17 +1,42 @@
-[{
-    "RoleId": 1,
-    "PrivilegeName": "Leave_View_All",
-    "Description": "Access to View all the Leave applied by all the users",
-    "IsEnabled": true,
-    "CreatedOn": "2024-05-20",
-    "CreatedBy": "Migrated data"
-},
-{
-    "RoleId": 1,
-    "PrivilegeName": "Leave_Approve_Reject",
-    "Description": "Access for leave approve or reject",
-    "IsEnabled": true,
-    "CreatedOn": "2024-05-20",
-    "CreatedBy": "Migrated data"
-}]
-
+[
+    {
+        "RoleId": 1,
+        "PrivilegeName": "User_Signup",
+        "Description": "Access to View all the Leave applied by all the users",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    },
+    {
+        "RoleId": 1,
+        "PrivilegeName": "Leave_View_All",
+        "Description": "Access to View all the Leave applied by all the users",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    },
+    {
+        "RoleId": 1,
+        "PrivilegeName": "Leave_Approve_Reject",
+        "Description": "Access for leave approve or reject",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    },
+    {
+        "RoleId": 2,
+        "PrivilegeName": "Leave_Apply",
+        "Description": "Access for applying leave",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    },
+    {
+        "RoleId": 2,
+        "PrivilegeName": "Leave_View",
+        "Description": "Access to View all the Leave applied ",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    }
+]

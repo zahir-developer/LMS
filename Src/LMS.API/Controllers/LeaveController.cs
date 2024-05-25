@@ -18,6 +18,7 @@ namespace LMS.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
