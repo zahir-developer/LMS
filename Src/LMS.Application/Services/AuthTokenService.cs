@@ -55,16 +55,17 @@ public class AuthTokenService : IAuthTokenService
                     if (computeHash[i] != user.PasswordHash[i])
                         return null;
                 }
-                token.UserId = user.Id;
-                token.Token = GenerateToken(login.Email);
-                token.RefreshToken = string.Empty;
-                token.Email = login.Email;
 
                 loginResultDto = _userService.GetUserRolePrvilegeDetail(user.Id).Result;
                 loginResultDto.AuthToken = token;
                 loginResultDto.Password = null;
                 loginResultDto.PasswordHash = null;
-                
+
+                token.UserId = user.Id;
+                token.Token = GenerateToken(login.Email, loginResultDto.Role.RoleName);
+                token.RefreshToken = string.Empty;
+                token.Email = login.Email;
+
                 return loginResultDto;
             }            
         }
@@ -90,12 +91,24 @@ public class AuthTokenService : IAuthTokenService
         return user;
     }
 
-    public string GenerateToken(string EmailId)
+    public string GenerateToken(string EmailId, string? roleName = null)
     {
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.NameId, EmailId)
         };
+
+        if (!string.IsNullOrEmpty(roleName))
+            claims.Add(new Claim(ClaimTypes.Role, roleName));
+
+        // if (privileges != null)
+        // {
+        //     foreach (var p in privileges)
+        //     {
+        //         claims.Add(new Claim(ClaimTypes.Name, p.PrivilegeName));
+        //     }
+        // }
+            
 
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

@@ -83,8 +83,7 @@ export class LeaveRequestComponent {
   }
 
   getCurrentUser() {
-    var user = this.accountService.getCurrentUser();
-    this.userId = user?.id;
+    this.userId = this.accountService.getUserId();
   }
 
 }

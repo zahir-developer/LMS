@@ -9,6 +9,22 @@
     },
     {
         "RoleId": 1,
+        "PrivilegeName": "User_View_All",
+        "Description": "Access to View all the user details",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    },
+    {
+        "RoleId": 1,
+        "PrivilegeName": "User_Edit_Update",
+        "Description": "Access to edit/update the user details",
+        "IsEnabled": true,
+        "CreatedOn": "2024-05-20",
+        "CreatedBy": "Migrated data"
+    },
+    {
+        "RoleId": 1,
         "PrivilegeName": "Leave_View_All",
         "Description": "Access to View all the Leave applied by all the users",
         "IsEnabled": true,
