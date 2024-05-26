@@ -17,9 +17,9 @@ namespace LMS.Infrastructure.Repository;
 
 public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : GenericRepository<UserLeave>(dbContext), IUserLeaveRepository
 {
-    public async Task<List<UserLeave>> GetAllUserLeaveAsync()
+    public async Task<IEnumerable<UserLeave>> GetAllUserLeaveAsync()
     {
-        var userLeaves = await dbContext.UserLeave.Include(s=>s.User).Include(s=>s.LeaveType).ToListAsync();
+        var userLeaves = dbContext.UserLeave.Include(s=>s.User).Include(s=>s.LeaveType);
 
         return userLeaves;
     }

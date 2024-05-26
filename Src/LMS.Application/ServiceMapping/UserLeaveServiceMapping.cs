@@ -14,17 +14,17 @@ using System;
 namespace LMS.Application.ServiceMappings;
 public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveDto>, IUserLeaveServiceMapping
 {
-    private readonly IGenericRepository<UserLeave> genericRepo;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserLeaveRepository userLeaveRepository;
     private readonly IMapper mapper;
 
-    public UserLeaveServiceMapping(IGenericRepository<UserLeave> genericRepo, IUserLeaveRepository userLeaveRepository, IMapper mapper) : base(genericRepo, mapper)
+    public UserLeaveServiceMapping(IUnitOfWork unitOfWork, IUserLeaveRepository userLeaveRepository, IMapper mapper) : base(unitOfWork, mapper)
     {
+        this._unitOfWork = unitOfWork;
         this.mapper = mapper;
-        this.genericRepo = genericRepo;
         this.userLeaveRepository = userLeaveRepository;
     }
-    public List<UserLeaveListDto> GetAllUserLeaveList()
+    public List<UserLeaveListDto> GetAllUserLeaveList(int userId = 0)
     {
         var result = this.userLeaveRepository.GetAllUserLeaveAsync().Result;
         var userLeaveResult = (from u in result
@@ -38,8 +38,12 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
                                    ToDate = u.ToDate,
                                    Comments = u.Comments,
                                    StatusName = ((ConstEnum.LeaveStatus)u.Status).ToString()
-                               }).ToList();
+                               });
 
-        return userLeaveResult;
+        if (userId > 0)
+        {
+            userLeaveResult = userLeaveResult.Where(u => u.UserId == userId);
+        }
+        return userLeaveResult.ToList();
     }
 }

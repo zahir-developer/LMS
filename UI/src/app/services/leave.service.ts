@@ -22,11 +22,7 @@ export class LeaveService {
   }
 
   getLeave(userId: number) {
-    this.httpUtilService.get(apiEndPoint.Leave.get).subscribe(
-      result => {
-        alert("Retrieved leaves successfully");
-      }
-    );
+    return this.httpUtilService.get(apiEndPoint.Leave.get + userId);
   }
 
   getLeaveType() {

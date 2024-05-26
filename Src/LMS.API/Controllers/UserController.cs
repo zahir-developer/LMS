@@ -38,4 +38,11 @@ public class UserController : ControllerBase
 
         return result;
     }
+
+    [HttpPost]
+    public async Task<ActionResult<bool>> Test(UserDto userDto)
+    {
+        
+        return true;
+    }
 }

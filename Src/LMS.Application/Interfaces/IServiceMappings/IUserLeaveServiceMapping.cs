@@ -9,13 +9,10 @@ using LMS.Domain.Entities;
 using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces.IRepository;
 
-
-
-
 namespace LMS.Application.Interfaces.IServiceMappings
 {
-    public interface IUserLeaveServiceMapping : IReadServiceAsync<UserLeave, UserLeaveDto>, IGenericServiceAsync<UserLeave, UserLeaveDto>
+    public interface IUserLeaveServiceMapping : IGenericServiceAsync<UserLeave, UserLeaveDto>
     {
-        List<UserLeaveListDto> GetAllUserLeaveList();
+        List<UserLeaveListDto> GetAllUserLeaveList(int userId = 0);
     }
 }

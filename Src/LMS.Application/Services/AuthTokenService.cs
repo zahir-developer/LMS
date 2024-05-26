@@ -11,10 +11,12 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 
+using LMS.Application.Interfaces;
 using LMS.Application.Interfaces.IServices;
 using LMS.Application.DTOs;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
+using LMS.Domain.Entities;
 using AutoMapper;
 
 namespace LMS.Application.Services;
@@ -23,7 +25,6 @@ public class AuthTokenService : IAuthTokenService
 {
     private readonly SymmetricSecurityKey _key;
     private readonly IUserServiceMapping _userService;
-
     private readonly IMapper _autoMapper;
 
     public AuthTokenService(IConfiguration config, IUserServiceMapping userService, IMapper autoMapper)
@@ -40,6 +41,7 @@ public class AuthTokenService : IAuthTokenService
 
         if (login != null)
         {
+            
             var user = _userService.GetUserByEmail(login.Email);            
 
             if (user != null && user?.PasswordSalt != null)
@@ -86,7 +88,6 @@ public class AuthTokenService : IAuthTokenService
         user.Token = token;
         
         _userService.AddAsync(user);
-        _userService.SaveAsync();
 
         return user;
     }

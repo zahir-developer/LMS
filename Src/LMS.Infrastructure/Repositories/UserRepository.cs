@@ -23,4 +23,26 @@ public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRep
 
         return userRoleDetails;
     }
+
+    public async Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>>? filter = null, IOrderedQueryable<User> orderBy = null, string includeProperties = "")
+    {
+        IQueryable<User> query;
+
+        if (filter != null)
+        {
+            query = dbContext.Set<User>().Where(filter);
+        }
+        else
+        {
+            query = dbContext.Set<User>();
+        }
+
+        foreach (var includeProperty in includeProperties.Split
+            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            query = query.Include(includeProperty);
+        }
+
+        return await query.ToListAsync();
+    }
 }
