@@ -9,16 +9,11 @@ public static class FluentValidationServicesExtension
 {
     public static IServiceCollection AddFluentValidationServicesExtension(this IServiceCollection services)
     {
+        // services.AddFluentValidationAutoValidation()
+        // .AddFluentValidationClientsideAdapters().AddValidatorsFromAssemblyContaining<LeaveStatusUpdateValidator>();
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
         services.AddScoped<IValidator<LeaveStatusUpdateDto>, LeaveStatusUpdateValidator>();
-        services.AddFluentValidationAutoValidation()
-        .AddFluentValidationClientsideAdapters()
-        .AddValidatorsFromAssemblyContaining<LeaveStatusUpdateValidator>();
         
-
-        // Load using a type reference rather than the generic.
-        //services.AddValidatorsFromAssemblyContaining(typeof(LeaveStatusUpdateValidator));
-            
-        //services.AddValidatorsFromAssemblyContaining<LeaveStatusUpdateValidator>(ServiceLifetime.Transient);
         return services;
 
     }

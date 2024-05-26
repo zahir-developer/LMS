@@ -2,6 +2,8 @@
 using LMS.Domain.Entities;
 using LMS.Application.Interfaces;
 using LMS.Application.IServiceMappings;
+using LMS.Application.Interfaces.IServices;
+using LMS.Application.Interfaces.IRepository;
 using LMS.Application.Services;
 using LMS.Application.DTOs;
 
@@ -15,12 +17,12 @@ using AutoMapper;
 
 namespace LMS.Application.ServiceMappings
 {
-    public class UserService : GenericServiceAsync<User, UserDto>, IUserService
+    public class UserServiceMapping : GenericServiceAsync<User, UserDto>, IUserServiceMapping
     {
         private readonly IGenericRepository<User> _genUserRepo;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IGenericRepository<User> genericRepository, IUserRepository userRepository, IMapper mapper) : base(genericRepository, mapper)
+        public UserServiceMapping(IGenericRepository<User> genericRepository, IUserRepository userRepository, IMapper mapper) : base(genericRepository, mapper)
         {
             _genUserRepo = genericRepository;
             _userRepository = userRepository;

@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LMS.Application.Interfaces.IServices;
 
 using LMS.Domain.Entities;
 
-namespace LMS.Application.Interfaces;
+namespace LMS.Application.Interfaces.IServices;
 public interface IGenericServiceAsync<TEntity, TDto> : IReadServiceAsync<TEntity, TDto> 
 where TEntity : class where TDto : class
 {

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using System.Data.Entity.Core;
 using AutoMapper;
 
-using LMS.Application.Interfaces;
+using LMS.Application.Interfaces.IServices;
+using LMS.Application.Interfaces.IRepository;
 using LMS.Domain.Entities;
+
 
 
 namespace LMS.Application.Services

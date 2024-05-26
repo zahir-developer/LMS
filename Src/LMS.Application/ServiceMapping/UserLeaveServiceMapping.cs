@@ -1,7 +1,9 @@
-using LMS.Application.Interfaces.ServiceMappings;
+using LMS.Application.Interfaces.IServiceMappings;
 using LMS.Application.Services;
 using LMS.Application.DTOs;
 using LMS.Application.IServiceMappings;
+using LMS.Application.Interfaces.IRepository;
+using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces;
 using LMS.Application.Constants;
 using LMS.Domain.Entities;

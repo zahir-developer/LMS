@@ -53,8 +53,8 @@ try {
     await Seed.SeedUserData(context);
     await Seed.SeedLeaveType(context);
 }
-catch (Exception ex)
-{ throw ex; }
+catch (Exception)
+{  }
 
 app.Run();
 

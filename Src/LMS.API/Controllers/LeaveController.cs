@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using LMS.Application.DTOs;
-using LMS.Application.Interfaces.ServiceMappings;
+using LMS.Application.Interfaces.IServiceMappings;
 using AutoMapper;
 
 namespace LMS.API.Controllers;
@@ -80,8 +80,8 @@ public class LeaveController : ControllerBase
         if(userLeave != null)
         {
             userLeave.Status = (int)statusUpdateDto.Status;
-            _userLeaveService.UpdateAsync(userLeave);
-            _userLeaveService.SaveAsync();
+            await _userLeaveService.UpdateAsync(userLeave);
+            await _userLeaveService.SaveAsync();
         }
         
         return true;
