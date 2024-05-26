@@ -45,7 +45,7 @@ public class LeaveController : ControllerBase
     [Route("{userId}")]
     public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeaves(int userId)
     {
-        var result = _userLeaveService.GetAllUserLeaveList();
+        var result = _userLeaveService.GetAllUserLeaveList(userId);
 
         return Ok(result);
     }
@@ -75,14 +75,14 @@ public class LeaveController : ControllerBase
     public async Task<ActionResult<bool>> LeaveStatusUpdate(LeaveStatusUpdateDto statusUpdateDto)
     {
         var userLeave = _userLeaveService.GetByIdAsync(statusUpdateDto.Id).Result;
-        
-        if(userLeave != null)
+
+        if (userLeave != null)
         {
             userLeave.Status = (int)statusUpdateDto.Status;
             await _userLeaveService.UpdateAsync(userLeave);
             //await _userLeaveService.SaveAsync();
         }
-        
+
         return true;
     }
 }

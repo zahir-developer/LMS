@@ -4,7 +4,7 @@ import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
-import { LoginUser } from '../model/login.user';
+import { LoginUser, Role } from '../model/login.user';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -13,6 +13,7 @@ import { environment } from '../../environments/environment';
 export class AccountService {
   loggedInUserId: number = 0;
   loggedInUser: LoginUser | undefined;
+  loggedInUserRole: string | undefined;
 
   private currentUserSource = new BehaviorSubject<LoginUser | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
@@ -54,8 +55,11 @@ export class AccountService {
   setCurrentUser(user: LoginUser) {
     this.currentUserSource.next(user);
     this.loggedInUser = user;
-    if (user)
+    if (user) {
       this.loggedInUserId = user?.id;
+      this.loggedInUserRole = user?.role.roleName;
+    }
+
   }
 
   logout() {
@@ -86,5 +90,9 @@ export class AccountService {
       }
     });
     return this.loggedInUser;
+  }
+
+  getCurrentUserRole() {
+    return this.loggedInUserRole;
   }
 }

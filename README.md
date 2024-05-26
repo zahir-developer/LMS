@@ -12,4 +12,13 @@ https://medium.com/@bruno-bernardes-tech/how-to-implement-jwt-authentication-in-
 
 https://github.com/Brunosalesb/jwt-auth/blob/master/jwtAuth/Program.cs#L52
 
-https://medium.com/@bruno-bernardes-tech/how-to-implement-jwt-authentication-in-asp-net-core-269f258f19be#:~:text=To%20use%20JWT%2C%20we%20need,this%20package%20to%20the%20project.&text=Now%2C%20create%20the%20AuthService%20(commonly,and%20returns%20the%20generated%20token.
+https://medium.com/@bruno-bernardes-tech/how-to-implement-jwt-authentication-in-asp-net-core-269f258f19be#:~:text=To%20use%20JWT%2C%20we%20need,this%20package%20to%20the%20project.&text=Now%2C%20create%20the%20AuthService%20(commonly,and%20returns%20the%20generated%20token
+
+EF No Triacking 
+https://learn.microsoft.com/en-us/ef/core/querying/tracking
+/*
+optionsBuilder
+        .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFQuerying.Tracking;Trusted_Connection=True;ConnectRetryCount=0")
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+*/

@@ -1,7 +1,7 @@
 import { LeaveStatus } from "../Enum/constEnum";
 
 export interface LeaveUpdate {
-    userLeaveId: number;
+    Id: number;
     userId: number;
     status: LeaveStatus;
 }

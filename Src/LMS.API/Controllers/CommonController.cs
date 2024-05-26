@@ -1,16 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 
 using LMS.Application.DTOs;
-using LMS.Domain.Entities;
-using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces.IServiceMappings;
-using System.Net.Http.Headers;
 
 namespace LMS.API.Controllers;
 

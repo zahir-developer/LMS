@@ -13,6 +13,6 @@ namespace LMS.Application.Interfaces.IServiceMappings
 {
     public interface IUserLeaveServiceMapping : IGenericServiceAsync<UserLeave, UserLeaveDto>
     {
-        List<UserLeaveListDto> GetAllUserLeaveList();
+        List<UserLeaveListDto> GetAllUserLeaveList(int userId = 0);
     }
 }
