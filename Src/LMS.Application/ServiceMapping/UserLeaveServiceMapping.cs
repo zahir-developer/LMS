@@ -14,14 +14,14 @@ using System;
 namespace LMS.Application.ServiceMappings;
 public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveDto>, IUserLeaveServiceMapping
 {
-    private readonly IGenericRepository<UserLeave> genericRepo;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserLeaveRepository userLeaveRepository;
     private readonly IMapper mapper;
 
-    public UserLeaveServiceMapping(IGenericRepository<UserLeave> genericRepo, IUserLeaveRepository userLeaveRepository, IMapper mapper) : base(genericRepo, mapper)
+    public UserLeaveServiceMapping(IUnitOfWork unitOfWork, IUserLeaveRepository userLeaveRepository, IMapper mapper) : base(unitOfWork, mapper)
     {
+        this._unitOfWork = unitOfWork;
         this.mapper = mapper;
-        this.genericRepo = genericRepo;
         this.userLeaveRepository = userLeaveRepository;
     }
     public List<UserLeaveListDto> GetAllUserLeaveList()

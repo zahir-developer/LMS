@@ -11,7 +11,7 @@ using LMS.Application.Interfaces.IRepository;
 
 namespace LMS.Application.IServiceMappings
 {
-    public interface IUserServiceMapping : IReadServiceAsync<User, UserDto>, IGenericServiceAsync<User, UserDto>
+    public interface IUserServiceMapping : IGenericServiceAsync<User, UserDto>
     {
         UserDto GetUserByEmail(string emailId);
         Task<LoginResultDto> GetUserRolePrvilegeDetail(int userId);

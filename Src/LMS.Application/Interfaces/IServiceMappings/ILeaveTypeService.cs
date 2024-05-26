@@ -11,7 +11,7 @@ using LMS.Application.Interfaces.IServices;
 
 namespace LMS.Application.Interfaces.IServiceMappings
 {
-    public interface ILeaveTypeService : IReadServiceAsync<LeaveType, LeaveTypeDto>
+    public interface ILeaveTypeService : IGenericServiceAsync<LeaveType, LeaveTypeDto>
     {
         
     }

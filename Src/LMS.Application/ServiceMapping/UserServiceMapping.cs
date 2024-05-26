@@ -19,12 +19,12 @@ namespace LMS.Application.ServiceMappings
 {
     public class UserServiceMapping : GenericServiceAsync<User, UserDto>, IUserServiceMapping
     {
-        private readonly IGenericRepository<User> _genUserRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserServiceMapping(IGenericRepository<User> genericRepository, IUserRepository userRepository, IMapper mapper) : base(genericRepository, mapper)
+        public UserServiceMapping(IUnitOfWork unitOfWork, IUserRepository userRepository, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _genUserRepo = genericRepository;
+            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _mapper = mapper;
         }
@@ -35,7 +35,7 @@ namespace LMS.Application.ServiceMappings
 
             Expression<Func<User, bool>> exp = s => s.Email == emailId;
 
-            var user = _genUserRepo.GetAsync(exp).Result.ToList().FirstOrDefault();
+            var user = _userRepository.GetAsync(exp).Result.ToList().FirstOrDefault();
 
             var result = _mapper.Map<UserDto>(user);
 

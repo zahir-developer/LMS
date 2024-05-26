@@ -55,10 +55,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     public async Task<T?> GetByIdAsync(int Id, CancellationToken cancellationToken = default)
     {
-        if (Id > 0)
-            return null;
-        else
-            return await dbContext.Set<T>().FindAsync(new[] { Id });
+        return await dbContext.Set<T>().FindAsync(Id);
     }
 
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)

@@ -61,7 +61,6 @@ public class LeaveController : ControllerBase
     {
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
         await _userLeaveService.AddAsync(userLeaveDto);
-        await _userLeaveService.SaveAsync();
         return true;
     }
 
