@@ -22,11 +22,11 @@ namespace LMS.Application.Services;
 public class AuthTokenService : IAuthTokenService
 {
     private readonly SymmetricSecurityKey _key;
-    private readonly IUserService _userService;
+    private readonly IUserServiceMapping _userService;
 
     private readonly IMapper _autoMapper;
 
-    public AuthTokenService(IConfiguration config, IUserService userService, IMapper autoMapper)
+    public AuthTokenService(IConfiguration config, IUserServiceMapping userService, IMapper autoMapper)
     {
         _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtTokenKey"]));
         _userService = userService;

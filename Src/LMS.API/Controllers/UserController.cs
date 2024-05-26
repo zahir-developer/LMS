@@ -17,12 +17,12 @@ namespace LMS.API.Controllers;
 [Authorize]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IUserServiceMapping _userService;
     private readonly ILogger<UserController> _logger;
     private readonly IConfiguration _config;
     private readonly IAuthTokenService _authTokenService;
 
-    public UserController(ILogger<UserController> logger, IUserService userService, IConfiguration config, IAuthTokenService authTokenService)
+    public UserController(ILogger<UserController> logger, IUserServiceMapping userService, IConfiguration config, IAuthTokenService authTokenService)
     {
         _logger = logger;
         _userService = userService;

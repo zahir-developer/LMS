@@ -6,10 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 using LMS.Application.Interfaces;
+using LMS.Application.Interfaces.IServices;
+using LMS.Application.Interfaces.IRepository;
 using LMS.Infrastructure.Database;
+using LMS.Infrastructure.Repository;
 using LMS.Domain.Entities;
 using AutoMapper;
-namespace LMS.Infrastructure.Repositories;
+
+namespace LMS.Infrastructure.Repository;
 
 public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRepository<User>(dbContext), IUserRepository
 {

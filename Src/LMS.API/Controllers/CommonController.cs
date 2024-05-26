@@ -9,7 +9,8 @@ using LMS.Application.DTOs;
 using LMS.Domain.Entities;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
-using LMS.Application.Interfaces.ServiceMappings;
+using LMS.Application.Interfaces.IServiceMappings;
+using System.Net.Http.Headers;
 
 namespace LMS.API.Controllers;
 
@@ -31,7 +32,9 @@ public class CommonController : ControllerBase
     [Route("LeaveTypes")]
     public async Task<ActionResult<List<LeaveTypeDto>>> LeaveType()
     {
-        return _leaveTypeService.GetAllAsync().Result.ToList();
+        var result = await _leaveTypeService.GetAllAsync();
+
+        return result.ToList();
     }
 
 }

@@ -1,12 +1,14 @@
-using LMS.Infrastructure.Repositories;
+
 using LMS.Infrastructure.Database;
+using LMS.Infrastructure.Repository;
 using LMS.Application.Interfaces;
 using LMS.Application.Services;
 using LMS.Application.ServiceMappings;
-using LMS.Application.Interfaces.ServiceMappings;
-using LMS.Application.IServiceMappings;
+using LMS.Application.Interfaces.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
-using LMS.Application.Mappings;
+using LMS.Application.Interfaces.IRepository;
+using LMS.Application.AutoMapper;
+using LMS.Application.IServiceMappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace LMS.API.Extensions
@@ -34,7 +36,7 @@ namespace LMS.API.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             //AutoMapper Configuration
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof(AutoMappingProfile));
 
             //Generic Repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -43,7 +45,7 @@ namespace LMS.API.Extensions
             services.AddScoped(typeof(IReadServiceAsync<,>), typeof(ReadServiceAsync<,>));
 
             // Services
-            services.AddScoped(typeof(IUserService), typeof(UserService));
+            services.AddScoped(typeof(IUserServiceMapping), typeof(UserServiceMapping));
             services.AddScoped<IAuthTokenService, AuthTokenService>();
             services.AddScoped(typeof(ILeaveTypeService), typeof(LeaveTypeService));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));

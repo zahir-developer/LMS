@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 
+using LMS.Application.Interfaces.IServices;
+using LMS.Application.Interfaces.IRepository;
 using LMS.Application.Interfaces;
+
 
 namespace LMS.Application.Services
 {

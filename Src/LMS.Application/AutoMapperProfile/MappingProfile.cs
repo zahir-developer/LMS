@@ -2,11 +2,11 @@ using AutoMapper;
 using LMS.Domain.Entities;
 using LMS.Application.DTOs;
 
-namespace LMS.Application.Mappings;
+namespace LMS.Application.AutoMapper;
 
-public class MappingProfile : Profile
+public class AutoMappingProfile : Profile
 {
-    public MappingProfile()
+    public AutoMappingProfile()
     {
         CreateMap<User, UserDto>().ReverseMap();
 

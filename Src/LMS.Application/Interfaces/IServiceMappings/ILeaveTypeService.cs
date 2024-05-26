@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using LMS.Application.DTOs;
 using LMS.Domain.Entities;
 using LMS.Application.Interfaces;
+using LMS.Application.Interfaces.IServices;
 
 
-namespace LMS.Application.Interfaces.ServiceMappings
+namespace LMS.Application.Interfaces.IServiceMappings
 {
     public interface ILeaveTypeService : IReadServiceAsync<LeaveType, LeaveTypeDto>
     {

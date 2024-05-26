@@ -7,8 +7,10 @@ using System.Linq.Expressions;
 
 using LMS.Application.Interfaces;
 using LMS.Infrastructure.Database;
+using LMS.Application.Interfaces.IRepository;
 
-namespace LMS.Infrastructure.Repositories;
+
+namespace LMS.Infrastructure.Repository;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {

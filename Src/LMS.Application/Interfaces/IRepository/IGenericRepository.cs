@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Linq;
 
-namespace LMS.Application.Interfaces;
+namespace LMS.Application.Interfaces.IRepository;
 
 public interface IGenericRepository<T> where T : class
 {
