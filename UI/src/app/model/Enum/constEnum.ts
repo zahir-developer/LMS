@@ -11,3 +11,15 @@ export enum LeaveStatus
     Rejected = 2
 }
 
+export enum LeaveStatusText
+{
+    Pending = "Pending",
+    Approved = "Approved",
+    Rejected = "Rejected"
+}
+export enum AppText
+{
+    ApproveConfirmation = "Confirm leave approve action.!",
+    RejectConfirmation = "Confirm leave reject action.!"
+}
+

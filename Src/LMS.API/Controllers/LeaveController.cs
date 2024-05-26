@@ -70,18 +70,18 @@ public class LeaveController : ControllerBase
     /// </summary>
     /// <param name="leaveStatusUpdateDto"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPut]
     [Route("StatusUpdate")]
     [Authorize("Leave_Approve_Reject")]
     public async Task<ActionResult<bool>> LeaveStatusUpdate(LeaveStatusUpdateDto statusUpdateDto)
     {
-        var userLeave = _userLeaveService.GetByIdAsync(statusUpdateDto.UserLeaveId).Result;
+        var userLeave = _userLeaveService.GetByIdAsync(statusUpdateDto.Id).Result;
         
         if(userLeave != null)
         {
             userLeave.Status = (int)statusUpdateDto.Status;
             await _userLeaveService.UpdateAsync(userLeave);
-            await _userLeaveService.SaveAsync();
+            //await _userLeaveService.SaveAsync();
         }
         
         return true;

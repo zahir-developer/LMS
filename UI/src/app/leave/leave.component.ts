@@ -18,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogConfirmationComponent } from '../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
 import { Title } from '@angular/platform-browser';
 import { ConfirmDialogeResponse } from '../model/confirm.dialoge.response';
-import { Confirm, LeaveStatus } from '../model/Enum/constEnum';
+import { AppText, Confirm, LeaveStatus, LeaveStatusText } from '../model/Enum/constEnum';
 import { LeaveUpdate } from '../model/leave/leave.update';
 import { AccountService } from '../services/account.service';
 
@@ -33,8 +33,9 @@ import { AccountService } from '../services/account.service';
 export class LeaveComponent {
 
   leaves: UserLeave[] = []
+  leaveStatusText: typeof LeaveStatusText = LeaveStatusText;
   leaveUpdate: LeaveUpdate = {
-    id: 0,
+    userLeaveId: 0,
     status: LeaveStatus.Pending,
     userId: this.accountService.getUserId()
   };
@@ -68,14 +69,14 @@ export class LeaveComponent {
   }
 
   openApproveDialog(id: number) {
-    this.dialogData.title = "Approve";
-    this.dialogData.description = "Confirm leave approve action.!";
+    this.dialogData.title = LeaveStatusText.Approved.toString();
+    this.dialogData.description = AppText.ApproveConfirmation.toString();
     this.openDialog(id)
   }
 
   openRejectDialog(id: number) {
-    this.dialogData.title = "Reject";
-    this.dialogData.description = "Confirm leave reject action.!";
+    this.dialogData.title = LeaveStatusText.Rejected.toString();
+    this.dialogData.description = AppText.RejectConfirmation.toString();
     this.openDialog(id)
   }
 
@@ -97,13 +98,12 @@ export class LeaveComponent {
           status = LeaveStatus.Approved;
         else
           status = LeaveStatus.Rejected;
+
+          this.leaveUpdate.userLeaveId = obj.data;
+          this.leaveUpdate.status = status;
+
+          this.updateleaveStatus();
       }
-
-      this.leaveUpdate.id = obj.data;
-      this.leaveUpdate.status = status;
-
-      this.updateleaveStatus();
-
     });
   }
 
