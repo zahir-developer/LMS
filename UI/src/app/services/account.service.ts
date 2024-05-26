@@ -15,6 +15,9 @@ export class AccountService {
   loggedInUser: LoginUser | undefined;
   loggedInUserRole: string | undefined;
 
+  private editUserSource = new BehaviorSubject<User | null>(null);
+  editUser$ = this.editUserSource.asObservable();
+
   private currentUserSource = new BehaviorSubject<LoginUser | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -29,14 +32,19 @@ export class AccountService {
   }
 
   getAllUser() {
-    this.httpUtilService.get(apiEndPoint.User.getAll).subscribe(
-      result => {
-      }
-    );
+    return this.httpUtilService.get(apiEndPoint.User.getAll);
   }
 
   login_Old(model: any) {
     return this.http.post(environment.apiUrl + apiEndPoint.Auth.login.toString(), model);
+  }
+
+  updateUser(updateObj: User) {
+    return this.http.put(environment.apiUrl + apiEndPoint.User.update, updateObj);
+  }
+
+  deleteUser(userId: number) {
+    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete + '?userId='+userId);
   }
 
   login(model: any) {
@@ -50,6 +58,12 @@ export class AccountService {
       }
       )
     )
+  }
+
+
+  setEditUser(editObj: User | undefined) {
+    if (editObj)
+      this.editUserSource.next(editObj);
   }
 
   setCurrentUser(user: LoginUser) {
@@ -95,4 +109,9 @@ export class AccountService {
   getCurrentUserRole() {
     return this.loggedInUserRole;
   }
+
+  getRoles() {
+    return this.httpUtilService.get(apiEndPoint.Common.roles);
+  }
+
 }

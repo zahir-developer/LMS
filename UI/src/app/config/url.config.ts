@@ -8,7 +8,9 @@ export const apiEndPoint =
     },
     User:
     {
-        getAll: `user/users`
+        getAll: `user/users`,
+        update: `user/`,
+        delete: `user`
     },
     Leave:
     {
@@ -17,5 +19,10 @@ export const apiEndPoint =
         get: `leave/`, 
         getAll: `leave/`,
         updateStatus: `leave/StatusUpdate`
+    },
+    Common:
+    {
+        roles: `common/roles`
     }
+
 }

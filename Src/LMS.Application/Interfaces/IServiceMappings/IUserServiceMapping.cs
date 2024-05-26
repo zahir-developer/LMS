@@ -15,5 +15,6 @@ namespace LMS.Application.IServiceMappings
     {
         UserDto GetUserByEmail(string emailId);
         Task<LoginResultDto> GetUserRolePrvilegeDetail(int userId);
+        Task<List<UserListDto>> GetAllUserListAsync();
     }
 }

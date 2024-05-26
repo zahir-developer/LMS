@@ -23,6 +23,14 @@ public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRep
 
         return userRoleDetails;
     }
+    public async Task<IEnumerable<User>> GetAllUserAsync()
+    {
+        var userRoleDetails = dbContext.User.Include(s=>s.Role);
+
+        return userRoleDetails;
+    }
+
+    
 
     public async Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>>? filter = null, IOrderedQueryable<User> orderBy = null, string includeProperties = "")
     {

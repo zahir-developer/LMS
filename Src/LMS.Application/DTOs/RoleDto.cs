@@ -2,7 +2,7 @@ namespace LMS.Application.DTOs;
 
 public class RoleDto
 {
-    private int RoleId;
+    public int Id { get; set; }
     public string? RoleName { get; set; }
     public string? Description { get; set; }
 }

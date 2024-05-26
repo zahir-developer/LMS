@@ -2,7 +2,6 @@ import { Component, Input, input } from '@angular/core';
 import { LeaveService } from '../../services/leave.service';
 import { UserLeave } from '../../model/leave/user.leave';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs';
 import { RouterModule } from '@angular/router';
 
 import {
@@ -16,7 +15,6 @@ import {
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogConfirmationComponent } from '../../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
-import { Title } from '@angular/platform-browser';
 import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
 import { AppText, Confirm, LeaveStatus, LeaveStatusText, Role } from '../../model/Enum/constEnum';
 import { LeaveUpdate } from '../../model/leave/leave.update';
@@ -79,7 +77,7 @@ export class UserLeaveComponent {
   openApproveDialog(id: number) {
     this.dialogData.title = LeaveStatusText.Approved.toString();
     this.dialogData.description = AppText.ApproveConfirmation.toString();
-    this.openDialog(id)
+    this.openDialog(id);
   }
 
   openRejectDialog(id: number) {

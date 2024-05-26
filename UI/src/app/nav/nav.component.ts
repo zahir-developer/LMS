@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { Router, RouterModule } from '@angular/router';
+import { Role } from '../model/Enum/constEnum';
 
 @Component({
   selector: 'app-nav',
@@ -13,27 +14,35 @@ import { Router, RouterModule } from '@angular/router';
 export class NavComponent {
 
   isLoggedIn = false;
-
-  constructor(private accountService: AccountService, private route: Router)
-  {
+  isAdmin: boolean | undefined;
+  loggedInUser: string | undefined;
+  constructor(private accountService: AccountService, private route: Router) {
 
   }
 
   getCurrentUser() {
     this.accountService.currentUser$.subscribe({
-      next: user => this.isLoggedIn = !!user
+      next: user => {
+        this.isLoggedIn = !!user
+        if (user) {
+          this.loggedInUser = user?.firstName + user?.lastName;
+          if (user.role.roleName === Role[Role.Admin])
+            this.isAdmin = true;
+          else
+            this.isAdmin = false;
+        }
+      }
     })
   }
 
-  logout()
-  {
+
+
+  logout() {
     this.accountService.logout();
     this.route.navigateByUrl('/login');
   }
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     this.getCurrentUser();
   }
-
 }

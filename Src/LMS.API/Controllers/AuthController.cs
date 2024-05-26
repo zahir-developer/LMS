@@ -57,8 +57,6 @@ public class AuthController : ControllerBase
     {
         _logger.LogInformation("User {0} create begins", user.Email);
 
-        user.RoleId = (int)ConstEnum.Roles.User;
-
         var userAuth = _authTokenService.RegisterAuthUser(user);
         
         return userAuth;
@@ -76,7 +74,7 @@ public class AuthController : ControllerBase
     {
         var result = _authTokenService.ValidateUser(login);
 
-        if (result == null)
+        if (result?.Id == 0)
         {
             return Unauthorized("Unauthorized user.");
         }
