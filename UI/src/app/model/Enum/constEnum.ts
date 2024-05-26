@@ -25,8 +25,17 @@ export enum LeaveStatusText
 }
 export enum AppText
 {
+    /*Manage leaves: Begin*/
     ApproveConfirmation = "Confirm leave approve action.!",
     RejectConfirmation = "Confirm leave reject action.!",
-    ForbiddenAction = "You are not allowed to perform this action.|"
+    /*Manage leaves: Ends*/
+
+    /*Common*/
+    ForbiddenAction = "You are not allowed to perform this action !",
+    DeleteConfirmation = "Are you sure proceed to delete ?",
+    DeleteSuccess = "User deleted successfully !",
+    
+    /*User*/
+    UserUpdateSuccess = "User updated successfully",
 }
 

@@ -22,3 +22,13 @@ optionsBuilder
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
 */
+
+Bootstrap Icons:
+
+/*
+npm i bootstrap-icons --save
+
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+<i class="bi bi-star-fill"></i>
+*/

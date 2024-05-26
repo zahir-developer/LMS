@@ -8,20 +8,21 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="'/home'">Home<span class="sr-only"></span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/leave'">All User Leaves<span class="sr-only"></span></a>
+      <li class="nav-item" *ngIf="isAdmin">
+        <a class="nav-link" [routerLink]="'/user-leave'">Manage Leaves<span class="sr-only"></span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAdmin">
+        <a class="nav-link" [routerLink]="'/user-list'">Users<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item" *ngIf="!isAdmin">
         <a class="nav-link" [routerLink]="'/user-leave'">Leaves<span class="sr-only"></span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="'/register'">Register<span class="sr-only"></span></a>
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li> -->
     </ul>
     <form class="form-inline my-2 my-lg-0">
+      <div class="navbar-brand">Welcome, <span style="font-weight: bold;">{{ loggedInUser }}</span></div>
       <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
       <a class="btn btn-warning my-2 my-sm-0" *ngIf="isLoggedIn" (click)="logout()">Log out</a>
       <a class="btn btn-success my-2 my-sm-0" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
@@ -29,6 +30,7 @@
   </div>
   <div class="collapse navbar-collapse" id="navbarCollapse" *ngIf="!isLoggedIn">
     <ul class="navbar-nav mr-auto">
+      
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <a class="btn btn-success my-2 my-sm-0" routerLink="/login" href="/login">Login</a>

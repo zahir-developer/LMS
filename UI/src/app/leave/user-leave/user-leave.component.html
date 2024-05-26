@@ -42,4 +42,10 @@
             </td>
         </tr>
     </tbody>
+    <tbody *ngIf="leaves[0]==undefined">
+        <tr *ngIf="isAdmin" class="text-center"><td colspan="8">No data available</td></tr>
+    </tbody>
+    <tbody *ngIf="leaves[0]==undefined">
+        <tr *ngIf="!isAdmin"  class="text-center"><td colspan="6">No data available</td></tr>
+    </tbody>
 </table>

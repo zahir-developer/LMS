@@ -31,18 +31,52 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize("User_View_All")]
     [Route("users")]
-    public async Task<ActionResult<List<UserDto>>> GetAllUser()
+    public async Task<ActionResult<List<UserListDto>>> GetAllUser()
     {
-        var result = _userService.GetAllAsync().Result.ToList();
+        var result = _userService.GetAllUserListAsync().Result;
 
         return result;
     }
 
-    [HttpPost]
-    public async Task<ActionResult<bool>> Test(UserDto userDto)
+    /// <summary>
+    /// Updates user details. Policy only admin can access.
+    /// </summary>
+    /// <param name="statusUpdateDto"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [Authorize("User_Edit_Update")]
+    public async Task<ActionResult<bool>> UpdateUser(UserUpdateDto userUpdateDto)
     {
-        
-        return true;
+        var user = _userService.GetByIdAsync(userUpdateDto.Id).Result;
+        if (user != null)
+        {
+            user.FirstName = userUpdateDto.FirstName;
+            user.LastName = userUpdateDto.LastName;
+            user.Email = userUpdateDto.Email;
+            user.RoleId = userUpdateDto.RoleId;
+            await _userService.UpdateAsync(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Deletes the user with given userId
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [Authorize("User_Delete")]
+    [HttpDelete]
+    public async Task<ActionResult<bool>> DeleteUser(int userId)
+    {
+        if(userId > 0)
+        {
+            await _userService.DeleteByIdAsync(userId);
+            return true;
+        }
+        return false;
     }
 }

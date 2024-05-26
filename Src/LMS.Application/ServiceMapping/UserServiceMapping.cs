@@ -50,5 +50,24 @@ namespace LMS.Application.ServiceMappings
 
             return result;
         }
+
+        public async Task<List<UserListDto>> GetAllUserListAsync()
+        {
+            var userList = _userRepository.GetAllUserAsync().Result;
+
+            var usersResult = (from u in userList
+                               select new UserListDto()
+                               {
+                                   Id = u.Id,
+                                   FirstName = u.FirstName,
+                                   LastName = u.LastName,
+                                   Email = u.Email,
+                                   RoleId = u.RoleId,
+                                   RoleName = u.Role.RoleName
+                               }).ToList();
+
+            return usersResult;
+        }
+
     }
 }

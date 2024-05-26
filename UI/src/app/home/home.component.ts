@@ -18,7 +18,6 @@ export class HomeComponent {
 
   ngOnInit() {
     this.getCurrentUser();
-    this.allUser = this.accountService.getAllUser();
   }
 
   getCurrentUser() {
