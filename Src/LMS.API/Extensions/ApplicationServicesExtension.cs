@@ -22,7 +22,8 @@ namespace LMS.API.Extensions
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
             services.AddDbContext<LMSDbContext>(options =>
-            options.UseSqlite(config.GetConnectionString("SqliteConnection")));
+            options.UseSqlite(config.GetConnectionString("SqliteConnection"))
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             services.AddCors(options =>
             {
@@ -40,19 +41,19 @@ namespace LMS.API.Extensions
 
             //Generic Repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(IGenericServiceAsync<,>), typeof(GenericServiceAsync<,>));
 
-            //Generic Services
-            services.AddScoped(typeof(IReadServiceAsync<,>), typeof(ReadServiceAsync<,>));
-
-            // Services
+            // Services            
             services.AddScoped(typeof(IUserServiceMapping), typeof(UserServiceMapping));
             services.AddScoped<IAuthTokenService, AuthTokenService>();
-            services.AddScoped(typeof(ILeaveTypeService), typeof(LeaveTypeService));
+            //services.AddScoped(typeof(ILeaveTypeService), typeof(LeaveTypeService));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));  
             services.AddScoped(typeof(IUserLeaveServiceMapping), typeof(UserLeaveServiceMapping));
-            services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));            
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+                 
             //services.AddScoped(typeof(IRoleServiceMapping), typeof(RoleServiceMapping));
-            
+                    
             return services;
         }
     }
