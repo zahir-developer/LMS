@@ -10,7 +10,8 @@ export const apiEndPoint =
     {
         getAll: `user/users`,
         update: `user/`,
-        delete: `user`
+        delete: `user`,
+        emailExists: `user/`
     },
     Leave:
     {

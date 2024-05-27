@@ -6,11 +6,14 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
 import { LoginUser, Role } from '../model/login.user';
 import { environment } from '../../environments/environment';
+import { NotifyMessageService } from './notify-message.service';
+import { AppText } from '../model/Enum/constEnum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+
   loggedInUserId: number = 0;
   loggedInUser: LoginUser | undefined;
   loggedInUserRole: string | undefined;
@@ -21,18 +24,27 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<LoginUser | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private httpUtilService: HttpUtilsService, private http: HttpClient) { }
+  constructor(
+    private httpUtilService: HttpUtilsService, 
+    private http: HttpClient,
+    private _notify: NotifyMessageService,
+
+  ) { }
 
   registerUser(userObj: User) {
     this.httpUtilService.post(apiEndPoint.Auth.signup, userObj).subscribe(
       result => {
-        alert("Operation completed successfully");
+        this._notify.showMessage(AppText.UserCreatedSuccess);
       }
     );
   }
 
   getAllUser() {
     return this.httpUtilService.get(apiEndPoint.User.getAll);
+  }
+
+  checkEmailExists(emailId: string) {
+    return this.http.get(environment.apiUrl + apiEndPoint.User.emailExists +emailId );
   }
 
   login_Old(model: any) {

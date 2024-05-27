@@ -19,6 +19,7 @@ import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
 import { AppText, Confirm, LeaveStatus, LeaveStatusText, Role } from '../../model/Enum/constEnum';
 import { LeaveUpdate } from '../../model/leave/leave.update';
 import { AccountService } from '../../services/account.service';
+import { NotifyMessageService } from '../../services/notify-message.service';
 
 @Component({
   selector: 'app-leave',
@@ -47,7 +48,7 @@ export class UserLeaveComponent {
   constructor(private leaveService: LeaveService,
     private accountService: AccountService,
     public dialog: MatDialog,
-
+    private notify: NotifyMessageService
   ) { }
 
   ngOnInit() {
@@ -118,14 +119,14 @@ export class UserLeaveComponent {
       this.leaveService.updateLeaveStatus(this.leaveUpdate).subscribe({
         next: result => {
           if (result) {
-            alert('Leave status updated successfully !');
+            this.notify.showMessage('Leave status updated successfully !');
             this.getLeave();
           }
         }
       })
     }
     else
-      alert(AppText.ForbiddenAction);
+      this.notify.showMessage(AppText.ForbiddenAction);
 
   }
 }

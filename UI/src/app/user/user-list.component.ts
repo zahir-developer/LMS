@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogConfirmationComponent } from '../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
 import { ConfirmDialogeResponse } from '../model/confirm.dialoge.response';
 import { User } from '../model/user.model';
+import { NotifyMessageService } from '../services/notify-message.service';
 
 
 @Component({
@@ -50,7 +51,9 @@ export class UserListComponent {
     }
   constructor(private accountService: AccountService,
     private router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private notify: NotifyMessageService
+  ) { }
 
   ngOnInit() {
     this.getUsers();
@@ -95,7 +98,7 @@ export class UserListComponent {
           if(result)
             {
               this.getUsers();
-              alert(AppText.DeleteSuccess);
+              this.notify.showMessage(AppText.DeleteSuccess);
             } 
         }
       }

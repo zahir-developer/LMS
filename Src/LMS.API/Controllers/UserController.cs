@@ -72,11 +72,25 @@ public class UserController : ControllerBase
     [HttpDelete]
     public async Task<ActionResult<bool>> DeleteUser(int userId)
     {
-        if(userId > 0)
+        if (userId > 0)
         {
             await _userService.DeleteByIdAsync(userId);
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Checks if emailId already availabe or not
+    /// </summary>
+    /// <param name="emailId"></param>
+    /// <returns></returns>
+    [Authorize("User_Email_Exists")]
+    [HttpGet("{emailId}")]
+    public async Task<ActionResult<bool>> checkEmailExists(string emailId)
+    {
+        var user = _userService.GetUserByEmail(emailId);
+
+        return user != null;
     }
 }

@@ -14,6 +14,8 @@ public static class AuthorizationPolicyServicesExtension
             x.AddPolicy("User_View_All", policy=>policy.RequireRole("Admin"));
             x.AddPolicy("User_Edit_Update", policy=>policy.RequireRole("Admin"));
             x.AddPolicy("User_Delete", policy=>policy.RequireRole("Admin"));
+            x.AddPolicy("User_Email_Exists", policy=>policy.RequireRole("Admin"));
+            
 
             //Module: Leave
             //Role: Admin
