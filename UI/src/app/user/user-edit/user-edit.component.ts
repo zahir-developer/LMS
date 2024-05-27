@@ -4,6 +4,7 @@ import { User } from '../../model/user.model';
 import { AccountService } from '../../services/account.service';
 import { CommonModule } from '@angular/common';
 import { AppText } from '../../model/Enum/constEnum';
+import { NotifyMessageService } from '../../services/notify-message.service';
 @Component({
   selector: 'app-user-edit',
   standalone: true,
@@ -12,8 +13,12 @@ import { AppText } from '../../model/Enum/constEnum';
   styleUrl: './user-edit.component.css'
 })
 export class UserEditComponent {
+  submitted = false;
+  constructor(
+    private accService: AccountService,
+    private notify: NotifyMessageService
 
-  constructor(private accService: AccountService) {
+  ) {
   }
   roles: any;
   public formEditUser: any;
@@ -61,6 +66,7 @@ export class UserEditComponent {
 
 
   onSubmit() {
+    this.submitted = true;
     console.log(this.formEditUser.value);
     if (this.formEditUser.valid) {
       const updateUser : User = this.formEditUser.value;
@@ -68,7 +74,7 @@ export class UserEditComponent {
       this.accService.updateUser(updateUser).subscribe(
         {
           next: result => {
-            if (result) alert(AppText.UserUpdateSuccess)
+            if (result) this.notify.showMessage(AppText.UserUpdateSuccess)
           }
         })
     }

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { User } from '../../model/user.model';
 import { AccountService } from '../../services/account.service';
 import { CommonModule } from '@angular/common';
+import { NotifyMessageService } from '../../services/notify-message.service';
+import { AppText } from '../../model/Enum/constEnum';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -12,7 +15,14 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterComponent {
   roles: any;
-  constructor(private accService: AccountService) {
+  submitted = false;
+  isEmailValid: any;
+  constructor(
+    private accService: AccountService,
+    private _notify: NotifyMessageService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {
 
   }
 
@@ -36,7 +46,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.getRoles();
-    this.regForm = new FormGroup(
+    this.regForm = this.formBuilder.group(
       {
         firstName: new FormControl(this.regData.firstName, [Validators.required]),
         lastName: new FormControl(this.regData.lastName, Validators.required),
@@ -45,13 +55,35 @@ export class RegisterComponent {
         password: new FormControl(this.regData.password, Validators.required)
       }
     );
+    console.log(this.regForm);
+    console.log(this.regForm.controls.email.touched);
   }
 
-
   onSubmit() {
+    this.submitted = true;
     console.log(this.regForm.value)
-    if (this.regForm.valid)
-      this.accService.registerUser(this.regForm.value)
+    if (this.regForm.valid) {
+      this.checkEmailExists();
+    }
+  }
+  checkEmailExists() {
+
+    var emailId = this.regForm.value.email;
+    if (emailId) {
+      this.accService.checkEmailExists(emailId).subscribe({
+        next: result => {
+          this.isEmailValid = (result);
+          if (result)
+            this._notify.showMessage(AppText.EmailExists);
+          else {
+            this.accService.registerUser(this.regForm.value);
+            //this._notify.showMessage(AppText.EmailNotExists);
+            this.router.navigateByUrl('/user-list');
+          }
+
+        }
+      })
+    }
   }
   getRoles() {
     this.accService.getRoles().subscribe({
@@ -59,4 +91,5 @@ export class RegisterComponent {
         this.roles = result
     });
   }
+
 }

@@ -36,6 +36,9 @@ export enum AppText
     DeleteSuccess = "User deleted successfully !",
     
     /*User*/
-    UserUpdateSuccess = "User updated successfully",
+    UserUpdateSuccess = "User updated successfully !",
+    UserCreatedSuccess = "User created successfully !",
+    EmailExists = "Email already exists!",
+    EmailNotExists = "Email available to crete !",
 }
 
