@@ -22,7 +22,7 @@
       </li> -->
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <div class="navbar-brand">Welcome, <span style="font-weight: bold;">{{ loggedInUser }}</span></div>
+      <div class="navbar-brand">Welcome, <span style="font-weight: bold;">{{ loggedInUser }}</span><span> - {{ loggedInUserRole }}</span></div>
       <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
       <a class="btn btn-warning my-2 my-sm-0" *ngIf="isLoggedIn" (click)="logout()">Log out</a>
       <a class="btn btn-success my-2 my-sm-0" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
