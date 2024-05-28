@@ -5,8 +5,12 @@ project.lock.json
 *.pyc
 nupkg/
 
+#SQLite
+*.db.shm
+*.db.wal
+
 # Visual Studio Code
-.vscode/
+# .vscode/
 
 # Rider
 .idea/

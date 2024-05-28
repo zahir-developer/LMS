@@ -1,0 +1,11 @@
+[{
+    "Id": 1,
+    "FirstName": "Admin",
+    "LastName": "User",
+    "Email": "admin@lms.com",
+    "RoleId": 1,
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+}]
+

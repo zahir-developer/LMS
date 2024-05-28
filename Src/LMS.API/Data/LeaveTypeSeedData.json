@@ -1,0 +1,29 @@
+[{
+    "Id": 1,
+    "LeaveTypeName": "Personal",
+    "MaxLeaveCount": 5,
+    "Description": "Personal leave type",
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 2,
+    "LeaveTypeName": "Sick",
+    "MaxLeaveCount": 5,
+    "Description": "Sick leave type.",
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 3,
+    "LeaveTypeName": "Privilege",
+    "MaxLeaveCount": 10,
+    "Description": "Privilege leave type.",
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+}
+]
+

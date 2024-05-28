@@ -1,35 +1,29 @@
-using LMS.Infrastructure.Repositories;
+using LMS.API.Extensions;
 using LMS.Infrastructure.Database;
-using LMS.Application.Interfaces;
-using LMS.Application.Services;
-using LMS.Application.Mappings;
-
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+using LMS.Infrastructure.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddIdentityServices(builder.Configuration);
 
-builder.Services.AddDbContext<LMSDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+// builder.Services.AddDbContext<LMSDbContext>(options => 
+// options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
-//AutoMapper Configuration
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddSwaggerConfigration();
+builder.Services.AddAuthorizationPolicyServices();
+builder.Services.AddFluentValidationServicesExtension();
+//builder.Services.AddValidatorsFromAssemblyContaining<LeaveStatusUpdateDto>();
+//builder.Services.AddScoped<IValidator<LeaveStatusUpdateDto>, LeaveStatusUpdateValidator>();
 
-//Generic Repository
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-//Generic Services
-builder.Services.AddScoped(typeof(IReadServiceAsync<,>), typeof(ReadServiceAsync<,>));
-
-// Services
-builder.Services.AddScoped(typeof(IUserService), typeof(UserService));
+        
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -41,9 +35,26 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
+
+//EF SQL Migration and Data
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try {
+    var context = services.GetRequiredService<LMSDbContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedRoleData(context);
+    await Seed.SeedRolePrivilegeData(context);
+    await Seed.SeedUserData(context);
+    await Seed.SeedLeaveType(context);
+}
+catch (Exception)
+{  }
 
 app.Run();
 

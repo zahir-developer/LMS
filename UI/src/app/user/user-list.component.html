@@ -1,0 +1,31 @@
+<div class="p-3">
+    <button class="btn btn-primary" [routerLink]="'/register'">Add User</button>
+</div>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email Id</th>
+            <th scope="col">Role</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="allUsers[0].id !== 0">
+        <tr *ngFor="let u of allUsers">
+            <td scope="row">{{ u.id }}</td>
+            <td scope="row">{{ u.firstName }}</td>
+            <td scope="row">{{ u.lastName }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.roleName }}</td>
+            <td class="text-center">
+                <button class="btn btn-primary" (click)="edit(u)">Edit</button>
+                <button class="btn btn-warning" (click)="openDeleteDialog(u.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="allUsers[0].id == 0">
+        <tr class="text-center"><td colspan="6">No data available</td></tr>
+    </tbody>
+</table>

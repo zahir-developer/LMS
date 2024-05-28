@@ -1,0 +1,39 @@
+<h3><span class="bd-content-title">Apply Leave</span></h3>
+<form class="register-form" [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="leaveType">Leave Type <strong>*</strong></label>
+        <select type="text" id="leaveType" formControlName="leaveType" name="leaveType" class="form-control">
+            <option value="">Select leave type</option>
+            <option *ngFor="let item of leaveType" [ngValue]="item.id">{{ item.leaveTypeName }}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="leaveType">Leave date range <strong>*</strong></label>
+        <br/>
+        <mat-form-field>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="leaveForm" [rangePicker]="picker">
+                <input matStartDate formControlName="fromDate" placeholder="Start date">
+                <input matEndDate formControlName="toDate" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+
+            @if (leaveForm.controls['fromDate'].hasError('matStartDateInvalid')) {
+            <mat-error>Invalid start date</mat-error>
+            }
+            @if (leaveForm.controls['toDate'].hasError('matEndDateInvalid')) {
+            <mat-error>Invalid end date</mat-error>
+            }
+        </mat-form-field>
+        <!-- <p>Selected range: {{leaveForm.value | json}}</p> -->
+    </div>
+    <div class="form-group">
+        <label for="comments">Comments</label>
+        <input type="text" name="comments" formControlName="comments" class="form-control">
+    </div>
+
+    <div>
+        <button class="btn btn-primary" [disabled]="!this.leaveForm.valid" type="submit">Apply</button>
+    </div>
+</form>
