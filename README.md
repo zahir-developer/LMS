@@ -32,3 +32,21 @@ npm i bootstrap-icons --save
 
 <i class="bi bi-star-fill"></i>
 */
+
+/*
+dotnet cli commands:
+
+dotnet new -l  => Lists all the available templates
+
+Add solution file =>
+dotnet new sln -n lms
+
+Add project to .sln file =>
+dotnet sln lms.sln add lms.api\lms.api.csproj 
+dotnet sln lms.sln add lms.application\lms.application.cs
+proj
+dotnet sln lms.sln add lms.domain\lms.domain.csproj
+dotnet sln lms.sln add lms.infrastructure\lms.infrastruct
+ure.csproj
+
+*/
