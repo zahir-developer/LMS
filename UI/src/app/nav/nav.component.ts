@@ -16,6 +16,7 @@ export class NavComponent {
   isLoggedIn = false;
   isAdmin: boolean | undefined;
   loggedInUser: string | undefined;
+  loggedInUserRole: string | undefined;
   constructor(private accountService: AccountService, private route: Router) {
 
   }
@@ -25,7 +26,8 @@ export class NavComponent {
       next: user => {
         this.isLoggedIn = !!user
         if (user) {
-          this.loggedInUser = user?.firstName + user?.lastName;
+          this.loggedInUser = user?.firstName;
+          this.loggedInUserRole = user.role.roleName;
           if (user.role.roleName === Role[Role.Admin])
             this.isAdmin = true;
           else
