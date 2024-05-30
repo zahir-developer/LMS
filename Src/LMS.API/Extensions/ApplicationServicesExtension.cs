@@ -37,7 +37,8 @@ namespace LMS.API.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             //AutoMapper Configuration
-            services.AddAutoMapper(typeof(AutoMappingProfile));
+            //services.AddAutoMapper(typeof(AutoMappingProfile));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Generic Repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -47,8 +48,8 @@ namespace LMS.API.Extensions
             services.AddScoped(typeof(IUserServiceMapping), typeof(UserServiceMapping));
             services.AddScoped<IAuthTokenService, AuthTokenService>();
             services.AddScoped(typeof(ILeaveTypeService), typeof(LeaveTypeService));
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-            services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));  
+            //services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            //services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));  
             services.AddScoped(typeof(IUserLeaveServiceMapping), typeof(UserLeaveServiceMapping));
             services.AddScoped(typeof(IRoleService), typeof(RoleService));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));

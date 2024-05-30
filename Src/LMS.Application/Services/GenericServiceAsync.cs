@@ -79,5 +79,10 @@ namespace LMS.Application.Services
             await _unitOfWork.Repository<TEntity>().UpdateAsync(entity);
             await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _unitOfWork.SaveChangesAsync();
+        }
     }
 }

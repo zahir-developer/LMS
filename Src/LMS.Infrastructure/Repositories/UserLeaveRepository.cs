@@ -15,7 +15,7 @@ using AutoMapper;
 namespace LMS.Infrastructure.Repository;
 
 
-public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : GenericRepository<UserLeave>(dbContext), IUserLeaveRepository
+public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUserLeaveRepository
 {
     public async Task<IEnumerable<UserLeave>> GetAllUserLeaveAsync()
     {

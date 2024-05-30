@@ -70,7 +70,7 @@ export class LeaveRequestComponent {
     this.leaveService.addLeave(objData).subscribe(
       result => {
         console.log('Leave applied successfully');
-        this.router.navigateByUrl('/leave');
+        this.router.navigateByUrl('/user-leave');
       }
     )
   }
