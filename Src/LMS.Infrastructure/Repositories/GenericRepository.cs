@@ -66,17 +66,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<bool> UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         dbContext.Entry(entity).State = EntityState.Modified;
-        return await SaveAsync();
+        return await SaveChangesAsync();
     }
 
     public async Task<bool> DeleteByIdAsync(int id, CancellationToken cancellationToken)
     {
         var entityDelete = await dbContext.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
         dbContext.Set<T>().RemoveRange(entityDelete);
-        return await SaveAsync();
+        return await SaveChangesAsync();
     }
 
-    public async Task<bool> SaveAsync()
+    public async Task<bool> SaveChangesAsync()
     {
         return await dbContext.SaveChangesAsync() > 0;
     }

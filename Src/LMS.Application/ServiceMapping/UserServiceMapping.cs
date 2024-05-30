@@ -20,12 +20,10 @@ namespace LMS.Application.ServiceMappings
     public class UserServiceMapping : GenericServiceAsync<User, UserDto>, IUserServiceMapping
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserServiceMapping(IUnitOfWork unitOfWork, IUserRepository userRepository, IMapper mapper) : base(unitOfWork, mapper)
+        public UserServiceMapping(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -35,7 +33,7 @@ namespace LMS.Application.ServiceMappings
 
             Expression<Func<User, bool>> exp = s => s.Email == emailId;
 
-            var user = _userRepository.GetAsync(exp).Result.ToList().FirstOrDefault();
+            var user = _unitOfWork.UserRepository.GetAsync(exp).Result.ToList().FirstOrDefault();
 
             var result = _mapper.Map<UserDto>(user);
 
@@ -44,7 +42,7 @@ namespace LMS.Application.ServiceMappings
 
         public async Task<LoginResultDto> GetUserRolePrvilegeDetail(int userId)
         {
-            var userRolePrivileges = _userRepository.GetUserRoleDetailsAsync(userId).Result;
+            var userRolePrivileges = _unitOfWork.UserRepository.GetUserRoleDetailsAsync(userId).Result;
 
             var result = _mapper.Map<LoginResultDto>(userRolePrivileges);
 
@@ -53,7 +51,7 @@ namespace LMS.Application.ServiceMappings
 
         public async Task<List<UserListDto>> GetAllUserListAsync()
         {
-            var userList = _userRepository.GetAllUserAsync().Result;
+            var userList = _unitOfWork.UserRepository.GetAllUserAsync().Result;
 
             var usersResult = (from u in userList
                                select new UserListDto()

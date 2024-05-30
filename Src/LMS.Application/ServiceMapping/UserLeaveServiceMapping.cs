@@ -15,18 +15,16 @@ namespace LMS.Application.ServiceMappings;
 public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveDto>, IUserLeaveServiceMapping
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserLeaveRepository userLeaveRepository;
     private readonly IMapper mapper;
 
-    public UserLeaveServiceMapping(IUnitOfWork unitOfWork, IUserLeaveRepository userLeaveRepository, IMapper mapper) : base(unitOfWork, mapper)
+    public UserLeaveServiceMapping(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
         this._unitOfWork = unitOfWork;
         this.mapper = mapper;
-        this.userLeaveRepository = userLeaveRepository;
     }
     public List<UserLeaveListDto> GetAllUserLeaveList(int userId = 0)
     {
-        var result = this.userLeaveRepository.GetAllUserLeaveAsync().Result;
+        var result = this._unitOfWork.UserLeaveRepository.GetAllUserLeaveAsync().Result;
         var userLeaveResult = (from u in result
                                select new UserLeaveListDto()
                                {

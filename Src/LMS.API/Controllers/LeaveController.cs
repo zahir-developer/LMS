@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
 using AutoMapper;
+using LMS.Application.Interfaces;
 
 namespace LMS.API.Controllers;
 
@@ -14,13 +15,16 @@ public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+
     private readonly IUserLeaveServiceMapping _userLeaveService;
 
-    public LeaveController(ILogger<LeaveController> logger, IUserLeaveServiceMapping userLeaveService, IMapper mapper)
+    public LeaveController(IUserLeaveServiceMapping userLeaveService, IUnitOfWork unitOfWork, IMapper mapper, ILogger<LeaveController> logger)
     {
         _logger = logger;
-        _userLeaveService = userLeaveService;
         _mapper = mapper;
+        _unitOfWork = unitOfWork;
+        _userLeaveService = userLeaveService;
     }
 
     /// <summary>
