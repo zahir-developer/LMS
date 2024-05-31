@@ -7,6 +7,6 @@ public class UserLeave : BaseEntity
     public DateTime ToDate { get; set; }
     public string? Comments { get; set; }
     public int Status { get; set; } = 0;
-    public virtual User User { get; set; }
-    public virtual LeaveType LeaveType { get; set; }
+    public virtual User? User { get; set; }
+    public virtual LeaveType? LeaveType { get; set; }
 }

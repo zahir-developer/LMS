@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LMS.Domain.Entities;
+using LMS.Domain;
 
 namespace LMS.Infrastructure.Database
 {
@@ -17,5 +14,6 @@ namespace LMS.Infrastructure.Database
         public DbSet<RolePrivilege> RolePrivilege { get; set; }
         public DbSet<LeaveType> LeaveType { get; set; }
         public DbSet<UserLeave> UserLeave { get; set; }
+        public DbSet<Department> Department { get; set; }
     }
 }

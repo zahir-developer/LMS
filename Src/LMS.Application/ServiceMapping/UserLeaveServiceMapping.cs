@@ -30,7 +30,7 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
                                {
                                    Id = u.Id,
                                    UserId = u.UserId,
-                                   Name = (u.User.FirstName + " " + u.User.LastName),
+                                   Name = u.User?.FirstName + " " + u.User?.LastName,
                                    LeaveTypeName = u.LeaveType?.LeaveTypeName,
                                    FromDate = u.FromDate,
                                    ToDate = u.ToDate,

@@ -12,13 +12,14 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
+using LMS.Domain;
 namespace LMS.Infrastructure.SeedData
 {
     public static class Seed
     {
-        public static async Task SeedRoleData(LMSDbContext context)
+        public static async Task RoleData(LMSDbContext context)
         {
-            
+
             if (await context.Role.AnyAsync()) return;
 
             var roleData = await File.ReadAllTextAsync("Data/RoleSeedData.json");
@@ -30,18 +31,17 @@ namespace LMS.Infrastructure.SeedData
 
             var roles = JsonSerializer.Deserialize<List<Role>>(roleData);
 
-            // if (!roles.Any())
-            //     throw new Exception("No roles found");
-
-            foreach (var role in roles)
+            if (roles?.Count() > 0)
             {
-                context.Role.Add(role);
+                foreach (var role in roles)
+                {
+                    context.Role.Add(role);
+                }
+                await context.SaveChangesAsync();
             }
-
-            await context.SaveChangesAsync();
         }
 
-        public static async Task SeedRolePrivilegeData(LMSDbContext context)
+        public static async Task RolePrivilegeData(LMSDbContext context)
         {
             if (await context.RolePrivilege.AnyAsync()) return;
 
@@ -49,57 +49,74 @@ namespace LMS.Infrastructure.SeedData
 
             var RolePrivilege = JsonSerializer.Deserialize<List<RolePrivilege>>(RolePrivilegeData);
 
-            foreach (var privilege in RolePrivilege)
+            if (RolePrivilege?.Count > 0)
             {
-                context.RolePrivilege.Add(privilege);
+                foreach (var privilege in RolePrivilege)
+                {
+                    context.RolePrivilege.Add(privilege);
+                }
+                await context.SaveChangesAsync();
             }
 
-            await context.SaveChangesAsync();
         }
 
-        public static async Task SeedUserData(LMSDbContext context)
+        public static async Task UserData(LMSDbContext context)
         {
             if (await context.User.AnyAsync()) return;
 
             var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
 
-            //var options = new JsonSerializeOptions(PropertyNameCaseInsensitive = true);
-
             var users = JsonSerializer.Deserialize<List<User>>(userData);
 
-            foreach (var user in users)
+            if (users?.Count > 0)
             {
-                using var hmac = new HMACSHA512();
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("P@ssw0rd"));
-                user.PasswordSalt = hmac.Key;
+                foreach (var user in users)
+                {
+                    using var hmac = new HMACSHA512();
+                    user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("P@ssw0rd"));
+                    user.PasswordSalt = hmac.Key;
 
-                context.User.Add(user);
+                    context.User.Add(user);
+                }
+                await context.SaveChangesAsync();
             }
 
-            await context.SaveChangesAsync();
-            
         }
 
-        public static async Task SeedLeaveType(LMSDbContext context)
+        public static async Task LeaveType(LMSDbContext context)
         {
             if (await context.LeaveType.AnyAsync()) return;
 
             var data = await File.ReadAllTextAsync("Data/LeaveTypeSeedData.json");
 
-            //var options = new JsonSerializeOptions(PropertyNameCaseInsensitive = true);
-
             var records = JsonSerializer.Deserialize<List<LeaveType>>(data);
 
-            // if (!roles.Any())
-            //     throw new Exception("No roles found");
-
-            foreach (var r in records)
+            if (records?.Count > 0)
             {
-                context.LeaveType.Add(r);
+                foreach (var r in records)
+                {
+                    context.LeaveType.Add(r);
+                }
             }
+            await context.SaveChangesAsync();
+        }
 
+        public static async Task Department(LMSDbContext context)
+        {
+            if (await context.Department.AnyAsync()) return;
+
+            var data = await File.ReadAllTextAsync("Data/DepartmentSeedData.json");
+
+            var records = JsonSerializer.Deserialize<List<Department>>(data);
+
+            if (records?.Count > 0)
+            {
+                foreach (var r in records)
+                {
+                    context.Department.Add(r);
+                }
+            }
             await context.SaveChangesAsync();
         }
     }
-
 }

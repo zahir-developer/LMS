@@ -48,10 +48,12 @@ var services = scope.ServiceProvider;
 try {
     var context = services.GetRequiredService<LMSDbContext>();
     await context.Database.MigrateAsync();
-    await Seed.SeedRoleData(context);
-    await Seed.SeedRolePrivilegeData(context);
-    await Seed.SeedUserData(context);
-    await Seed.SeedLeaveType(context);
+    await Seed.RoleData(context);
+    await Seed.RolePrivilegeData(context);
+    await Seed.Department(context);
+    await Seed.UserData(context);
+    await Seed.LeaveType(context);
+    
 }
 catch (Exception)
 {  }

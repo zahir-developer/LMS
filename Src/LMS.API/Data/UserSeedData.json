@@ -1,9 +1,53 @@
 [{
     "Id": 1,
-    "FirstName": "Admin",
-    "LastName": "User",
+    "FirstName": "Adminstrator",
+    "LastName": "Admin",
     "Email": "admin@lms.com",
     "RoleId": 1,
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 2,
+    "FirstName": "Employee - Dev",
+    "LastName": "Emp",
+    "Email": "emp_dev@lms.com",
+    "RoleId": 2,
+    "DepartmentId": 1,
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 3,
+    "FirstName": "Manager - Dev",
+    "LastName": "User",
+    "Email": "manager_dev@lms.com",
+    "RoleId": 3,
+    "DepartmentId": 1,
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 4,
+    "FirstName": "Employee - Support",
+    "LastName": "Emp",
+    "Email": "emp_support@lms.com",
+    "RoleId": 2,
+    "DepartmentId": 2,
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 4,
+    "FirstName": "Manager - Support",
+    "LastName": "User",
+    "Email": "manger_support@lms.com",
+    "RoleId": 3,
+    "DepartmentId": 2,
     "IsEnabled": true,
     "CreatedOn": "2024-05-20",
     "CreatedBy": "Migrated data"

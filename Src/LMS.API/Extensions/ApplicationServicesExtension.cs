@@ -25,6 +25,10 @@ namespace LMS.API.Extensions
             options.UseSqlite(config.GetConnectionString("SqliteConnection"))
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
+            /*services.AddDbContext<LMSDbContext>(options =>
+            options.UseSqlServer(config.GetConnectionString("DefaultConnectionString"))
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));*/
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -51,6 +55,7 @@ namespace LMS.API.Extensions
             //services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             //services.AddScoped(typeof(IUserLeaveRepository), typeof(UserLeaveRepository));  
             services.AddScoped(typeof(IUserLeaveServiceMapping), typeof(UserLeaveServiceMapping));
+            services.AddScoped(typeof(IDepartmentServiceMapping), typeof(DepartmentServiceMapping));
             services.AddScoped(typeof(IRoleService), typeof(RoleService));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
                  

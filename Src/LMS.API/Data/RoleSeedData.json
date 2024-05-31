@@ -8,8 +8,17 @@
 },
 {
     "Id": 2,
-    "RoleName": "User",
-    "Description": "Users having restricted access.",
+    "RoleName": "Employee",
+    "Description": "Employee having restricted access.",
+    "DepartmentId": 1,
+    "IsEnabled": true,
+    "CreatedOn": "2024-05-20",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 3,
+    "RoleName": "Manager",
+    "Description": "Manager having leave - approve/reject access.",
     "IsEnabled": true,
     "CreatedOn": "2024-05-20",
     "CreatedBy": "Migrated data"

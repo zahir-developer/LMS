@@ -17,12 +17,8 @@ namespace LMS.Application.ServiceMappings
 {
     public class LeaveTypeService : GenericServiceAsync<LeaveType, LeaveTypeDto>, ILeaveTypeService 
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
         public LeaveTypeService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
     }
 }

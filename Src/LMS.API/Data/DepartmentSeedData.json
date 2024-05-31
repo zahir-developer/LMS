@@ -1,0 +1,26 @@
+[{
+    "Id": 1,
+    "DepartmentName": "Development",
+    "Description": "Development team",
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-01",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 2,
+    "DepartmentName": "Support",
+    "Description": "Support department",
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-01",
+    "CreatedBy": "Migrated data"
+},
+{
+    "Id": 2,
+    "DepartmentName": "Infra",
+    "Description": "Infrastructure department",
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-01",
+    "CreatedBy": "Migrated data"
+}
+]
+
