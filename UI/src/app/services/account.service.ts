@@ -17,6 +17,7 @@ export class AccountService {
   loggedInUserId: number = 0;
   loggedInUser: LoginUser | undefined;
   loggedInUserRole: string | undefined;
+  loggedInUserDepartmentId: number = 0;
 
   private editUserSource = new BehaviorSubject<User | null>(null);
   editUser$ = this.editUserSource.asObservable();
@@ -25,7 +26,7 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(
-    private httpUtilService: HttpUtilsService, 
+    private httpUtilService: HttpUtilsService,
     private http: HttpClient,
     private _notify: NotifyMessageService,
 
@@ -84,6 +85,7 @@ export class AccountService {
     if (user) {
       this.loggedInUserId = user?.id;
       this.loggedInUserRole = user?.role.roleName;
+      this.loggedInUserDepartmentId = user.department.id;
     }
 
   }

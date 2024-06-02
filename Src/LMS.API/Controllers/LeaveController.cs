@@ -31,11 +31,11 @@ public class LeaveController : ControllerBase
     /// Retrieves all the user leaves with status
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
-    [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<List<UserLeaveListDto>>> GetAllUserLeaves()
+    [HttpGet("department/{departmentId}")]
+    [Authorize(Roles = "Manager")]
+    public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeavesByDepartmentId(int departmentId, int userId)
     {
-        var result = _userLeaveService.GetAllUserLeaveList();
+        var result = _userLeaveService.GetAllUserLeaveList(departmentId, userId);
 
         return Ok(result);
     }

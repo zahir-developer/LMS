@@ -21,8 +21,8 @@ export class LeaveService {
     return this.httpUtilService.get(apiEndPoint.Leave.getAll);
   }
 
-  getLeave(userId: number) {
-    return this.httpUtilService.get(apiEndPoint.Leave.get + userId);
+  getLeave(departmentId: number, userId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.get.replace('{department}', departmentId.toString()).replace('{userId}', userId.toString())  + departmentId);
   }
 
   getLeaveType() {

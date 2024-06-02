@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { NotifyMessageService } from '../../services/notify-message.service';
 import { AppText } from '../../model/Enum/constEnum';
 import { Router } from '@angular/router';
+import { DepartmentService } from '../../services/department.service';
+import { DepartmentModel } from '../../model/department/department.model';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -15,10 +17,12 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   roles: any;
+  departments: DepartmentModel[] = [];
   submitted = false;
   isEmailValid: any;
   constructor(
     private accService: AccountService,
+    private department: DepartmentService,
     private _notify: NotifyMessageService,
     private formBuilder: FormBuilder,
     private router: Router
@@ -34,6 +38,8 @@ export class RegisterComponent {
     lastName: '',
     roleId: 0,
     roleName: '',
+    departmentId: 0,
+    departmentName: '',
     password: '',
     mobileNo: '',
     email: '',
@@ -46,17 +52,30 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.getRoles();
+    this.getDepartments();
     this.regForm = this.formBuilder.group(
       {
         firstName: new FormControl(this.regData.firstName, [Validators.required]),
         lastName: new FormControl(this.regData.lastName, Validators.required),
         roleId: new FormControl(this.regData.roleId, [Validators.required]),
+        departmentId: new FormControl(this.regData.departmentId, [Validators.required]),
         email: new FormControl(this.regData.email, [Validators.required, Validators.email]),
         password: new FormControl(this.regData.password, Validators.required)
       }
     );
     console.log(this.regForm);
     console.log(this.regForm.controls.email.touched);
+  }
+  getDepartments() {
+    this.department.getDepartments().subscribe(
+      {
+        next: result => {
+          if (result)
+            this.departments = result;
+          console.log(this.departments);
+        }
+      }
+    )
   }
 
   onSubmit() {

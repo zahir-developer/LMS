@@ -61,7 +61,9 @@ namespace LMS.Application.ServiceMappings
                                    LastName = u.LastName,
                                    Email = u.Email,
                                    RoleId = u.RoleId,
-                                   RoleName = u.Role.RoleName
+                                   RoleName = u.Role.RoleName,
+                                   DepartmentId = u.Department?.Id,
+                                   DepartmentName = u.Department?.DepartmentName
                                }).ToList();
 
             return usersResult;

@@ -1,48 +1,58 @@
 <form class="user-form" [formGroup]="regForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="firstName">
-            <h2>Register User</h2>
-        </label>
-    </div>
-    <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" formControlName="firstName" name="firstName" class="form-control">
-        <span class="text-danger"
-            *ngIf="(regForm.controls.firstName?.touched || submitted) && regForm.controls.firstName.errors?.required">
-            First name is required
-        </span>
-    </div>
-    <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName" formControlName="lastName" class="form-control">
-        <span class="text-danger" *ngIf="(regForm.controls.lastName.touched || submitted) && regForm.controls.lastName.errors?.required">
-            Last name is required
-        </span>
-    </div>
-    <div class="form-group">
-        <label for="role">Role<strong>*</strong></label>
-        <select type="text" id="roleId" formControlName="roleId" name="role" class="form-control">
-            <option value="">Select role</option>
-            <option *ngFor="let item of roles" [ngValue]="item.id">{{ item.roleName }}</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="Email">Email Id</label>
-        <input type="text" name="email" formControlName="email"
-            class="form-control">
-        <!-- <span class="text-danger" *ngIf="(regForm.email?.touched || submitted) && regForm.email.errors?.required">
+  <div class="form-group">
+    <label for="firstName">
+      <h2>Register User</h2>
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" formControlName="firstName" name="firstName" class="form-control">
+    <span class="text-danger"
+      *ngIf="(regForm.controls.firstName?.touched || submitted) && regForm.controls.firstName.errors?.required">
+      First name is required
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" formControlName="lastName" class="form-control">
+    <span class="text-danger"
+      *ngIf="(regForm.controls.lastName.touched || submitted) && regForm.controls.lastName.errors?.required">
+      Last name is required
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="role">Role<strong>*</strong></label>
+    <select type="text" id="roleId" formControlName="roleId" name="role" class="form-control">
+      <option value="">Select role</option>
+      <option *ngFor="let item of roles" [ngValue]="item.id">{{ item.roleName }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="">Department</label>
+    <select name="department" formControlName="departmentId" id="department" class="form-control">
+      <option value="">Select department</option>
+      <option *ngFor="let d of departments" [ngValue]="d.id">
+        {{d.departmentName}}
+      </option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="Email">Email Id</label>
+    <input type="text" name="email" formControlName="email" class="form-control">
+    <!-- <span class="text-danger" *ngIf="(regForm.email?.touched || submitted) && regForm.email.errors?.required">
             Email id is required
         </span> -->
-    </div>
-    <div class="form-group">
-        <label for="Password">Password</label>
-        <input type="password" name="password" formControlName="password" class="form-control">
-        <span class="text-danger" *ngIf="(regForm.controls.password?.touched || submitted) && regForm.controls.password.errors?.required">
-            password is required
-        </span>
-    </div>
+  </div>
+  <div class="form-group">
+    <label for="Password">Password</label>
+    <input type="password" name="password" formControlName="password" class="form-control">
+    <span class="text-danger"
+      *ngIf="(regForm.controls.password?.touched || submitted) && regForm.controls.password.errors?.required">
+      password is required
+    </span>
+  </div>
 
-    <div>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </div>
+  <div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
 </form>

@@ -26,11 +26,12 @@ public class AutoMappingProfile : Profile
         CreateMap<UserLeaveDto, UserLeaveAddDto>().ReverseMap();
         CreateMap<UserLeaveListDto, UserLeaveDto>().ReverseMap();
         CreateMap<User,LoginResultDto>()
-        .ForPath(s => s.RolePrivilege, opt => opt.MapFrom(src =>src.Role.RolePrivilege));
+        .ForPath(s => s.RolePrivilege, opt => opt.MapFrom(src =>src.Role.RolePrivilege))
+        .ForPath(s => s.Department, opt => opt.MapFrom(src =>src.Department));
         CreateMap<Role, RoleDto>();
         CreateMap<RolePrivilege,RolePrivilegeDto>();
-        
-        //
+        //Department
+        CreateMap<Department, DepartmentDto>();
         //.ForMember(d => d.User.Id, opt => opt.MapFrom(src => src.Id));
         //.ReverseMap()
 

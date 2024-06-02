@@ -22,8 +22,8 @@ public static class AuthorizationPolicyServicesExtension
             x.AddPolicy("Leave_View_All", policy=>policy.RequireRole("Admin"));
             x.AddPolicy("Leave_Approve_Reject", policy=>policy.RequireRole("Admin"));
             //Role: User
-            x.AddPolicy("Leave_View", policy=>policy.RequireRole("User"));
-            x.AddPolicy("Leave_Apply", policy=>policy.RequireRole("User"));          
+            x.AddPolicy("Leave_View", policy=>policy.RequireRole("Employee"));
+            x.AddPolicy("Leave_Apply", policy=>policy.RequireRole("Employee"));          
         });
 
         return services;

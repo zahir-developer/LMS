@@ -17,9 +17,9 @@ namespace LMS.Infrastructure.Repository;
 
 public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUserLeaveRepository
 {
-    public async Task<IEnumerable<UserLeave>> GetAllUserLeaveAsync()
+    public async Task<IEnumerable<UserLeave>> GetAllUserLeaveList(int departmentId)
     {
-        var userLeaves = dbContext.UserLeave.Include(s=>s.User).Include(s=>s.LeaveType);
+        var userLeaves = dbContext.UserLeave.Include(s=>s.User).ThenInclude(s=>s.Department).Include(s=>s.LeaveType).Where(s=>s.User.DepartmentId == departmentId);
 
         return userLeaves;
     }

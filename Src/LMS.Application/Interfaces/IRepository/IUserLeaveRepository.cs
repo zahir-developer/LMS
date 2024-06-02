@@ -7,6 +7,6 @@ namespace LMS.Application.Interfaces.IRepository;
 
 public interface IUserLeaveRepository
 {
-    Task<IEnumerable<UserLeave>> GetAllUserLeaveAsync();
+    Task<IEnumerable<UserLeave>> GetAllUserLeaveList(int departmentId);
     //void GetAllAsync();
 }

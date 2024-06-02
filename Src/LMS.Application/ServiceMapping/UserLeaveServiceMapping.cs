@@ -22,9 +22,9 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         this._unitOfWork = unitOfWork;
         this.mapper = mapper;
     }
-    public List<UserLeaveListDto> GetAllUserLeaveList(int userId = 0)
+    public List<UserLeaveListDto> GetAllUserLeaveList(int departmentId, int userId = 0)
     {
-        var result = this._unitOfWork.UserLeaveRepository.GetAllUserLeaveAsync().Result;
+        var result = this._unitOfWork.UserLeaveRepository.GetAllUserLeaveList(departmentId).Result;
         var userLeaveResult = (from u in result
                                select new UserLeaveListDto()
                                {
@@ -37,7 +37,6 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
                                    Comments = u.Comments,
                                    StatusName = ((ConstEnum.LeaveStatus)u.Status).ToString()
                                });
-
         if (userId > 0)
         {
             userLeaveResult = userLeaveResult.Where(u => u.UserId == userId);
