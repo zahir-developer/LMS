@@ -22,25 +22,36 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         this._unitOfWork = unitOfWork;
         this.mapper = mapper;
     }
-    public List<UserLeaveListDto> GetAllUserLeaveList(int departmentId, int userId = 0)
+    public List<UserLeaveListDto> GetAllUserLeaveList(int departmentId = 0, int userId = 0)
     {
         var result = this._unitOfWork.UserLeaveRepository.GetAllUserLeaveList(departmentId).Result;
-        var userLeaveResult = (from u in result
-                               select new UserLeaveListDto()
-                               {
-                                   Id = u.Id,
-                                   UserId = u.UserId,
-                                   Name = u.User?.FirstName + " " + u.User?.LastName,
-                                   LeaveTypeName = u.LeaveType?.LeaveTypeName,
-                                   FromDate = u.FromDate,
-                                   ToDate = u.ToDate,
-                                   Comments = u.Comments,
-                                   StatusName = ((ConstEnum.LeaveStatus)u.Status).ToString()
-                               });
+
         if (userId > 0)
         {
-            userLeaveResult = userLeaveResult.Where(u => u.UserId == userId);
+            result = result.Where(u => u.UserId == userId).ToList();
         }
-        return userLeaveResult.ToList();
+        // var userLeaveResult = (from u in result
+        //                        select new UserLeaveListDto()
+        //                        {
+        //                            Id = u.Id,
+        //                            UserId = u.UserId,
+        //                            Name = u.User?.FirstName + " " + u.User?.LastName,
+        //                            LeaveTypeName = u.LeaveType?.LeaveTypeName,
+        //                            FromDate = u.FromDate,
+        //                            ToDate = u.ToDate,
+        //                            Comments = u.Comments,
+        //                            StatusName = ((ConstEnum.LeaveStatus)u.Status).ToString()
+        //                        });
+
+        var userLeaveResult = mapper.Map<List<UserLeaveListDto>>(result);
+
+        return userLeaveResult;
+    }
+
+    public List<UserLeaveReportDto> GetUserLeaveReport()
+    {
+        var leaveReport = this._unitOfWork.UserLeaveRepository.GetUserLeaveReport();
+
+        return new List<UserLeaveReportDto>();
     }
 }

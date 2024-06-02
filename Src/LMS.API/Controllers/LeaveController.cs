@@ -33,9 +33,9 @@ public class LeaveController : ControllerBase
     /// <returns></returns>
     [HttpGet("department/{departmentId}")]
     [Authorize(Roles = "Manager")]
-    public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeavesByDepartmentId(int departmentId, int userId)
+    public async Task<ActionResult<List<UserLeaveListDto>>> GetAllUserLeaves(int departmentId)
     {
-        var result = _userLeaveService.GetAllUserLeaveList(departmentId, userId);
+        var result = _userLeaveService.GetAllUserLeaveList(departmentId: departmentId, userId: 0);
 
         return Ok(result);
     }
@@ -46,10 +46,10 @@ public class LeaveController : ControllerBase
     /// <param name="userId"></param>
     /// <returns></returns>
     [HttpGet]
-    [Route("{userId}")]
+    [Route("user/{userId}")]
     public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeaves(int userId)
     {
-        var result = _userLeaveService.GetAllUserLeaveList(userId);
+        var result = _userLeaveService.GetAllUserLeaveList(departmentId: 0 , userId: userId);
 
         return Ok(result);
     }
@@ -88,5 +88,15 @@ public class LeaveController : ControllerBase
         }
 
         return true;
+    }
+
+    [HttpGet]
+    [Authorize("LeaveReport")]
+    public async Task<ActionResult<UserLeaveReportDto>> LeaveReport()
+    {
+        var result = new UserLeaveReportDto();
+        var leaveReport = _userLeaveService.GetUserLeaveReport();
+
+        return result;
     }
 }

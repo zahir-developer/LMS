@@ -4,10 +4,11 @@ import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
-import { LoginUser, Role } from '../model/login.user';
+import { LoginUser } from '../model/login.user';
 import { environment } from '../../environments/environment';
 import { NotifyMessageService } from './notify-message.service';
 import { AppText } from '../model/Enum/constEnum';
+import { Roles } from '../model/Enum/constEnum';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,11 @@ export class AccountService {
   loggedInUser: LoginUser | undefined;
   loggedInUserRole: string | undefined;
   loggedInUserDepartmentId: number = 0;
+  isAdmin: boolean = false;
+  isEmployee: boolean = false;
+  isManager: boolean = false;
+
+
 
   private editUserSource = new BehaviorSubject<User | null>(null);
   editUser$ = this.editUserSource.asObservable();
@@ -85,7 +91,13 @@ export class AccountService {
     if (user) {
       this.loggedInUserId = user?.id;
       this.loggedInUserRole = user?.role.roleName;
-      this.loggedInUserDepartmentId = user.department.id;
+      this.loggedInUserDepartmentId = user.department?.id;
+      if (user.role.roleName === Roles[Roles.Admin])
+        this.isAdmin = true;
+      else if(user.role.roleName == Roles[Roles.Manager])
+        this.isManager = true;
+      else if(user.role.roleName == Roles[Roles.Employee])
+        this.isEmployee = true;
     }
 
   }

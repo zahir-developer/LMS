@@ -19,8 +19,18 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
 {
     public async Task<IEnumerable<UserLeave>> GetAllUserLeaveList(int departmentId)
     {
-        var userLeaves = dbContext.UserLeave.Include(s=>s.User).ThenInclude(s=>s.Department).Include(s=>s.LeaveType).Where(s=>s.User.DepartmentId == departmentId);
+        var userLeaves = dbContext.UserLeave.Include(s => s.User).ThenInclude(s => s.Department).Include(s => s.LeaveType).AsQueryable();
+
+        if (departmentId > 0)
+            userLeaves = userLeaves.Where(s => s.User.DepartmentId == departmentId).AsQueryable();
 
         return userLeaves;
+    }
+
+    public async Task<List<UserLeave>> GetUserLeaveReport()
+    {
+        var userLeaveReport = dbContext.UserLeave.Include(s=>s.User).Include(s =>s.LeaveType).GroupBy(s=>s.LeaveType);
+
+        return null;
     }
 }

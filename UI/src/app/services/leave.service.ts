@@ -17,12 +17,12 @@ export class LeaveService {
     return this.httpUtilService.post(apiEndPoint.Leave.add, userLeaveObj);
   }
 
-  getAllLeave() {
-    return this.httpUtilService.get(apiEndPoint.Leave.getAll);
+  getLeave(userId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.get.replace('{userId}', userId.toString()));
   }
 
-  getLeave(departmentId: number, userId: number) {
-    return this.httpUtilService.get(apiEndPoint.Leave.get.replace('{department}', departmentId.toString()).replace('{userId}', userId.toString())  + departmentId);
+  getAllLeave(departmentId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.getAll.replace('{departmentId}', departmentId.toString()));
   }
 
   getLeaveType() {

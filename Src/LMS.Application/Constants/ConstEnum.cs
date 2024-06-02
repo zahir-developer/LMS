@@ -12,7 +12,8 @@ namespace LMS.Application.Constants
         public enum Roles
         {
             Admin = 1,
-            User = 2
+            Employee = 2,
+            Manager = 3
         }
 
         public enum LeaveStatus

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../services/account.service';
-import { Role } from '../model/Enum/constEnum';
 @Component({
   selector: 'app-user-leave',
   standalone: true,
@@ -11,6 +10,6 @@ import { Role } from '../model/Enum/constEnum';
 export class LeaveComponent {
   currentUserRole: boolean = false;
   constructor(private accountService: AccountService) {
-   
+
   }
 }

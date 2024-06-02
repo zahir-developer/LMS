@@ -1,10 +1,8 @@
-import { DepartmentModel } from "./department/department.model"
-
 export interface LoginUser {
     authToken: AuthToken
     role: Role
     rolePrivilege: RolePrivilege[],
-    department: DepartmentModel
+    department: Department
     id: number
     passwordHash: string
     passwordSalt: string
@@ -31,4 +29,11 @@ export interface LoginUser {
   export interface RolePrivilege {
     privilegeName: string
     description: string
+  }
+
+
+  export interface Department {
+    id: number;
+    departmentName: string;
+    description: string;
   }

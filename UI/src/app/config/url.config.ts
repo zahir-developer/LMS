@@ -17,8 +17,8 @@ export const apiEndPoint =
     {
         getType: `common/leaveTypes`,
         add: `leave/`,
-        get: `leave/department/{department}/user/{userId}`,
-        getAll: `leave/`,
+        get: `leave/user/{userId}`,
+        getAll: `leave/department/{departmentId}`,
         updateStatus: `leave/StatusUpdate`
     },
     Common:
