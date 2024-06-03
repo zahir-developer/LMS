@@ -34,6 +34,8 @@ export class UserListComponent {
     lastName: '',
     roleName: '',
     roleId: 0,
+    departmentId: 0,
+    departmentName: '',
     password: '',
     mobileNo: '',
     email: '',
@@ -99,7 +101,7 @@ export class UserListComponent {
             {
               this.getUsers();
               this.notify.showMessage(AppText.DeleteSuccess);
-            } 
+            }
         }
       }
     )

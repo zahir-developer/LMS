@@ -16,7 +16,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogConfirmationComponent } from '../../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
 import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
-import { AppText, Confirm, LeaveStatus, LeaveStatusText, Role } from '../../model/Enum/constEnum';
+import { AppText, Confirm, LeaveStatus, LeaveStatusText } from '../../model/Enum/constEnum';
 import { LeaveUpdate } from '../../model/leave/leave.update';
 import { AccountService } from '../../services/account.service';
 import { NotifyMessageService } from '../../services/notify-message.service';
@@ -30,8 +30,10 @@ import { NotifyMessageService } from '../../services/notify-message.service';
   styleUrl: './user-leave.component.css'
 })
 export class UserLeaveComponent {
-  isAdmin: boolean = false;
+  isEmployee: boolean = false;
+  isManager: boolean = false;
   leaves: UserLeave[] = []
+  userDepartmentId: number = 0;
   leaveStatusText: typeof LeaveStatusText = LeaveStatusText;
   leaveUpdate: LeaveUpdate = {
     Id: 0,
@@ -52,21 +54,21 @@ export class UserLeaveComponent {
   ) { }
 
   ngOnInit() {
-    const userRole = this.accountService.getCurrentUserRole();
-    if (userRole)
-      this.isAdmin = (userRole == Role[Role.Admin]);
     this.getLeave();
+    this.isManager = this.accountService.isManager;
+    this.isEmployee = this.accountService.isEmployee;
   }
 
   getLeave() {
     const userId = this.accountService.loggedInUserId;
-    if (this.isAdmin) {
-      this.leaveService.getAllLeave().subscribe({
+    const departmentId = this.accountService.loggedInUserDepartmentId;
+    if (this.accountService.isManager) {
+      this.leaveService.getAllLeave(departmentId).subscribe({
         next: result =>
           this.leaves = result
       });
     }
-    else {
+    else if (this.accountService.isEmployee) {
       this.leaveService.getLeave(userId).subscribe({
         next: result =>
           this.leaves = result
@@ -115,7 +117,7 @@ export class UserLeaveComponent {
   }
 
   updateleaveStatus() {
-    if (this.isAdmin) {
+    if (this.isManager) {
       this.leaveService.updateLeaveStatus(this.leaveUpdate).subscribe({
         next: result => {
           if (result) {

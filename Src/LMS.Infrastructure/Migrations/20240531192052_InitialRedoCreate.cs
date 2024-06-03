@@ -18,7 +18,7 @@ namespace LMS.Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DepartmentName = table.Column<string>(type: "TEXT", nullable: false),
-                    DepartmentDescription = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
                     IsEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CreatedBy = table.Column<string>(type: "TEXT", nullable: true)

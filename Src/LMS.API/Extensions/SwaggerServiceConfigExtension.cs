@@ -1,6 +1,3 @@
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.OpenApi.Models;
 
 namespace LMS.API.Extensions;

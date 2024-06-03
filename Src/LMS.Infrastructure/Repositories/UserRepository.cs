@@ -19,18 +19,18 @@ public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRep
 {
     public async Task<User> GetUserRoleDetailsAsync(int userId)
     {
-        var userRoleDetails = dbContext.User.Include(s=>s.Role).ThenInclude(s=>s.RolePrivilege).Where(s=>s.Id == userId).FirstOrDefault();
+        var userRoleDetails = dbContext.User.Include(s=>s.Department).Include(s => s.Role).ThenInclude(s => s.RolePrivilege).Where(s => s.Id == userId).FirstOrDefault();
 
         return userRoleDetails;
     }
     public async Task<IEnumerable<User>> GetAllUserAsync()
     {
-        var userRoleDetails = dbContext.User.Include(s=>s.Role);
+        var userRoleDetails = dbContext.User.Include(s => s.Role).Include(s => s.Department);
 
         return userRoleDetails;
     }
 
-    
+
 
     public async Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>>? filter = null, IOrderedQueryable<User> orderBy = null, string includeProperties = "")
     {

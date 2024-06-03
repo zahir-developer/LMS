@@ -9,6 +9,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email Id</th>
             <th scope="col">Role</th>
+            <th scope="col">Department</th>
             <th scope="col" class="text-center">Actions</th>
         </tr>
     </thead>
@@ -19,6 +20,7 @@
             <td scope="row">{{ u.lastName }}</td>
             <td>{{ u.email }}</td>
             <td>{{ u.roleName }}</td>
+            <td>{{ !u.departmentName ? 'Unassigned' : u.departmentName }}</td>
             <td class="text-center">
                 <button class="btn btn-primary" (click)="edit(u)">Edit</button>
                 <button class="btn btn-warning" (click)="openDeleteDialog(u.id)">Delete</button>

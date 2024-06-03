@@ -1,4 +1,4 @@
-export const apiEndPoint = 
+export const apiEndPoint =
 {
     Auth:
     {
@@ -17,13 +17,18 @@ export const apiEndPoint =
     {
         getType: `common/leaveTypes`,
         add: `leave/`,
-        get: `leave/`, 
-        getAll: `leave/`,
-        updateStatus: `leave/StatusUpdate`
+        get: `leave/user/{userId}`,
+        getAll: `leave/department/{departmentId}`,
+        updateStatus: `leave/StatusUpdate`,
+        report: `leave/report/{userId}`
     },
     Common:
     {
         roles: `common/roles`
+    },
+    Department:
+    {
+      get: 'department'
     }
 
 }

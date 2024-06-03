@@ -4,15 +4,16 @@ export enum Confirm
     No = 'No'
 }
 
-export enum Role
+export enum Roles
 {
-    Admin,
-    User
+    Admin = 1,
+    Employee = 2,
+    Manager = 3,
 }
 
 export enum LeaveStatus
 {
-    Pending = 0, 
+    Pending = 0,
     Approved = 1,
     Rejected = 2
 }
@@ -34,7 +35,7 @@ export enum AppText
     ForbiddenAction = "You are not allowed to perform this action !",
     DeleteConfirmation = "Are you sure proceed to delete ?",
     DeleteSuccess = "User deleted successfully !",
-    
+
     /*User*/
     UserUpdateSuccess = "User updated successfully !",
     UserCreatedSuccess = "User created successfully !",

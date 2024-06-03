@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Linq;
+﻿using LMS.Application.DTOs;
 using LMS.Domain.Entities;
 
 namespace LMS.Application.Interfaces.IRepository;
 
 public interface IUserLeaveRepository
 {
-    Task<IEnumerable<UserLeave>> GetAllUserLeaveAsync();
-    //void GetAllAsync();
+    Task<IEnumerable<UserLeave>> GetAllUserLeaveList(int departmentId);
+    Task<List<UserLeaveReportDto>> GetUserLeaveReport();
 }

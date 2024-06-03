@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
 using LMS.Application.DTOs;
-using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces.IServiceMappings;
 
 namespace LMS.API.Controllers;

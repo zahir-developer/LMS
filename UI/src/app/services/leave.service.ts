@@ -11,18 +11,19 @@ import { LeaveUpdate } from '../model/leave/leave.update';
   providedIn: 'root'
 })
 export class LeaveService {
+
   constructor(private httpUtilService: HttpUtilsService, private http: HttpClient) { }
 
   addLeave(userLeaveObj: UserLeaveAdd) {
     return this.httpUtilService.post(apiEndPoint.Leave.add, userLeaveObj);
   }
 
-  getAllLeave() {
-    return this.httpUtilService.get(apiEndPoint.Leave.getAll);
+  getLeave(userId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.get.replace('{userId}', userId.toString()));
   }
 
-  getLeave(userId: number) {
-    return this.httpUtilService.get(apiEndPoint.Leave.get + userId);
+  getAllLeave(departmentId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.getAll.replace('{departmentId}', departmentId.toString()));
   }
 
   getLeaveType() {
@@ -31,6 +32,10 @@ export class LeaveService {
 
   updateLeaveStatus(obj: LeaveUpdate) {
     return this.httpUtilService.put(apiEndPoint.Leave.updateStatus, obj);
+  }
+
+  getLeaveReport(userId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.report.replace('{userId}', userId.toString()))
   }
 
 }

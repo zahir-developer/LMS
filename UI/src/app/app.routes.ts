@@ -8,15 +8,17 @@ import { UserLeaveComponent } from './leave/user-leave/user-leave.component';
 import { UserListComponent } from './user/user-list.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { LeaveReportComponent } from './leave/leave-report/leave-report.component';
 
 export const routes: Routes = [
    { path: 'home', component: HomeComponent, canActivate: [authGuard] },
    { path: 'login', component: LoginComponent },
-   { path: 'register', component: RegisterComponent },
-   { path: 'leave', component: LeaveComponent },
-   { path: 'leave-request', component: LeaveRequestComponent },
-   { path: 'user-leave', component: UserLeaveComponent },
-   { path: 'user-list', component: UserListComponent },
-   { path: 'user-edit', component: UserEditComponent }
+   { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
+   { path: 'leave', component: LeaveComponent, canActivate: [authGuard] },
+   { path: 'leave-request', component: LeaveRequestComponent, canActivate: [authGuard] },
+   { path: 'leave-report', component: LeaveReportComponent, canActivate: [authGuard] },
+   { path: 'user-leave', component: UserLeaveComponent, canActivate: [authGuard] },
+   { path: 'user-list', component: UserListComponent, canActivate: [authGuard] },
+   { path: 'user-edit', component: UserEditComponent, canActivate: [authGuard] }
 ];
 

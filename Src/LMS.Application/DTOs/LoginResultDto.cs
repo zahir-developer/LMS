@@ -10,5 +10,6 @@ public class LoginResultDto : UserDto
     }
     public AuthTokenDto AuthToken { get; set; }
     public RoleDto Role { get; set; }
+    public DepartmentDto Department { get; set; }
     public List<RolePrivilegeDto> RolePrivilege { get; set; }
 }
