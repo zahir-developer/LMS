@@ -1,51 +1,56 @@
 <div class="p-3">
-    <button class="btn btn-primary" [routerLink]="'/leave-request'">Apply Leave</button>
+  <button class="btn btn-primary" [routerLink]="'/leave-request'">Apply Leave</button>
+  <button class="btn btn-info float-right" [routerLink]="'/leave-report'">Leave Report</button>
 </div>
 <table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th *ngIf="isManager" scope="col">User Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
-            <th scope="col">Leave Type</th>
-            <th scope="col">Status</th>
-            <th scope="col">Comments</th>
-            <th *ngIf="isManager" scope="col" class="text-center">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let i of leaves">
-            <td *ngIf="isManager" scope="row">{{ i.userId }}</td>
-            <td scope="row">{{ i.name }}</td>
-            <td>{{ i.fromDate | date }}</td>
-            <td>{{ i.toDate | date }}</td>
-            <td>{{ i.leaveTypeName }}</td>
-            <td><span class="badge" [ngClass]="{'badge-warning': i.statusName === 'Pending',
+  <thead class="thead-light">
+    <tr>
+      <th *ngIf="isManager" scope="col">User Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">From</th>
+      <th scope="col">To</th>
+      <th scope="col">Leave Type</th>
+      <th scope="col">Status</th>
+      <th scope="col">Comments</th>
+      <th *ngIf="isManager" scope="col" class="text-center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of leaves">
+      <td *ngIf="isManager" scope="row">{{ i.userId }}</td>
+      <td scope="row">{{ i.name }}</td>
+      <td>{{ i.fromDate | date }}</td>
+      <td>{{ i.toDate | date }}</td>
+      <td>{{ i.leaveTypeName }}</td>
+      <td><span class="badge" [ngClass]="{'badge-warning': i.statusName === 'Pending',
             'badge-success' : i.statusName === 'Approved',
             'badge-danger' : i.statusName === 'Rejected' }">{{ i.statusName }} </span></td>
-            <td>{{ i.comments }}</td>
-            <td *ngIf="isManager" class="text-center">
-                <div *ngIf="i.statusName=='Pending'">
-                    <button class="btn btn-primary" (click)="openApproveDialog(i.id)">Approve</button>
-                    <button class="btn btn-warning" (click)="openRejectDialog(i.id)">Reject</button>
-                </div>
-                <div>
-                    <h3 *ngIf="i.statusName !=='Pending'" class="badge badge-secondary"> No Actions
-                        <!-- <span *ngIf="i.statusName !=='Pending'" class="badge"
+      <td>{{ i.comments }}</td>
+      <td *ngIf="isManager" class="text-center">
+        <div *ngIf="i.statusName=='Pending'">
+          <button class="btn btn-primary" (click)="openApproveDialog(i.id)">Approve</button>
+          <button class="btn btn-warning" (click)="openRejectDialog(i.id)">Reject</button>
+        </div>
+        <div>
+          <h3 *ngIf="i.statusName !=='Pending'" class="badge badge-secondary"> No Actions
+            <!-- <span *ngIf="i.statusName !=='Pending'" class="badge"
                             [ngClass]="{'badge-warning': i.statusName === 'Pending',
                             'badge-success' : i.statusName === 'Approved',
                             'badge-danger' : i.statusName === 'Rejected'
                                 }">{{ i.statusName }} </span> -->
-                    </h3>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-    <tbody *ngIf="leaves[0]==undefined">
-        <tr *ngIf="isManager" class="text-center"><td colspan="8">No data available</td></tr>
-    </tbody>
-    <tbody *ngIf="leaves[0]==undefined">
-        <tr *ngIf="!isManager"  class="text-center"><td colspan="6">No data available</td></tr>
-    </tbody>
+          </h3>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="leaves[0]==undefined">
+    <tr *ngIf="isManager" class="text-center">
+      <td colspan="8">No data available</td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="leaves[0]==undefined">
+    <tr *ngIf="!isManager" class="text-center">
+      <td colspan="6">No data available</td>
+    </tr>
+  </tbody>
 </table>

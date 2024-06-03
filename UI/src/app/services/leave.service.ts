@@ -11,6 +11,7 @@ import { LeaveUpdate } from '../model/leave/leave.update';
   providedIn: 'root'
 })
 export class LeaveService {
+
   constructor(private httpUtilService: HttpUtilsService, private http: HttpClient) { }
 
   addLeave(userLeaveObj: UserLeaveAdd) {
@@ -31,6 +32,10 @@ export class LeaveService {
 
   updateLeaveStatus(obj: LeaveUpdate) {
     return this.httpUtilService.put(apiEndPoint.Leave.updateStatus, obj);
+  }
+
+  getLeaveReport(userId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.report.replace('{userId}', userId.toString()))
   }
 
 }

@@ -14,6 +14,6 @@ namespace LMS.Application.Interfaces.IServiceMappings
     public interface IUserLeaveServiceMapping : IGenericServiceAsync<UserLeave, UserLeaveDto>
     {
         List<UserLeaveListDto> GetAllUserLeaveList(int departmentId = 0, int userId = 0);
-        List<UserLeaveReportDto> GetUserLeaveReport();
+        List<UserLeaveReportDto> GetUserLeaveReport(int userId = 0);
     }
 }

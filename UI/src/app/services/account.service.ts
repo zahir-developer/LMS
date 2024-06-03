@@ -23,8 +23,6 @@ export class AccountService {
   isEmployee: boolean = false;
   isManager: boolean = false;
 
-
-
   private editUserSource = new BehaviorSubject<User | null>(null);
   editUser$ = this.editUserSource.asObservable();
 
@@ -105,6 +103,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.isAdmin = false;
+    this.isManager = false;
+    this.isEmployee = false;
     this.loggedInUserId = 0;
   }
 

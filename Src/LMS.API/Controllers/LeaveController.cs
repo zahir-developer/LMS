@@ -90,13 +90,21 @@ public class LeaveController : ControllerBase
         return true;
     }
 
-    [HttpGet]
-    [Authorize("LeaveReport")]
-    public async Task<ActionResult<UserLeaveReportDto>> LeaveReport()
+    [HttpGet("Report/{userId}")]
+    [Authorize("UserLeaveReport")]
+    public async Task<List<UserLeaveReportDto>> LeaveReport(int userId)
     {
-        var result = new UserLeaveReportDto();
+        var leaveReport = _userLeaveService.GetUserLeaveReport(userId);
+
+        return leaveReport;
+    }
+
+    [HttpGet("Report")]
+    [Authorize("LeaveReport")]
+    public async Task<List<UserLeaveReportDto>> LeaveReport()
+    {
         var leaveReport = _userLeaveService.GetUserLeaveReport();
 
-        return result;
+        return leaveReport;
     }
 }

@@ -48,10 +48,13 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         return userLeaveResult;
     }
 
-    public List<UserLeaveReportDto> GetUserLeaveReport()
+    public List<UserLeaveReportDto> GetUserLeaveReport(int userId)
     {
-        var leaveReport = this._unitOfWork.UserLeaveRepository.GetUserLeaveReport();
+        var report = this._unitOfWork.UserLeaveRepository.GetUserLeaveReport().Result;
 
-        return new List<UserLeaveReportDto>();
+        if (userId > 0)
+            report = report.Where(u => u.UserId == userId).ToList();
+            
+        return report;
     }
 }
