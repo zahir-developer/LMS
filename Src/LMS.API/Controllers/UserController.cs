@@ -64,7 +64,7 @@ public class UserController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [Authorize("User_Delete")]
-    [HttpDelete]
+    [HttpDelete("{userId}")]
     public async Task<ActionResult<bool>> DeleteUser(int userId)
     {
         if (userId > 0)

@@ -34,8 +34,12 @@ export class LeaveService {
     return this.httpUtilService.put(apiEndPoint.Leave.updateStatus, obj);
   }
 
-  getLeaveReport(userId: number) {
-    return this.httpUtilService.get(apiEndPoint.Leave.report.replace('{userId}', userId.toString()))
+  getLeaveReport(departmentId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.report.replace('{departmentId}', departmentId.toString()), );
+  }
+
+  getUserLeaveReport(userId: number) {
+    return this.httpUtilService.get(apiEndPoint.Leave.userReport.replace('{userId}', userId.toString()))
   }
 
 }

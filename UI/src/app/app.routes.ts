@@ -9,6 +9,9 @@ import { UserListComponent } from './user/user-list.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { LeaveReportComponent } from './leave/leave-report/leave-report.component';
+import { DeptListComponent } from './department/dept-list/dept-list.component';
+import { DeptAddEditComponent } from './department/dept-form/dept-add-edit/dept-add-edit.component';
+import { DeptFormComponent } from './department/dept-form/dept-form.component';
 
 export const routes: Routes = [
    { path: 'home', component: HomeComponent, canActivate: [authGuard] },
@@ -19,6 +22,11 @@ export const routes: Routes = [
    { path: 'leave-report', component: LeaveReportComponent, canActivate: [authGuard] },
    { path: 'user-leave', component: UserLeaveComponent, canActivate: [authGuard] },
    { path: 'user-list', component: UserListComponent, canActivate: [authGuard] },
-   { path: 'user-edit', component: UserEditComponent, canActivate: [authGuard] }
+   { path: 'user-edit', component: UserEditComponent, canActivate: [authGuard] },
+   //Department
+   { path: 'dept-list', component: DeptListComponent, canActivate: [authGuard] },
+   { path: 'dept-form', component: DeptFormComponent, canActivate: [authGuard] },
+   { path: 'dept-add-edit', component: DeptAddEditComponent, canActivate: [authGuard] },
+   //{ path: 'dept-edit', loadChildren: () => import('./department/dept-edit/dept-edit.component'), canActivate: [authGuard] }
 ];
 

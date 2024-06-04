@@ -13,7 +13,7 @@ public interface IGenericServiceAsync<TEntity, TDto> where TEntity : class where
     Task<IEnumerable<TDto>> GetAllAsync();
     Task<TDto> GetByIdAsync(int id);
     Task<List<TDto>> GetAsync(Expression<Func<TEntity, bool>>? filter = null);
-    Task AddAsync(TDto dto, CancellationToken cancellationToken = default);
-    Task UpdateAsync(TDto dto, CancellationToken cancellationToken = default);
-    Task DeleteByIdAsync(int Id);
+    Task<bool> AddAsync(TDto dto, CancellationToken cancellationToken = default);
+    Task<bool> UpdateAsync(TDto dto, CancellationToken cancellationToken = default);
+    Task<bool> DeleteByIdAsync(int Id);
 }

@@ -30,10 +30,14 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
         return userLeaves;
     }
 
-    public async Task<List<UserLeaveReportDto>> GetUserLeaveReport()
+    public async Task<List<UserLeaveReportDto>> GetUserLeaveReport(int departmentId = 0)
     {
-        var userLeaveReport = dbContext.UserLeave.Include(s => s.LeaveType).Include(s => s.User)
-        .GroupBy(g => new { g.LeaveTypeId, g.User.Id, g.User.FirstName, g.LeaveType.LeaveTypeName })
+        var userLeaveReport = dbContext.UserLeave.Include(s => s.LeaveType).Include(s => s.User).AsQueryable();
+
+        if (departmentId > 0)
+            userLeaveReport = userLeaveReport.Where(s => s.User.DepartmentId == departmentId).AsQueryable();
+
+        var userLeaveGroup = userLeaveReport.GroupBy(g => new { g.LeaveTypeId, g.User.Id, g.User.FirstName, g.LeaveType.LeaveTypeName })
         .Select(s => new UserLeaveReportDto()
         {
             LeaveTypeId = s.Key.LeaveTypeId,
@@ -44,15 +48,15 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
             TotalLeave = s.Max(g => g.LeaveType.MaxLeaveCount)
         }).ToList();
 
-        var users = dbContext.User.Select(s => new { s.Id, s.FirstName, s.LastName }).ToList();
+        var users = dbContext.User.Include(s=>s.Role).Where(s=> s.DepartmentId == departmentId && s.Role.RoleName != Roles.Manager.ToString() || departmentId == 0).Select(s => new { s.Id, s.FirstName, s.LastName }).ToList();
 
         foreach (var user in users)
         {
-            var uLeaveTypes = dbContext.LeaveType.ToList().Where(u => !userLeaveReport.Exists(s => s.LeaveTypeId == u.Id && s.UserId == user.Id));
+            var uLeaveTypes = dbContext.LeaveType.ToList().Where(u => !userLeaveGroup.Exists(s => s.LeaveTypeId == u.Id && s.UserId == user.Id));
 
             if (uLeaveTypes.Any())
                 foreach (var leaveType in uLeaveTypes)
-                    userLeaveReport.Add(new UserLeaveReportDto()
+                    userLeaveGroup.Add(new UserLeaveReportDto()
                     {
                         UserId = user.Id,
                         LeaveTypeId = leaveType.Id,
@@ -64,15 +68,15 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
                     });
         }
 
-/*
-        var uReport = (from lt in dbContext.LeaveType
-                       join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId
-                       select new
-                       {
-                           lt.LeaveTypeName,
-                           lt.MaxLeaveCount
-                       });
-*/
+        /*
+                var uReport = (from lt in dbContext.LeaveType
+                               join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId
+                               select new
+                               {
+                                   lt.LeaveTypeName,
+                                   lt.MaxLeaveCount
+                               });
+        */
         /*
         var leaveReport = (from lt in dbContext.LeaveType
                            join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId into ulGroup
@@ -102,6 +106,6 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
                            }).ToList();
                            */
 
-        return userLeaveReport.OrderBy(s => s.UserId).ToList();
+        return userLeaveGroup.OrderBy(s => s.UserId).ToList();
     }
 }

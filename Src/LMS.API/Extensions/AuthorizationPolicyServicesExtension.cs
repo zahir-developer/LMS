@@ -27,7 +27,14 @@ public static class AuthorizationPolicyServicesExtension
             x.AddPolicy("Leave_View", policy=>policy.RequireRole(Roles.Employee.ToString()));
             x.AddPolicy("Leave_Apply", policy=>policy.RequireRole(Roles.Employee.ToString()));
             x.AddPolicy("UserLeaveReport", policy=>policy.RequireRole(Roles.Employee.ToString()));
-                     
+
+            //Module: Department
+            x.AddPolicy("Department_Get", policy=>policy.RequireRole(Roles.Admin.ToString()));
+            x.AddPolicy("Department_Add", policy=>policy.RequireRole(Roles.Admin.ToString()));
+            x.AddPolicy("Department_Update", policy=>policy.RequireRole(Roles.Admin.ToString()));
+            x.AddPolicy("Department_Delete", policy=>policy.RequireRole(Roles.Admin.ToString()));
+            
+
         });
 
         return services;

@@ -1,4 +1,4 @@
-<div class="p-3">
+<div class="pb-3">
     <button class="btn btn-primary" [routerLink]="'/register'">Add User</button>
 </div>
 <table class="table">
@@ -22,8 +22,8 @@
             <td>{{ u.roleName }}</td>
             <td>{{ !u.departmentName ? 'Unassigned' : u.departmentName }}</td>
             <td class="text-center">
-                <button class="btn btn-primary" (click)="edit(u)">Edit</button>
-                <button class="btn btn-warning" (click)="openDeleteDialog(u.id)">Delete</button>
+                <button class="btn btn-primary mr-2" (click)="edit(u)">Edit</button>
+                <button class="btn btn-warning mr-2" (click)="openDeleteDialog(u.id)">Delete</button>
             </td>
         </tr>
     </tbody>

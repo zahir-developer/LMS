@@ -20,7 +20,8 @@ export const apiEndPoint =
         get: `leave/user/{userId}`,
         getAll: `leave/department/{departmentId}`,
         updateStatus: `leave/StatusUpdate`,
-        report: `leave/report/{userId}`
+        report: `leave/report/department/{departmentId}`,
+        userReport: `leave/report/user/{userId}`
     },
     Common:
     {
