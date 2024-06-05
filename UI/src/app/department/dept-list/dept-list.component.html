@@ -1,3 +1,6 @@
+<div class="pb-3">
+  <button type="button" class="btn btn-info" (click)="onAdd()">Add Department</button>
+</div>
 <table class="table">
   <thead class="thead-light">
     <th scope="col">Department ID</th>
@@ -11,8 +14,8 @@
       <td>{{ d.departmentName }}</td>
       <td>{{ d.description }}</td>
       <td class="text-center">
-        <button class="btn btn-primary mr-2">Edit</button>
-        <button class="btn btn-warning mr-2">Delete</button>
+        <button class="btn btn-warning mr-2" (click)="edit(d)">Edit</button>
+        <button class="btn btn-danger mr-2" (click)="openDeleteDialog(d.id)">Delete</button>
     </td>
     </tr>
   </tbody>
