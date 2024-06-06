@@ -9,6 +9,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 /* toaster - notification service */
 import { provideToastr } from 'ngx-toastr';
+import { MatDialogHelper } from './model/common/mat.dialog.helper';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     provideAnimationsAsync(),
     provideToastr(), // Toastr providers
+    MatDialogHelper,
   ]
 };

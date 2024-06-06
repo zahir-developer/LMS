@@ -17,13 +17,16 @@ import { MatDialogConfirmationComponent } from '../shared/mat-dialog-confirmatio
 import { ConfirmDialogeResponse } from '../model/confirm.dialoge.response';
 import { User } from '../model/user.model';
 import { NotifyMessageService } from '../services/notify-message.service';
+import { ConfirmDialog } from '../model/common/mat.dialog.helper';
+import { MatDialogHelper } from '../model/common/mat.dialog.helper';
 
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, RouterModule,
-    MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule],
+  imports: [CommonModule,
+    RouterModule,
+  ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
 })
@@ -45,16 +48,17 @@ export class UserListComponent {
       state: ''
     }
   }];
-  dialogData: any =
+  dialogData: ConfirmDialog =
     {
-      title: 'Delete confirmation',
+      title: 'Delete user',
       description: AppText.DeleteConfirmation.toString(),
       data: 0
     }
   constructor(private accountService: AccountService,
     private router: Router,
     public dialog: MatDialog,
-    private notify: NotifyMessageService
+    private notify: NotifyMessageService,
+    private matDialogHelper: MatDialogHelper,
   ) { }
 
   ngOnInit() {
@@ -77,17 +81,11 @@ export class UserListComponent {
 
   openDialog(id: number) {
     this.dialogData.data = id;
-    const dialog = this.dialog.open(MatDialogConfirmationComponent, {
-      width: '250px',
-      enterAnimationDuration: '0ms',
-      exitAnimationDuration: '0ms',
-      data: this.dialogData
-    });
+    var config = this.matDialogHelper.getMatDialogConfig(this.dialogData);
+    const dialog = this.dialog.open(MatDialogConfirmationComponent, config);
 
     dialog.afterClosed().subscribe((obj: ConfirmDialogeResponse) => {
-      console.log(obj);
-      var status: number = 0;
-      if (obj.action === Confirm.Yes.toString()) {
+      if (obj.action === Confirm.Yes) {
         this.deleteUser(obj.data);
       }
     });
@@ -97,11 +95,10 @@ export class UserListComponent {
     this.accountService.deleteUser(id).subscribe(
       {
         next: result => {
-          if(result)
-            {
-              this.getUsers();
-              this.notify.showMessage(AppText.DeleteSuccess);
-            }
+          if (result) {
+            this.getUsers();
+            this.notify.showMessage(AppText.DeleteSuccess);
+          }
         }
       }
     )

@@ -34,29 +34,26 @@ public class DepartmentController : ControllerBase
 
     [HttpPost]
     [Authorize("Department_Add")]
-    public async Task<bool> AddDepartment(DepartmentDto departmentDto)
+    public async Task<bool> AddDepartment([FromBody] DepartmentDto departmentDto)
     {
-        var addDepartment = await _departmentService.AddAsync(departmentDto);
-
-        return addDepartment;
+        await _departmentService.AddAsync(departmentDto);
+        return _departmentService.SaveChangesAsync();
     }
 
     [HttpPut]
     [Authorize("Department_Update")]
-    public async Task<bool> UpdateDepartment(DepartmentDto departmentDto)
+    public async Task<bool> UpdateDepartment([FromBody] DepartmentDto departmentDto)
     {
-        var addDepartment = await _departmentService.UpdateAsync(departmentDto);
-
-        return addDepartment;
+        await _departmentService.UpdateAsync(departmentDto);
+        return _departmentService.SaveChangesAsync();
     }
 
     [HttpDelete("{departmentId}")]
     [Authorize("Department_Delete")]
     public async Task<bool> DeleteDepartment(int departmentId)
     {
-        var addDepartment = await _departmentService.DeleteByIdAsync(departmentId);
-
-        return addDepartment;
+        await _departmentService.DeleteByIdAsync(departmentId);
+        return _departmentService.SaveChangesAsync();
     }
 
 }

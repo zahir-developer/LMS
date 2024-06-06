@@ -24,6 +24,12 @@ export enum LeaveStatusText
     Approved = "Approved",
     Rejected = "Rejected"
 }
+
+export enum AppModule
+{
+    Department = "Department"
+}
+
 export enum AppText
 {
     /*Manage leaves: Begin*/
@@ -34,12 +40,17 @@ export enum AppText
     /*Common*/
     ForbiddenAction = "You are not allowed to perform this action !",
     DeleteConfirmation = "Are you sure proceed to delete ?",
-    DeleteSuccess = "User deleted successfully !",
+    DeleteSuccess = "Record deleted successfully !",
 
     /*User*/
     UserUpdateSuccess = "User updated successfully !",
     UserCreatedSuccess = "User created successfully !",
     EmailExists = "Email already exists!",
     EmailNotExists = "Email available to crete !",
+
+    /*Department*/
+    AddDepartmentSuccess = 'Department added successfully !',
+    UpdateDepartmentSuccess = 'Department updated successfully !',
+    DeleteDepartmentSuccess = 'Department deleted successfully !'
 }
 

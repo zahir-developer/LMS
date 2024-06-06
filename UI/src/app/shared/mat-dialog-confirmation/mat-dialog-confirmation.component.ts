@@ -18,10 +18,6 @@ import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
   styleUrl: './mat-dialog-confirmation.component.css'
 })
 export class MatDialogConfirmationComponent {
-  dialogHeading: string = "Leave "
-  message: string = "Please Approve or Reject leave..."
-  cancelButtonText = "Cancel"
-
   constructor(public dialogRef: MatDialogRef<MatDialogConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { title: string, description: string, data: any }
   ) {

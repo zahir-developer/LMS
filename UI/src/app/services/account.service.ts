@@ -67,7 +67,7 @@ export class AccountService {
   }
 
   deleteUser(userId: number) {
-    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete + '?userId=' + userId);
+    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete.replace('{userId}', userId.toString()) );
   }
 
   login(model: any) {
