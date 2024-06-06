@@ -16,5 +16,5 @@ public interface IGenericServiceAsync<TEntity, TDto> where TEntity : class where
     Task AddAsync(TDto dto, CancellationToken cancellationToken = default);
     Task UpdateAsync(TDto dto, CancellationToken cancellationToken = default);
     Task DeleteByIdAsync(int Id);
-    Task<bool> SaveChangesAsync();
+    bool SaveChangesAsync();
 }

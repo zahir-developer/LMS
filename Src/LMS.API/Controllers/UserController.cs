@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Application.DTOs;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
+using AutoMapper;
 
 namespace LMS.API.Controllers;
 
@@ -13,16 +14,16 @@ namespace LMS.API.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserServiceMapping _userService;
+    private readonly IMapper _mapper;
     private readonly ILogger<UserController> _logger;
     private readonly IConfiguration _config;
     private readonly IAuthTokenService _authTokenService;
 
-    public UserController(ILogger<UserController> logger, IUserServiceMapping userService, IConfiguration config, IAuthTokenService authTokenService)
+    public UserController(IUserServiceMapping userService, IMapper mapper, IAuthTokenService authTokenService)
     {
-        _logger = logger;
         _userService = userService;
-        _config = config;
         _authTokenService = authTokenService;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -44,18 +45,9 @@ public class UserController : ControllerBase
     [Authorize("User_Edit_Update")]
     public async Task<ActionResult<bool>> UpdateUser(UserUpdateDto userUpdateDto)
     {
-        var user = _userService.GetByIdAsync(userUpdateDto.Id).Result;
-        if (user != null)
-        {
-            user.FirstName = userUpdateDto.FirstName;
-            user.LastName = userUpdateDto.LastName;
-            user.Email = userUpdateDto.Email;
-            user.RoleId = userUpdateDto.RoleId;
-            await _userService.UpdateAsync(user);
-            return true;
-        }
-
-        return false;
+        var userDto = _mapper.Map<UserDto>(userUpdateDto);
+        var user = _userService.UpdateAsync(userDto);
+        return _userService.SaveChangesAsync();
     }
 
     /// <summary>
@@ -70,7 +62,7 @@ public class UserController : ControllerBase
         if (userId > 0)
         {
             await _userService.DeleteByIdAsync(userId);
-            return true;
+            return _userService.SaveChangesAsync();
         }
         return false;
     }

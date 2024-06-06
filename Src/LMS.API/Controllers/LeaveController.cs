@@ -15,15 +15,12 @@ public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
-
     private readonly IUserLeaveServiceMapping _userLeaveService;
 
-    public LeaveController(IUserLeaveServiceMapping userLeaveService, IUnitOfWork unitOfWork, IMapper mapper, ILogger<LeaveController> logger)
+    public LeaveController(IUserLeaveServiceMapping userLeaveService, IMapper mapper, ILogger<LeaveController> logger)
     {
         _logger = logger;
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
         _userLeaveService = userLeaveService;
     }
 
@@ -65,7 +62,7 @@ public class LeaveController : ControllerBase
     {
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
         await _userLeaveService.AddAsync(userLeaveDto);
-        return true;
+        return _userLeaveService.SaveChangesAsync();
     }
 
     /// <summary>
@@ -84,7 +81,7 @@ public class LeaveController : ControllerBase
         {
             userLeave.Status = (int)statusUpdateDto.Status;
             await _userLeaveService.UpdateAsync(userLeave);
-            //await _userLeaveService.SaveAsync();
+            return _userLeaveService.SaveChangesAsync();
         }
 
         return true;

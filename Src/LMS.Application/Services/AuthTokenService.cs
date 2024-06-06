@@ -41,8 +41,8 @@ public class AuthTokenService : IAuthTokenService
 
         if (login != null)
         {
-            
-            var user = _userService.GetUserByEmail(login.Email);            
+
+            var user = _userService.GetUserByEmail(login.Email);
 
             if (user != null && user?.PasswordSalt != null)
             {
@@ -69,7 +69,7 @@ public class AuthTokenService : IAuthTokenService
                 token.Email = login.Email;
 
                 return loginResultDto;
-            }            
+            }
         }
 
         return loginResultDto;
@@ -86,10 +86,12 @@ public class AuthTokenService : IAuthTokenService
         user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(user.Password));
         user.PasswordSalt = hmac.Key;
         user.Token = token;
-        
-        _userService.AddAsync(user);
 
-        return user;
+        _userService.AddAsync(user);
+        if (_userService.SaveChangesAsync())
+            return user;
+        else
+            return null;
     }
 
     public string GenerateToken(string EmailId, string? roleName = null)
@@ -109,7 +111,7 @@ public class AuthTokenService : IAuthTokenService
         //         claims.Add(new Claim(ClaimTypes.Name, p.PrivilegeName));
         //     }
         // }
-            
+
 
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
