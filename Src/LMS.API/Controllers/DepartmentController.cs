@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Runtime.Intrinsics.Arm;
+using AutoMapper;
 using LMS.Application.DTOs;
 using LMS.Application.IServiceMappings;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,7 @@ public class DepartmentController : ControllerBase
 
 
     [HttpGet]
+    [Authorize("Department_Get")]
     public async Task<List<DepartmentDto>> GetDepartmentList()
     {
         var departements = await _departmentService.GetAllAsync();
@@ -28,6 +30,30 @@ public class DepartmentController : ControllerBase
         var departmentResultDto = _mapper.Map<List<DepartmentDto>>(departements);
 
         return departmentResultDto.ToList();
+    }
+
+    [HttpPost]
+    [Authorize("Department_Add")]
+    public async Task<bool> AddDepartment([FromBody] DepartmentDto departmentDto)
+    {
+        await _departmentService.AddAsync(departmentDto);
+        return _departmentService.SaveChangesAsync();
+    }
+
+    [HttpPut]
+    [Authorize("Department_Update")]
+    public async Task<bool> UpdateDepartment([FromBody] DepartmentDto departmentDto)
+    {
+        await _departmentService.UpdateAsync(departmentDto);
+        return _departmentService.SaveChangesAsync();
+    }
+
+    [HttpDelete("{departmentId}")]
+    [Authorize("Department_Delete")]
+    public async Task<bool> DeleteDepartment(int departmentId)
+    {
+        await _departmentService.DeleteByIdAsync(departmentId);
+        return _departmentService.SaveChangesAsync();
     }
 
 }

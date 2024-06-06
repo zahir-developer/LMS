@@ -1,0 +1,28 @@
+<form [formGroup]="formDept" class="dept-form">
+  <div class="float-right pb-3">
+    <button class="btn btn-info" (click)="onBack()">Back</button>
+  </div>
+  <div>
+    <h2 *ngIf="!isAdd">Edit Department</h2>
+    <h2 *ngIf="isAdd">Add Department</h2>
+  </div>
+  <div class="form-group">
+    <label for="departmentName">Department Name</label><strong>*</strong>
+    <input type="text"  id="departmentName" name="departmentName" formControlName="departmentName" class="form-control">
+    <span class="text-danger" *ngIf="isSubmitted && formDept.controls['departmentName'].errors?.required">
+      Department name is mandatory !</span>
+    <span class="text-danger" *ngIf="isSubmitted && formDept.controls['departmentName'].errors?.minlength?.requiredLength">
+      Department name should have mininum length: {{ formDept.controls['departmentName'].errors?.minlength?.requiredLength }} </span>
+    <span class="text-danger" *ngIf="isSubmitted && formDept.controls['departmentName'].errors?.maxlength?.requiredLength">
+      Department name should be lesser than the max length: {{ formDept.controls['departmentName'].errors?.maxlength?.requiredLength }} </span>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea type="text" formControlName="description" class="form-control" rows="3"></textarea>
+    <span class="text-danger" *ngIf="isSubmitted && formDept.controls['description'].errors?.maxlength?.requiredLength">
+      Department description should be lesser than the max length: {{ formDept.controls['description'].errors?.maxlength?.requiredLength }} </span>
+  </div>
+  <div class="form-group">
+  <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{ isAdd ? 'Add Department' : 'Update department'}}</button>
+  </div>
+</form>

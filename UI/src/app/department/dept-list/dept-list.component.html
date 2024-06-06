@@ -1,0 +1,22 @@
+<div class="pb-3">
+  <button type="button" class="btn btn-info" (click)="onAdd()">Add Department</button>
+</div>
+<table class="table">
+  <thead class="thead-light">
+    <th scope="col">Department ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Description</th>
+    <th scope="col">Actions</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of departments">
+      <td>{{ d.id }}</td>
+      <td>{{ d.departmentName }}</td>
+      <td>{{ d.description }}</td>
+      <td class="text-center">
+        <button class="btn btn-warning mr-2" (click)="edit(d)">Edit</button>
+        <button class="btn btn-danger mr-2" (click)="openDeleteDialog(d.id)">Delete</button>
+    </td>
+    </tr>
+  </tbody>
+</table>

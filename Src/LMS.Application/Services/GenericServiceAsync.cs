@@ -64,25 +64,22 @@ namespace LMS.Application.Services
         public async Task AddAsync(TDto dto, CancellationToken cancellationToken)
         {
             await _unitOfWork.Repository<TEntity>().AddAsync(_mapper.Map<TEntity>(dto));
-            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteByIdAsync(int id)
         {
             await _unitOfWork.Repository<TEntity>().DeleteByIdAsync(id);
-            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TDto dto, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<TEntity>(dto);
             await _unitOfWork.Repository<TEntity>().UpdateAsync(entity);
-            await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<bool> SaveChangesAsync()
+        public bool SaveChangesAsync()
         {
-            return await _unitOfWork.SaveChangesAsync();
+            return _unitOfWork.SaveChangesAsync().Result;
         }
     }
 }

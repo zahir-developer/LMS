@@ -30,12 +30,16 @@ export class NavComponent {
         if (user) {
           this.loggedInUser = user?.firstName;
           this.loggedInUserRole = user.role.roleName;
-          if (user.role.roleName === Roles[Roles.Admin])
-            this.isAdmin = true;
-          else if(user.role.roleName == Roles[Roles.Manager])
-            this.isManager = true;
-          else if(user.role.roleName == Roles[Roles.Employee])
-            this.isEmployee = true;
+          this.isAdmin = this.accountService.isAdmin;
+          this.isEmployee = this.accountService.isEmployee;
+          this.isManager = this.accountService.isManager;
+
+          // if (user.role.roleName === Roles[Roles.Admin])
+          //   this.isAdmin = true;
+          // else if(user.role.roleName == Roles[Roles.Manager])
+          //   this.isManager = true;
+          // else if(user.role.roleName == Roles[Roles.Employee])
+          //   this.isEmployee = true;
         }
       }
     })

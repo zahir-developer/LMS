@@ -9,16 +9,25 @@ import { UserListComponent } from './user/user-list.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { LeaveReportComponent } from './leave/leave-report/leave-report.component';
+import { DeptListComponent } from './department/dept-list/dept-list.component';
+import { DeptAddEditComponent } from './department/dept-add-edit/dept-add-edit.component';
+import { DepartmentComponent } from './department/department.component';
 
 export const routes: Routes = [
-   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
-   { path: 'login', component: LoginComponent },
-   { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
-   { path: 'leave', component: LeaveComponent, canActivate: [authGuard] },
-   { path: 'leave-request', component: LeaveRequestComponent, canActivate: [authGuard] },
-   { path: 'leave-report', component: LeaveReportComponent, canActivate: [authGuard] },
-   { path: 'user-leave', component: UserLeaveComponent, canActivate: [authGuard] },
-   { path: 'user-list', component: UserListComponent, canActivate: [authGuard] },
-   { path: 'user-edit', component: UserEditComponent, canActivate: [authGuard] }
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
+  { path: 'leave', component: LeaveComponent, canActivate: [authGuard] },
+  { path: 'leave-request', component: LeaveRequestComponent, canActivate: [authGuard] },
+  { path: 'leave-report', component: LeaveReportComponent, canActivate: [authGuard] },
+  { path: 'user-leave', component: UserLeaveComponent, canActivate: [authGuard] },
+  { path: 'user-list', component: UserListComponent, canActivate: [authGuard] },
+  { path: 'user-edit', component: UserEditComponent, canActivate: [authGuard] },
+  //Department
+  { path: 'dept', component: DepartmentComponent, canActivate: [authGuard] },
+  { path: 'dept?action=list', component: DepartmentComponent, canActivate: [authGuard] },
+  { path: 'dept?action=edit', component: DepartmentComponent, canActivate: [authGuard] },
+  { path: 'dept?action=add', component: DepartmentComponent, canActivate: [authGuard] },
+  //{ path: 'dept-edit', loadChildren: () => import('./department/dept-edit/dept-edit.component'), canActivate: [authGuard] }
 ];
 

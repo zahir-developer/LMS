@@ -36,6 +36,12 @@ export class AccountService {
 
   ) { }
 
+  ngOnInit() {
+    this.isAdmin = false;
+    this.isManager = false;
+    this.isEmployee = false;
+  }
+
   registerUser(userObj: User) {
     this.httpUtilService.post(apiEndPoint.Auth.signup, userObj).subscribe(
       result => {
@@ -49,7 +55,7 @@ export class AccountService {
   }
 
   checkEmailExists(emailId: string) {
-    return this.http.get(environment.apiUrl + apiEndPoint.User.emailExists +emailId );
+    return this.http.get(environment.apiUrl + apiEndPoint.User.emailExists + emailId);
   }
 
   login_Old(model: any) {
@@ -61,7 +67,7 @@ export class AccountService {
   }
 
   deleteUser(userId: number) {
-    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete + '?userId='+userId);
+    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete.replace('{userId}', userId.toString()) );
   }
 
   login(model: any) {
@@ -84,7 +90,7 @@ export class AccountService {
   }
 
   setCurrentUser(user: LoginUser) {
-    this.currentUserSource.next(user);
+
     this.loggedInUser = user;
     if (user) {
       this.loggedInUserId = user?.id;
@@ -92,12 +98,12 @@ export class AccountService {
       this.loggedInUserDepartmentId = user.department?.id;
       if (user.role.roleName === Roles[Roles.Admin])
         this.isAdmin = true;
-      else if(user.role.roleName == Roles[Roles.Manager])
+      else if (user.role.roleName == Roles[Roles.Manager])
         this.isManager = true;
-      else if(user.role.roleName == Roles[Roles.Employee])
+      else if (user.role.roleName == Roles[Roles.Employee])
         this.isEmployee = true;
     }
-
+    this.currentUserSource.next(user);
   }
 
   logout() {

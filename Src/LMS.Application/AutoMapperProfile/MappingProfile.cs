@@ -15,6 +15,7 @@ public class AutoMappingProfile : Profile
         //.ForMember(d => d.Id, opt => opt.MapFrom(src => src.Id)
 
         CreateMap<UserDto, User>().ReverseMap();
+        CreateMap<UserUpdateDto, UserDto>();
         //.ForMember(dest => dest.PasswordHash, act => act.Ignore())
         //.ForMember(dest => dest.PasswordSalt, act => act.Ignore());
         CreateMap<AddUserDto, UserDto>().ReverseMap();
@@ -37,6 +38,7 @@ public class AutoMappingProfile : Profile
         CreateMap<RolePrivilege,RolePrivilegeDto>();
         //Department
         CreateMap<Department, DepartmentDto>();
+        CreateMap<DepartmentDto, Department>();
         //.ForMember(d => d.User.Id, opt => opt.MapFrom(src => src.Id));
         //.ReverseMap()
 

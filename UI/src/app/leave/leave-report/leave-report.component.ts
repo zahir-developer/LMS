@@ -14,6 +14,9 @@ import { RouterModule } from '@angular/router';
 })
 export class LeaveReportComponent {
   userId: number = 0
+  departmentId: number = 0;
+  isEmployee: boolean = false;
+  isManager: boolean = false;
   leaveReport: LeaveReport[] = [];
   constructor(
     private accountService: AccountService,
@@ -21,13 +24,34 @@ export class LeaveReportComponent {
   ) { }
 
   ngOnInit() {
-    this.userId = this.accountService.loggedInUserId;
-    this.getLeaveReport();
+    this.initUserDetail();
+    this.getReport();
   }
 
-  getLeaveReport()
-  {
-    this.leaveService.getLeaveReport(this.userId).subscribe({
+  initUserDetail() {
+    this.userId = this.accountService.loggedInUserId;
+    this.isEmployee = this.accountService.isEmployee;
+    this.isManager = this.accountService.isManager;
+    this.departmentId = this.accountService.loggedInUserDepartmentId;
+  }
+
+  getReport() {
+    if (this.isEmployee)
+      this.getUserLeaveReport();
+    else if (this.isManager)
+      this.getLeaveReport();
+    else {
+      alert('Restricted access !!!')
+    }
+  }
+
+  getUserLeaveReport() {
+    this.leaveService.getUserLeaveReport(this.userId).subscribe({
+      next: result => this.leaveReport = result
+    })
+  }
+  getLeaveReport() {
+    this.leaveService.getLeaveReport(this.departmentId).subscribe({
       next: result => this.leaveReport = result
     })
   }

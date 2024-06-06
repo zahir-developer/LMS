@@ -1,0 +1,2 @@
+<app-dept-list (editEvent)="onEdit($event)" (cancelEvent)="onEditCancelEvent()" *ngIf="action == 'list'"></app-dept-list>
+<app-dept-add-edit [deptModel]="modelDept" *ngIf="action == 'edit' || action == 'add'"></app-dept-add-edit>

@@ -15,15 +15,12 @@ public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
-
     private readonly IUserLeaveServiceMapping _userLeaveService;
 
-    public LeaveController(IUserLeaveServiceMapping userLeaveService, IUnitOfWork unitOfWork, IMapper mapper, ILogger<LeaveController> logger)
+    public LeaveController(IUserLeaveServiceMapping userLeaveService, IMapper mapper, ILogger<LeaveController> logger)
     {
         _logger = logger;
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
         _userLeaveService = userLeaveService;
     }
 
@@ -65,7 +62,7 @@ public class LeaveController : ControllerBase
     {
         var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
         await _userLeaveService.AddAsync(userLeaveDto);
-        return true;
+        return _userLeaveService.SaveChangesAsync();
     }
 
     /// <summary>
@@ -84,26 +81,26 @@ public class LeaveController : ControllerBase
         {
             userLeave.Status = (int)statusUpdateDto.Status;
             await _userLeaveService.UpdateAsync(userLeave);
-            //await _userLeaveService.SaveAsync();
+            return _userLeaveService.SaveChangesAsync();
         }
 
         return true;
     }
 
-    [HttpGet("Report/{userId}")]
+    [HttpGet("Report/user/{userId}")]
     [Authorize("UserLeaveReport")]
-    public async Task<List<UserLeaveReportDto>> LeaveReport(int userId)
+    public async Task<List<UserLeaveReportDto>> LeaveReportByUserId(int userId)
     {
-        var leaveReport = _userLeaveService.GetUserLeaveReport(userId);
+        var leaveReport = _userLeaveService.GetUserLeaveReport(departmentId: 0, userId: userId);
 
         return leaveReport;
     }
 
-    [HttpGet("Report")]
+    [HttpGet("Report/department/{departmentId}")]
     [Authorize("LeaveReport")]
-    public async Task<List<UserLeaveReportDto>> LeaveReport()
+    public async Task<List<UserLeaveReportDto>> LeaveReportByDepartment(int departmentId)
     {
-        var leaveReport = _userLeaveService.GetUserLeaveReport();
+        var leaveReport = _userLeaveService.GetUserLeaveReport(departmentId: departmentId, userId: 0);
 
         return leaveReport;
     }
