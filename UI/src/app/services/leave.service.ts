@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
 import { UserLeaveAdd } from '../model/leave/user.leave.add';
 import { LeaveUpdate } from '../model/leave/leave.update';
+import { LeaveReport } from '../model/leave/leave.report';
 
 @Injectable({
   providedIn: 'root'

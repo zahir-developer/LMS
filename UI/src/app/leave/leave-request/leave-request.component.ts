@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LeaveService } from '../../services/leave.service';
@@ -10,6 +11,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { AccountService } from '../../services/account.service';
 import { UserLeaveAdd } from '../../model/leave/user.leave.add';
 import { Router } from '@angular/router';
+import { LeaveReport } from '../../model/leave/leave.report';
 @Component({
   selector: 'app-leave-request',
   standalone: true,
@@ -21,7 +23,7 @@ import { Router } from '@angular/router';
   styleUrl: './leave-request.component.css'
 })
 export class LeaveRequestComponent {
-  userId: number | undefined;
+  userId: number = 0;
   model: UserLeaveAdd = {
     userId: 0,
     leaveTypeId: 0,
@@ -30,10 +32,23 @@ export class LeaveRequestComponent {
     comments: ''
   };
   leaveType: any = [];
+  leaveRemaining: LeaveReport[] = [];
+
+  leaveBalance: LeaveReport = {
+    name: '',
+    leaveType: '',
+    leaveTypeId: 0,
+    totalLeave: 0,
+    totalLeaveRemaining: 0,
+    totalLeaveTaken: 0,
+    userId: 0
+  };
   constructor(
     private leaveService: LeaveService,
     private accountService: AccountService,
-    private router: Router) { }
+    private router: Router,
+    private notify: ToastrService
+  ) { }
 
   //leaveForm: FormGroup | undefined;
   leaveForm: FormGroup = new FormGroup({});
@@ -51,6 +66,7 @@ export class LeaveRequestComponent {
     this.getLeaveType();
     this.initializeForm();
     this.getCurrentUser();
+    this.getLeaveAvailability();
   }
 
   onSubmit() {
@@ -66,12 +82,42 @@ export class LeaveRequestComponent {
   }
 
   addLeave(objData: UserLeaveAdd) {
-    this.leaveService.addLeave(objData).subscribe(
-      result => {
-        console.log('Leave applied successfully');
-        this.router.navigateByUrl('/user-leave');
-      }
-    )
+    if (this.checkLeaveAvailability()) {
+      this.leaveService.addLeave(objData).subscribe(
+        result => {
+          console.log('Leave applied successfully');
+          this.router.navigateByUrl('/user-leave');
+        }
+      )
+    } else {
+      this.notify.warning('Reached maximum available leave count', 'Apply leave restricted');
+    }
+
+  }
+
+  checkLeaveAvailability() {
+    var result = false;
+
+
+    var leaveBalance = this.leaveRemaining.filter(s => s.leaveTypeId == this.leaveForm.value.leaveType);
+
+    if (leaveBalance)
+      result = leaveBalance[0].totalLeaveRemaining > 0;
+
+    return result;
+  }
+
+  getLeaveAvailability() {
+    var result = false;
+    this.leaveService.getUserLeaveReport(this.userId).subscribe(
+      {
+        next: response => {
+          if (response) {
+            this.leaveRemaining = response;
+            console.log(response);
+          }
+        }
+      })
   }
   getLeaveType() {
     this.leaveService.getLeaveType().subscribe(
