@@ -79,6 +79,7 @@ export class DeptAddEditComponent implements OnInit {
         next: result => {
           if (result)
             this.toastrService.success(AppText.AddDepartmentSuccess, AppModule.Department);
+            this.onBack();
         }
       }
     )
@@ -90,6 +91,7 @@ export class DeptAddEditComponent implements OnInit {
         next: result => {
           if (result)
             this.toastrService.success(AppText.UpdateDepartmentSuccess, AppModule.Department);
+            this.onBack();
         }
       }
     )

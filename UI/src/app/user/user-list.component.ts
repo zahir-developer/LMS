@@ -1,3 +1,4 @@
+import { PageListConfig } from './../model/paged.list';
 import { Component } from '@angular/core';
 import { AccountService } from '../services/account.service';
 import { AppText, Confirm } from '../model/Enum/constEnum';
@@ -24,12 +25,14 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { PagedListResult } from '../model/paged.list';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [CommonModule, RouterModule,
     MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule,
     PaginationModule,
+    FormsModule,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
@@ -41,12 +44,16 @@ export class UserListComponent {
   returnedArray: string[] = [];
   pgNo: number = 1;
   pgSize: number = 3;
+  searchText: string = "";
 
   pagedList: PagedListResult<User> = {
-    currentPage: 1,
-    itemsPerPage: 3,
-    totalItems: 0,
-    totalPages: 0,
+    pageListConfig: {
+      currentPage: 1,
+      itemsPerPage: 3,
+      totalItems: 0,
+      totalPages: 0,
+    },
+    searchText: '',
     items: [],
   }
   allUsers: User[] = [{
@@ -82,7 +89,7 @@ export class UserListComponent {
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
-    this.pagedList.currentPage = event.page;
+    this.pagedList.pageListConfig.currentPage = event.page;
     this.getUsers();
   }
 
@@ -92,16 +99,19 @@ export class UserListComponent {
     this.pagedList.items = this.allUsers;
   }
   getUsers() {
-    this.accountService.getAllUser(this.pagedList.itemsPerPage, this.pagedList.currentPage).subscribe({
+    this.accountService.getAllUser(this.pagedList.pageListConfig, this.pagedList.searchText).subscribe({
       next: result => {
         this.pagedList = result;
-        console.log(this.pagedList.itemsPerPage);
-        console.log(this.pagedList.totalItems);
-       }
+        console.log(this.pagedList.pageListConfig.itemsPerPage);
+        console.log(this.pagedList.pageListConfig.totalItems);
+      }
     });
   }
 
-
+  search() {
+    this.pagedList.searchText = this.searchText;
+    this.getUsers();
+  }
 
   edit(editUser: User) {
     this.accountService.setEditUser(editUser);

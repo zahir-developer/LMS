@@ -67,8 +67,20 @@ namespace LMS.Application.ServiceMappings
                                    DepartmentId = u.Department.Id,
                                    DepartmentName = u.Department.DepartmentName
                                }).AsQueryable();
+                               
+            if (!string.IsNullOrEmpty(userParams.SearchText))
+            {
+                usersResult = usersResult.Where(s =>
+                               s.FirstName == userParams.SearchText ||
+                               s.LastName == userParams.SearchText ||
+                               s.Email == userParams.SearchText ||
+                               s.RoleName == userParams.SearchText ||
+                               s.DepartmentName == userParams.SearchText
+                               ).AsQueryable();
+            }
 
-            var pagedList =  PagedList<UserListDto>.CreateAsync(usersResult, userParams.PageNumber, userParams.PageSize).Result;
+
+            var pagedList = PagedList<UserListDto>.CreateAsync(usersResult, userParams.PageNumber, userParams.PageSize).Result;
 
             return new PagedListResult<UserListDto>(pagedList, pagedList.CurrentPage, pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages);
         }

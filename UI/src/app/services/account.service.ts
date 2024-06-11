@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { NotifyMessageService } from './notify-message.service';
 import { AppText } from '../model/Enum/constEnum';
 import { Roles } from '../model/Enum/constEnum';
+import { PageListConfig } from '../model/paged.list';
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +51,16 @@ export class AccountService {
     );
   }
 
-  getAllUser(pgSize: number, pgNo: number) {
-    return this.httpUtilService.get(apiEndPoint.User.getAll.replace('{pgSize}', pgSize.toString()).replace('{pgNo}', pgNo.toString()));
+  getAllUser(pageConfig: PageListConfig, searchText: string) {
+    var query = apiEndPoint.User.getAll.replace('{pgSize}', pageConfig.itemsPerPage.toString())
+      .replace('{pgNo}', pageConfig.currentPage.toString())
+
+    if (searchText != "" && searchText !== undefined)
+      query = query.replace('{searchText}', searchText.toString());
+    else
+      query = query.replace('{searchText}', '').replace('&SearchText=', '');
+
+    return this.httpUtilService.get(query);
   }
 
   checkEmailExists(emailId: string) {
@@ -67,7 +76,7 @@ export class AccountService {
   }
 
   deleteUser(userId: number) {
-    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete.replace('{userId}', userId.toString()) );
+    return this.http.delete(environment.apiUrl + apiEndPoint.User.delete.replace('{userId}', userId.toString()));
   }
 
   login(model: any) {

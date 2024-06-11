@@ -1,0 +1,38 @@
+
+        /*
+                var uReport = (from lt in dbContext.LeaveType
+                               join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId
+                               select new
+                               {
+                                   lt.LeaveTypeName,
+                                   lt.MaxLeaveCount
+                               });
+        */
+        /*
+        var leaveReport = (from lt in dbContext.LeaveType
+                           join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId into ulGroup
+                           from ul in ulGroup.DefaultIfEmpty()
+                                 join u in dbContext.User on ul.UserId equals u.Id into uGroup
+                                 from u in uGroup.DefaultIfEmpty()
+                           group new
+                           {
+                               u.FirstName, 
+                               lt.LeaveTypeName,
+                               lt.MaxLeaveCount,
+                               ul.Id
+                           }
+                           by new
+                           {
+                               lt.LeaveTypeName,
+                               ul.UserId,
+                               u.FirstName 
+                           } into grouped
+                           select new
+                           {
+                               grouped.Key.UserId,
+                               grouped.Key.FirstName,
+                               grouped.Key.LeaveTypeName,
+                               MaxLeaveCount = grouped.Max(s => s.MaxLeaveCount),
+                               LeaveCount = grouped.Count(s => s.Id > 0)
+                           }).ToList();
+                           */
