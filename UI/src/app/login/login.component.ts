@@ -31,10 +31,9 @@ export class LoginComponent {
   login() {
     this.accService.login(this.model).subscribe({
       next: result => {
-        console.log(result);
         this.isLoggenIn = true;
         this.router.navigateByUrl('/home')
-        
+
       },
       error: error => console.log(error)
     })

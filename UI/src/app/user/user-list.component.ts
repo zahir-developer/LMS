@@ -18,16 +18,35 @@ import { ConfirmDialogeResponse } from '../model/confirm.dialoge.response';
 import { User } from '../model/user.model';
 import { NotifyMessageService } from '../services/notify-message.service';
 
+import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { PagedListResult } from '../model/paged.list';
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [CommonModule, RouterModule,
-    MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule],
+    MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule,
+    PaginationModule,
+  ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
 })
 export class UserListComponent {
+  showBoundaryLinks: boolean = true;
+  showDirectionLinks: boolean = true;
+  contentArray: string[] = new Array(50).fill('');
+  returnedArray: string[] = [];
+  pgNo: number = 1;
+  pgSize: number = 3;
+
+  pagedList: PagedListResult<User> = {
+    currentPage: 1,
+    itemsPerPage: 3,
+    totalItems: 0,
+    totalPages: 0,
+    items: [],
+  }
   allUsers: User[] = [{
     id: 0,
     firstName: '',
@@ -43,6 +62,7 @@ export class UserListComponent {
       state: ''
     }
   }];
+
   dialogData: any =
     {
       title: 'Delete confirmation',
@@ -55,15 +75,30 @@ export class UserListComponent {
     private notify: NotifyMessageService
   ) { }
 
+  pageChanged(event: PageChangedEvent): void {
+    const startItem = (event.page - 1) * event.itemsPerPage;
+    const endItem = event.page * event.itemsPerPage;
+    this.pagedList.currentPage = event.page;
+    this.getUsers();
+  }
+
   ngOnInit() {
     this.getUsers();
     this.accountService.setEditUser(undefined);
+    this.pagedList.items = this.allUsers;
   }
   getUsers() {
-    this.accountService.getAllUser().subscribe({
-      next: result => this.allUsers = result
+    this.accountService.getAllUser(this.pagedList.itemsPerPage, this.pagedList.currentPage).subscribe({
+      next: result => {
+        this.pagedList = result;
+        console.log(this.pagedList.itemsPerPage);
+        console.log(this.pagedList.totalItems);
+       }
     });
   }
+
+
+
   edit(editUser: User) {
     this.accountService.setEditUser(editUser);
     this.router.navigateByUrl('/user-edit');
@@ -95,11 +130,10 @@ export class UserListComponent {
     this.accountService.deleteUser(id).subscribe(
       {
         next: result => {
-          if(result)
-            {
-              this.getUsers();
-              this.notify.showMessage(AppText.DeleteSuccess);
-            } 
+          if (result) {
+            this.getUsers();
+            this.notify.showMessage(AppText.DeleteSuccess);
+          }
         }
       }
     )

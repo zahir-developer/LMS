@@ -1,4 +1,4 @@
-export const apiEndPoint = 
+export const apiEndPoint =
 {
     Auth:
     {
@@ -8,7 +8,7 @@ export const apiEndPoint =
     },
     User:
     {
-        getAll: `user/users`,
+        getAll: `user/users?pageNumber={pgNo}&pageSize={pgSize}`,
         update: `user/`,
         delete: `user`,
         emailExists: `user/`
@@ -17,7 +17,7 @@ export const apiEndPoint =
     {
         getType: `common/leaveTypes`,
         add: `leave/`,
-        get: `leave/`, 
+        get: `leave/`,
         getAll: `leave/`,
         updateStatus: `leave/StatusUpdate`
     },

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using LMS.Application.Helpers.Pagination;
 
 
 namespace LMS.Application.ServiceMappings
@@ -49,8 +50,9 @@ namespace LMS.Application.ServiceMappings
             return result;
         }
 
-        public async Task<List<UserListDto>> GetAllUserListAsync()
+        public async Task<PagedListResult<UserListDto>> GetAllUserListAsync(UserParams userParams)
         {
+            PagedListResult<UserListDto> paginationHeader;
             var userList = _unitOfWork.UserRepository.GetAllUserAsync().Result;
 
             var usersResult = (from u in userList
@@ -62,10 +64,11 @@ namespace LMS.Application.ServiceMappings
                                    Email = u.Email,
                                    RoleId = u.RoleId,
                                    RoleName = u.Role.RoleName
-                               }).ToList();
+                               }).AsQueryable();
 
-            return usersResult;
+            var pagedList =  PagedList<UserListDto>.CreateAsync(usersResult, userParams.PageNumber, userParams.PageSize).Result;
+
+            return new PagedListResult<UserListDto>(pagedList, pagedList.CurrentPage, pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages);
         }
-
     }
 }

@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using LMS.Application.DTOs;
 using LMS.Domain.Entities;
-using LMS.Application.Interfaces;
 using LMS.Application.Interfaces.IServices;
-using LMS.Application.Interfaces.IRepository;
+using LMS.Application.Helpers.Pagination;
 
 namespace LMS.Application.IServiceMappings
 {
@@ -15,6 +9,6 @@ namespace LMS.Application.IServiceMappings
     {
         UserDto GetUserByEmail(string emailId);
         Task<LoginResultDto> GetUserRolePrvilegeDetail(int userId);
-        Task<List<UserListDto>> GetAllUserListAsync();
+        Task<PagedListResult<UserListDto>> GetAllUserListAsync(UserParams userParams);
     }
 }

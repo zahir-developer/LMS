@@ -23,9 +23,9 @@ public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRep
 
         return userRoleDetails;
     }
-    public async Task<IEnumerable<User>> GetAllUserAsync()
+    public async Task<IQueryable<User>> GetAllUserAsync()
     {
-        var userRoleDetails = dbContext.User.Include(s=>s.Role);
+        var userRoleDetails = dbContext.User.Include(s=>s.Role).AsQueryable();
 
         return userRoleDetails;
     }
