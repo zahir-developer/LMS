@@ -67,16 +67,17 @@ namespace LMS.Application.ServiceMappings
                                    DepartmentId = u.Department.Id,
                                    DepartmentName = u.Department.DepartmentName
                                }).AsQueryable();
-                               
+
             if (!string.IsNullOrEmpty(userParams.SearchText))
             {
+                userParams.SearchText = userParams.SearchText.Trim().ToLower();
                 usersResult = usersResult.Where(s =>
-                               s.FirstName == userParams.SearchText ||
-                               s.LastName == userParams.SearchText ||
-                               s.Email == userParams.SearchText ||
-                               s.RoleName == userParams.SearchText ||
-                               s.DepartmentName == userParams.SearchText
-                               ).AsQueryable();
+                               s.FirstName.ToLower().Contains(userParams.SearchText) ||
+                               s.LastName.ToLower().Contains(userParams.SearchText) ||
+                               s.Email.ToLower().Contains(userParams.SearchText) ||
+                               s.RoleName.ToLower().Contains(userParams.SearchText) ||
+                               s.DepartmentName.ToLower().Contains(userParams.SearchText))
+                               .AsQueryable();
             }
 
 

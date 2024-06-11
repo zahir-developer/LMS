@@ -1,15 +1,9 @@
 using LMS.Application.Interfaces.IServiceMappings;
 using LMS.Application.Services;
 using LMS.Application.DTOs;
-using LMS.Application.IServiceMappings;
-using LMS.Application.Interfaces.IRepository;
-using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces;
-using LMS.Application.Constants;
 using LMS.Domain.Entities;
 using AutoMapper;
-using System.Linq;
-using System;
 
 namespace LMS.Application.ServiceMappings;
 public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveDto>, IUserLeaveServiceMapping
@@ -30,18 +24,6 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         {
             result = result.Where(u => u.UserId == userId).ToList();
         }
-        // var userLeaveResult = (from u in result
-        //                        select new UserLeaveListDto()
-        //                        {
-        //                            Id = u.Id,
-        //                            UserId = u.UserId,
-        //                            Name = u.User?.FirstName + " " + u.User?.LastName,
-        //                            LeaveTypeName = u.LeaveType?.LeaveTypeName,
-        //                            FromDate = u.FromDate,
-        //                            ToDate = u.ToDate,
-        //                            Comments = u.Comments,
-        //                            StatusName = ((ConstEnum.LeaveStatus)u.Status).ToString()
-        //                        });
 
         var userLeaveResult = mapper.Map<List<UserLeaveListDto>>(result);
 

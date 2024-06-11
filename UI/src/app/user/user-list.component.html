@@ -1,7 +1,7 @@
 <div class="pb-3">
     <button class="btn btn-info" [routerLink]="'/register'">Add User</button>
     <button class="btn btn-primary float-right" (click)="search()">Search</button>
-    <input class="float-right p-2 mr-2" [(ngModel)]="searchText" type="text" name="search" id="search"/>
+    <input class="float-right p-2 mr-2" [(ngModel)]="searchText" type="text" name="search" id="search" placeholder="Search"/>
 
 </div>
 <table class="table">
@@ -37,5 +37,5 @@
 <pagination class="float-right" [boundaryLinks]="showBoundaryLinks"
          [directionLinks]="showDirectionLinks"
          [totalItems]="this.pagedList.pageListConfig.totalItems"
-         [itemsPerPage]="this.pagedList.pageListConfig.itemsPerPage"
+         [itemsPerPage]="this.pagedList.pageListConfig.pageSize"
          (pageChanged)="pageChanged($event)"></pagination>
