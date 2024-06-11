@@ -1,20 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-
-using LMS.Application.Interfaces;
-using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces.IRepository;
 using LMS.Infrastructure.Database;
 using LMS.Domain.Entities;
-using LMS.Infrastructure.Repository;
 using AutoMapper;
 using static LMS.Application.Constants.ConstEnum;
 using LMS.Application.DTOs;
-using System.Data.Common;
 namespace LMS.Infrastructure.Repository;
 
 
@@ -68,44 +58,6 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
                         TotalLeave = leaveType.MaxLeaveCount
                     });
         }
-
-        /*
-                var uReport = (from lt in dbContext.LeaveType
-                               join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId
-                               select new
-                               {
-                                   lt.LeaveTypeName,
-                                   lt.MaxLeaveCount
-                               });
-        */
-        /*
-        var leaveReport = (from lt in dbContext.LeaveType
-                           join ul in dbContext.UserLeave on lt.Id equals ul.LeaveTypeId into ulGroup
-                           from ul in ulGroup.DefaultIfEmpty()
-                                 join u in dbContext.User on ul.UserId equals u.Id into uGroup
-                                 from u in uGroup.DefaultIfEmpty()
-                           group new
-                           {
-                               u.FirstName, 
-                               lt.LeaveTypeName,
-                               lt.MaxLeaveCount,
-                               ul.Id
-                           }
-                           by new
-                           {
-                               lt.LeaveTypeName,
-                               ul.UserId,
-                               u.FirstName 
-                           } into grouped
-                           select new
-                           {
-                               grouped.Key.UserId,
-                               grouped.Key.FirstName,
-                               grouped.Key.LeaveTypeName,
-                               MaxLeaveCount = grouped.Max(s => s.MaxLeaveCount),
-                               LeaveCount = grouped.Count(s => s.Id > 0)
-                           }).ToList();
-                           */
 
         return userLeaveGroup.OrderBy(s => s.UserId).ToList();
     }

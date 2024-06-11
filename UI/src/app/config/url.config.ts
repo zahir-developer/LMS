@@ -8,7 +8,7 @@ export const apiEndPoint =
     },
     User:
     {
-        getAll: `user/users?pageNumber={pgNo}&pageSize={pgSize}`,
+        getAll: `user/users?pageNumber={pgNo}&pageSize={pgSize}&SearchText={searchText}`,
         update: `user/`,
         delete: `user/{userId}`,
         emailExists: `user/`

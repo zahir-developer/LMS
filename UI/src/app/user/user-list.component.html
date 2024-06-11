@@ -1,5 +1,8 @@
 <div class="pb-3">
     <button class="btn btn-info" [routerLink]="'/register'">Add User</button>
+    <button class="btn btn-primary float-right" (click)="search()">Search</button>
+    <input class="float-right p-2 mr-2" [(ngModel)]="searchText" type="text" name="search" id="search"/>
+
 </div>
 <table class="table">
     <thead class="thead-light">
@@ -13,7 +16,7 @@
             <th scope="col" class="text-center">Actions</th>
         </tr>
     </thead>
-    <tbody *ngIf="pagedList.items[0].id !== 0">
+    <tbody *ngIf="pagedList.items[0]?.id !== 0">
         <tr *ngFor="let u of pagedList.items">
             <td scope="row">{{ u.id }}</td>
             <td scope="row">{{ u.firstName }}</td>
@@ -27,12 +30,12 @@
             </td>
         </tr>
     </tbody>
-    <tbody *ngIf="pagedList.items[0].id == 0">
-        <tr class="text-center"><td colspan="6">No data available</td></tr>
+    <tbody *ngIf="pagedList.items[0]?.id == undefined">
+        <tr class="text-center"><td colspan="7">No data available</td></tr>
     </tbody>
 </table>
-<pagination [boundaryLinks]="showBoundaryLinks"
+<pagination class="float-right" [boundaryLinks]="showBoundaryLinks"
          [directionLinks]="showDirectionLinks"
-         [totalItems]="this.pagedList.totalItems"
-         [itemsPerPage]="this.pagedList.itemsPerPage"
+         [totalItems]="this.pagedList.pageListConfig.totalItems"
+         [itemsPerPage]="this.pagedList.pageListConfig.itemsPerPage"
          (pageChanged)="pageChanged($event)"></pagination>
