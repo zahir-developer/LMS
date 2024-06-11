@@ -1,6 +1,6 @@
-﻿using System.Runtime.Intrinsics.Arm;
-using AutoMapper;
+﻿using AutoMapper;
 using LMS.Application.DTOs;
+using LMS.Application.Helpers.Pagination;
 using LMS.Application.IServiceMappings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,6 @@ public class DepartmentController : ControllerBase
         this._mapper = mapper;
     }
 
-
     [HttpGet]
     [Authorize("Department_Get")]
     public async Task<List<DepartmentDto>> GetDepartmentList()
@@ -30,6 +29,16 @@ public class DepartmentController : ControllerBase
         var departmentResultDto = _mapper.Map<List<DepartmentDto>>(departements);
 
         return departmentResultDto.ToList();
+    }
+
+
+    [HttpGet("Search")]
+    [Authorize("Department_Search")]
+    public async Task<PagedListResult<DepartmentDto>> GetDepartmentSearch([FromQuery] UserParams userParams)
+    {
+        var departements = await _departmentService.GetAllDepartmentSearch(userParams);
+
+        return departements;
     }
 
     [HttpPost]

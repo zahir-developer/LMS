@@ -40,11 +40,6 @@ import { FormsModule } from '@angular/forms';
 export class UserListComponent {
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true;
-  contentArray: string[] = new Array(50).fill('');
-  returnedArray: string[] = [];
-  pgNo: number = 1;
-  pgSize: number = 3;
-  searchText: string = "";
 
   pagedList: PagedListResult<User> = {
     pageListConfig: {
@@ -108,11 +103,6 @@ export class UserListComponent {
     });
   }
 
-  search() {
-    this.pagedList.searchText = this.searchText;
-    this.getUsers();
-  }
-
   edit(editUser: User) {
     this.accountService.setEditUser(editUser);
     this.router.navigateByUrl('/user-edit');
@@ -145,6 +135,12 @@ export class UserListComponent {
         }
       }
     )
+  }
+
+  onKeydown(key: string) {
+    if (key === "Enter") {
+      this.getUsers();
+    }
   }
 
 
