@@ -7,8 +7,8 @@ export interface PagedListResult<T> {
 
 export interface PageListConfig
 {
-  currentPage: number;
-  itemsPerPage: number;
+  pageNumber: number;
+  pageSize: number;
   totalItems: number;
   totalPages: number;
 }

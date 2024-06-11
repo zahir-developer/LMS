@@ -48,8 +48,8 @@ export class UserListComponent {
 
   pagedList: PagedListResult<User> = {
     pageListConfig: {
-      currentPage: 1,
-      itemsPerPage: 3,
+      pageNumber: 1,
+      pageSize: 3,
       totalItems: 0,
       totalPages: 0,
     },
@@ -89,7 +89,7 @@ export class UserListComponent {
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
-    this.pagedList.pageListConfig.currentPage = event.page;
+    this.pagedList.pageListConfig.pageNumber = event.page;
     this.getUsers();
   }
 
@@ -102,7 +102,7 @@ export class UserListComponent {
     this.accountService.getAllUser(this.pagedList.pageListConfig, this.pagedList.searchText).subscribe({
       next: result => {
         this.pagedList = result;
-        console.log(this.pagedList.pageListConfig.itemsPerPage);
+        console.log(this.pagedList.pageListConfig.pageSize);
         console.log(this.pagedList.pageListConfig.totalItems);
       }
     });
