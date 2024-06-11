@@ -52,8 +52,8 @@ export class AccountService {
   }
 
   getAllUser(pageConfig: PageListConfig, searchText: string) {
-    var query = apiEndPoint.User.getAll.replace('{pgSize}', pageConfig.itemsPerPage.toString())
-      .replace('{pgNo}', pageConfig.currentPage.toString())
+    var query = apiEndPoint.User.getAll.replace('{pgSize}', pageConfig.pageSize.toString())
+      .replace('{pgNo}', pageConfig.pageNumber.toString())
 
     if (searchText != "" && searchText !== undefined)
       query = query.replace('{searchText}', searchText.toString());
