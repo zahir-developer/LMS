@@ -30,6 +30,15 @@
         </span>
     </div>
     <div class="form-group">
+      <label for="">Department</label>
+      <select name="department" formControlName="departmentId" id="department" class="form-control">
+        <option value="">Select department</option>
+        <option *ngFor="let d of departments" [ngValue]="d.id">
+          {{d.departmentName}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
         <label for="Email">Email Id</label>
         <input type="text" name="email" formControlName="email"
             class="form-control">

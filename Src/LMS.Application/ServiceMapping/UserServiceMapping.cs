@@ -64,8 +64,8 @@ namespace LMS.Application.ServiceMappings
                                    Email = u.Email,
                                    RoleId = u.RoleId,
                                    RoleName = u.Role.RoleName,
-                                   DepartmentId = u.Department?.Id,
-                                   DepartmentName = u.Department?.DepartmentName
+                                   DepartmentId = u.Department.Id,
+                                   DepartmentName = u.Department.DepartmentName
                                }).AsQueryable();
 
             var pagedList =  PagedList<UserListDto>.CreateAsync(usersResult, userParams.PageNumber, userParams.PageSize).Result;
