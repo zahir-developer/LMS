@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './interceptor/auth.interceptor';
 import { errorInterceptor } from './interceptor/error.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { PaginationConfig } from 'ngx-bootstrap/pagination';
 
 /* toaster - notification service */
 import { provideToastr } from 'ngx-toastr';
@@ -18,5 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideToastr(), // Toastr providers
     MatDialogHelper,
+    PaginationConfig
   ]
 };

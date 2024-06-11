@@ -13,8 +13,8 @@
             <th scope="col" class="text-center">Actions</th>
         </tr>
     </thead>
-    <tbody *ngIf="allUsers[0].id !== 0">
-        <tr *ngFor="let u of allUsers">
+    <tbody *ngIf="pagedList.items[0].id !== 0">
+        <tr *ngFor="let u of pagedList.items">
             <td scope="row">{{ u.id }}</td>
             <td scope="row">{{ u.firstName }}</td>
             <td scope="row">{{ u.lastName }}</td>
@@ -27,7 +27,12 @@
             </td>
         </tr>
     </tbody>
-    <tbody *ngIf="allUsers[0].id == 0">
+    <tbody *ngIf="pagedList.items[0].id == 0">
         <tr class="text-center"><td colspan="6">No data available</td></tr>
     </tbody>
 </table>
+<pagination [boundaryLinks]="showBoundaryLinks"
+         [directionLinks]="showDirectionLinks"
+         [totalItems]="this.pagedList.totalItems"
+         [itemsPerPage]="this.pagedList.itemsPerPage"
+         (pageChanged)="pageChanged($event)"></pagination>
