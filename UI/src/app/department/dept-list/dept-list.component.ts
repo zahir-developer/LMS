@@ -9,12 +9,17 @@ import { MatDialogConfirmationComponent } from '../../shared/mat-dialog-confirma
 import { ConfirmDialog, MatDialogHelper } from '../../model/common/mat.dialog.helper';
 import { AppText, Confirm } from '../../model/Enum/constEnum';
 import { ToastrService } from 'ngx-toastr';
-
+import { PagedListResult } from '../../model/paged.list';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { FormsModule } from '@angular/forms';
+import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 
 @Component({
   selector: 'app-dept-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+    PaginationModule,
+    FormsModule],
   templateUrl: './dept-list.component.html',
   styleUrl: './dept-list.component.css'
 })
@@ -27,6 +32,18 @@ export class DeptListComponent {
       description: AppText.DeleteConfirmation.toString(),
       data: 0
     }
+  showBoundaryLinks: boolean = true;
+  showDirectionLinks: boolean = true;
+  pagedList: PagedListResult<DepartmentModel> = {
+    pageListConfig: {
+      pageNumber: 1,
+      pageSize: 3,
+      totalItems: 0,
+      totalPages: 0,
+    },
+    searchText: '',
+    items: [],
+  }
   constructor(
     private deptService: DepartmentService,
     private dialog: MatDialog,
@@ -43,11 +60,12 @@ export class DeptListComponent {
 
   ngOnInit() {
     this.getDepartments();
+    this.pagedList.items = this.departments;
   }
 
   getDepartments() {
-    this.deptService.getDepartments().subscribe({
-      next: result => this.departments = result
+    this.deptService.getDepartmentSearch(this.pagedList.pageListConfig, this.pagedList.searchText).subscribe({
+      next: result => this.pagedList = result
     })
   }
 
@@ -88,5 +106,16 @@ export class DeptListComponent {
     )
   }
 
+  pageChanged(event: PageChangedEvent): void {
+    // const startItem = (event.page - 1) * event.itemsPerPage;
+    // const endItem = event.page * event.itemsPerPage;
+    this.pagedList.pageListConfig.pageNumber = event.page;
+    this.getDepartments();
+  }
 
+  onKeydown(key: string) {
+    if (key === "Enter") {
+      this.getDepartments();
+    }
+  }
 }

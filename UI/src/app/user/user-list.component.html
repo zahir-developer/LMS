@@ -1,7 +1,7 @@
 <div class="pb-3">
     <button class="btn btn-info" [routerLink]="'/register'">Add User</button>
-    <button class="btn btn-primary float-right" (click)="search()">Search</button>
-    <input class="float-right p-2 mr-2" [(ngModel)]="searchText" type="text" name="search" id="search" placeholder="Search"/>
+    <button class="btn btn-primary float-right" (click)="getUsers()">Search</button>
+    <input class="float-right p-2 mr-2" (keydown)="onKeydown($event.key)" [(ngModel)]="pagedList.searchText" type="text" name="search" id="search" placeholder="Search"/>
 
 </div>
 <table class="table">

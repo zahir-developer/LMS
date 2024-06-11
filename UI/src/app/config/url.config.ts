@@ -29,6 +29,7 @@ export const apiEndPoint =
     },
     Department:
     {
+      search: 'department/search?pageNumber={pgNo}&pageSize={pgSize}&SearchText={searchText}',
       get: 'department',
       add: 'department',
       update: 'department',

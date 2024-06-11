@@ -83,7 +83,7 @@ namespace LMS.Application.ServiceMappings
 
             var pagedList = PagedList<UserListDto>.CreateAsync(usersResult, userParams.PageNumber, userParams.PageSize).Result;
 
-            return new PagedListResult<UserListDto>(pagedList, pagedList.CurrentPage, pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages);
+            return new PagedListResult<UserListDto>(pagedList, pagedList.CurrentPage, pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages, userParams.SearchText);
         }
     }
 }

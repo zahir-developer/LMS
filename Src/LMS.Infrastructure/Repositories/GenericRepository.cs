@@ -25,6 +25,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await dbContext.Set<T>().ToListAsync();
     }
 
+    public IQueryable<T> GetAllQueryable()
+    {
+        return dbContext.Set<T>().AsQueryable();
+    }
+
     public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await dbContext.Set<T>().ToListAsync(cancellationToken);

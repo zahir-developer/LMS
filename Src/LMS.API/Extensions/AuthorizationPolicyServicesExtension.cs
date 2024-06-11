@@ -33,6 +33,7 @@ public static class AuthorizationPolicyServicesExtension
             x.AddPolicy("Department_Add", policy=>policy.RequireRole(Roles.Admin.ToString()));
             x.AddPolicy("Department_Update", policy=>policy.RequireRole(Roles.Admin.ToString()));
             x.AddPolicy("Department_Delete", policy=>policy.RequireRole(Roles.Admin.ToString()));
+            x.AddPolicy("Department_Search", policy=>policy.RequireRole(Roles.Admin.ToString()));
             
 
         });
