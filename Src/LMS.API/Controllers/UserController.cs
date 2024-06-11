@@ -5,6 +5,7 @@ using LMS.Application.DTOs;
 using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using AutoMapper;
+using LMS.Application.Helpers.Pagination;
 
 namespace LMS.API.Controllers;
 
@@ -29,11 +30,11 @@ public class UserController : ControllerBase
     [HttpGet]
     [Authorize("User_View_All")]
     [Route("users")]
-    public async Task<ActionResult<List<UserListDto>>> GetAllUser()
+    public async Task<IActionResult> GetAllUser([FromQuery]UserParams userParams)
     {
-        var result = _userService.GetAllUserListAsync().Result;
+        var result = _userService.GetAllUserListAsync(userParams).Result;
 
-        return result;
+        return Ok(result);
     }
 
     /// <summary>

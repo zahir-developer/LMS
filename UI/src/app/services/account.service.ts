@@ -50,8 +50,8 @@ export class AccountService {
     );
   }
 
-  getAllUser() {
-    return this.httpUtilService.get(apiEndPoint.User.getAll);
+  getAllUser(pgSize: number, pgNo: number) {
+    return this.httpUtilService.get(apiEndPoint.User.getAll.replace('{pgSize}', pgSize.toString()).replace('{pgNo}', pgNo.toString()));
   }
 
   checkEmailExists(emailId: string) {
