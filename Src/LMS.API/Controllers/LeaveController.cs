@@ -59,8 +59,17 @@ public class LeaveController : ControllerBase
     [Authorize("Leave_Apply")]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
-        var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
-        await _userLeaveService.AddAsync(userLeaveDto);
+        UserLeaveAddDto leave;
+        DateTime fromDate = dto.FromDate;
+        DateTime toDate = dto.ToDate;
+        for (DateTime date = fromDate; date <= toDate; date = date.AddDays(1))
+        {
+            leave = dto;
+            leave.FromDate = date;
+            leave.ToDate = date;
+            var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
+            await _userLeaveService.AddAsync(userLeaveDto);
+        }
         return _userLeaveService.SaveChangesAsync();
     }
 
