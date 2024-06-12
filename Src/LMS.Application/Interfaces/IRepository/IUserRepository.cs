@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Linq;
+﻿using System.Linq.Expressions;
 using LMS.Domain.Entities;
 
 namespace LMS.Application.Interfaces.IRepository;

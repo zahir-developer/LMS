@@ -4,7 +4,7 @@ import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
-import { LoginUser } from '../model/login.user';
+import { AuthToken, LoginUser } from '../model/login.user';
 import { environment } from '../../environments/environment';
 import { NotifyMessageService } from './notify-message.service';
 import { AppText } from '../model/Enum/constEnum';
@@ -95,6 +95,11 @@ export class AccountService {
       }
       )
     )
+  }
+
+  refreshToken(model: AuthToken)
+  {
+    return this.http.post<LoginUser>(environment.apiUrl + apiEndPoint.Auth.login, model);
   }
 
 

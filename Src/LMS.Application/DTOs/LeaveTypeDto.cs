@@ -1,5 +1,4 @@
- 
-namespace LMS.Application.DTOs;
+ namespace LMS.Application.DTOs;
 public class LeaveTypeDto
 {
     public int Id { get; set;}

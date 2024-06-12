@@ -7,7 +7,6 @@ using LMS.Application.ServiceMappings;
 using LMS.Application.Interfaces.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces.IRepository;
-using LMS.Application.AutoMapper;
 using LMS.Application.IServiceMappings;
 using Microsoft.EntityFrameworkCore;
 

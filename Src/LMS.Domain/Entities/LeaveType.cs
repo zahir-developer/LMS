@@ -1,7 +1,6 @@
-
+namespace LMS.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace LMS.Domain.Entities;
 public class LeaveType : BaseEntity
 {
 

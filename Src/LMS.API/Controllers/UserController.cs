@@ -6,7 +6,6 @@ using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using AutoMapper;
 using LMS.Application.Helpers.Pagination;
-using LMS.Domain.Entities;
 
 namespace LMS.API.Controllers;
 

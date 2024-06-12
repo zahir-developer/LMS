@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
 using AutoMapper;
-using LMS.Application.Interfaces;
 
 namespace LMS.API.Controllers;
 
@@ -71,7 +70,7 @@ public class LeaveController : ControllerBase
     /// <param name="leaveStatusUpdateDto"></param>
     /// <returns></returns>
     [HttpPut]
-    [Route("StatusUpdate")]
+    [Route("statusUpdate")]
     [Authorize("Leave_Approve_Reject")]
     public async Task<ActionResult<bool>> LeaveStatusUpdate(LeaveStatusUpdateDto statusUpdateDto)
     {
@@ -87,7 +86,7 @@ public class LeaveController : ControllerBase
         return true;
     }
 
-    [HttpGet("Report/user/{userId}")]
+    [HttpGet("report/user/{userId}")]
     [Authorize("UserLeaveReport")]
     public async Task<List<UserLeaveReportDto>> LeaveReportByUserId(int userId)
     {
@@ -96,7 +95,7 @@ public class LeaveController : ControllerBase
         return leaveReport;
     }
 
-    [HttpGet("Report/department/{departmentId}")]
+    [HttpGet("report/department/{departmentId}")]
     [Authorize("LeaveReport")]
     public async Task<List<UserLeaveReportDto>> LeaveReportByDepartment(int departmentId)
     {
