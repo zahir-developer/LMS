@@ -6,6 +6,7 @@ using LMS.Application.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using AutoMapper;
 using LMS.Application.Helpers.Pagination;
+using LMS.Domain.Entities;
 
 namespace LMS.API.Controllers;
 
@@ -46,8 +47,11 @@ public class UserController : ControllerBase
     [Authorize("User_Edit_Update")]
     public async Task<ActionResult<bool>> UpdateUser(UserUpdateDto userUpdateDto)
     {
-        var userDto = _mapper.Map<UserDto>(userUpdateDto);
-        var user = _userService.UpdateAsync(userDto);
+        var user = await _userService.GetByIdAsync(userUpdateDto.Id);
+
+        var userUpdated = _mapper.Map(userUpdateDto, user);
+
+        await _userService.UpdateAsync(userUpdated);
         return _userService.SaveChangesAsync();
     }
 
