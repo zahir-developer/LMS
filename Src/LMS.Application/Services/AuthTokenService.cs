@@ -104,7 +104,7 @@ public class AuthTokenService : IAuthTokenService
 
     public string GenerateToken(string EmailId, string? roleName = null)
     {
-        int.TryParse(_config["JwtTokenExpireMinutes"], out int tokenExpiry);
+        int.TryParse(_config["TokenExpireMinutes"], out int tokenExpiry);
 
         var claims = new List<Claim>
         {

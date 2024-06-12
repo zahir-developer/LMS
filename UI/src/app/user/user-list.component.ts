@@ -17,7 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogConfirmationComponent } from '../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
 import { ConfirmDialogeResponse } from '../model/confirm.dialoge.response';
 import { User } from '../model/user.model';
-import { NotifyMessageService } from '../services/notify-message.service';
 import { ConfirmDialog } from '../model/common/mat.dialog.helper';
 import { MatDialogHelper } from '../model/common/mat.dialog.helper';
 
@@ -28,6 +27,7 @@ import { PagedListResult } from '../model/paged.list';
 import { FormsModule } from '@angular/forms';
 
 import { Sort, MatSortModule } from '@angular/material/sort';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-user-list',
   standalone: true,
@@ -82,7 +82,7 @@ export class UserListComponent {
   constructor(private accountService: AccountService,
     private router: Router,
     public dialog: MatDialog,
-    private notify: NotifyMessageService,
+    private toastr: ToastrService,
     private matDialogHelper: MatDialogHelper,
   ) { }
 
@@ -133,7 +133,7 @@ export class UserListComponent {
         next: result => {
           if (result) {
             this.getUsers();
-            this.notify.showMessage(AppText.DeleteSuccess);
+            this.toastr.success(AppText.DeleteSuccess, 'User delete');
           }
         }
       }

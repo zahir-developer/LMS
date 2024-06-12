@@ -52,7 +52,9 @@ public class AuthController : ControllerBase
         _logger.LogInformation("User {0} create begins", user.Email);
 
         var userAuth = _authTokenService.RegisterAuthUser(user);
-        
+        if (userAuth != null)
+            _logger.LogInformation("User {0} created successfully ", user.Email);
+            
         return userAuth;
     }
 

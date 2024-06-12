@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
 import { AuthToken, LoginUser } from '../model/login.user';
 import { environment } from '../../environments/environment';
-import { NotifyMessageService } from './notify-message.service';
 import { AppText } from '../model/Enum/constEnum';
 import { Roles } from '../model/Enum/constEnum';
 import { PageListConfig } from '../model/paged.list';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class AccountService {
   constructor(
     private httpUtilService: HttpUtilsService,
     private http: HttpClient,
-    private _notify: NotifyMessageService,
+    private toastr: ToastrService,
 
   ) { }
 
@@ -46,7 +46,7 @@ export class AccountService {
   registerUser(userObj: User) {
     this.httpUtilService.post(apiEndPoint.Auth.signup, userObj).subscribe(
       result => {
-        this._notify.showMessage(AppText.UserCreatedSuccess);
+        this.toastr.success(AppText.UserCreatedSuccess, 'User');
       }
     );
   }

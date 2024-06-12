@@ -8,6 +8,7 @@ import { AppText } from '../../model/Enum/constEnum';
 import { Router } from '@angular/router';
 import { DepartmentService } from '../../services/department.service';
 import { DepartmentModel } from '../../model/department/department.model';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -25,7 +26,8 @@ export class RegisterComponent {
     private department: DepartmentService,
     private _notify: NotifyMessageService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) {
 
   }
@@ -96,7 +98,7 @@ export class RegisterComponent {
             this._notify.showMessage(AppText.EmailExists);
           else {
             this.accService.registerUser(this.regForm.value);
-            //this._notify.showMessage(AppText.EmailNotExists);
+            //this.toastr.success(AppText.UserCreatedSuccess, 'User create');
             this.router.navigateByUrl('/user-list');
           }
 
