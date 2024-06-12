@@ -32,7 +32,7 @@ public class DepartmentController : ControllerBase
     }
 
 
-    [HttpGet("Search")]
+    [HttpGet("search")]
     [Authorize("Department_Search")]
     public async Task<PagedListResult<DepartmentDto>> GetDepartmentSearch([FromQuery] UserParams userParams)
     {

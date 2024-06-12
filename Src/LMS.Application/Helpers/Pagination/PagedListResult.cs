@@ -2,13 +2,10 @@
 
 public class PagedListResult<T> where T : class
 {
-    public PagedListResult(List<T> items, int pageNumber, int pageSize, int totalItems, int toalPages, string searchText)
+    public PagedListResult(List<T> items, PageListConfig pageListConfig, string searchText)
     {
         Items = items;
-        PageListConfig.PageNumber = pageNumber;
-        PageListConfig.PageSize = pageSize;
-        PageListConfig.TotalItems = totalItems;
-        PageListConfig.TotalPages = toalPages;
+        PageListConfig = pageListConfig;
         SearchText = searchText;     
     }
 

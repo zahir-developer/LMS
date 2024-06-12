@@ -22,7 +22,7 @@
     <div class="form-group">
         <label for="role">Role<strong>*</strong></label>
         <select type="text" id="roleId" formControlName="roleId" name="role" class="form-control">
-            <option value="">Select role</option>
+            <option value="0">Select role</option>
             <option *ngFor="let item of roles" [ngValue]="item.id">{{ item.roleName }}</option>
         </select>
         <span class="text-danger" *ngIf="(regForm.controls.roleId.touched || submitted) && regForm.controls.roleId.value == 0">
@@ -32,11 +32,14 @@
     <div class="form-group">
       <label for="">Department</label>
       <select name="department" formControlName="departmentId" id="department" class="form-control">
-        <option value="">Select department</option>
+        <option value="0">Select department</option>
         <option *ngFor="let d of departments" [ngValue]="d.id">
           {{d.departmentName}}
         </option>
       </select>
+      <span class="text-danger" *ngIf="(regForm.controls.departmentId.touched || submitted) && regForm.controls.departmentId.value == 0">
+        Please select department
+      </span>
     </div>
     <div class="form-group">
         <label for="Email">Email Id</label>

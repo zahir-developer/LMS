@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace LMS.Application.DTOs;
 public class UserUpdateDto
 {

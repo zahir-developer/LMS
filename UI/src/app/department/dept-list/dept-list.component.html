@@ -3,11 +3,11 @@
   <button class="btn btn-primary float-right" (click)="getDepartments()">Search</button>
   <input class="float-right p-2 mr-2" (keydown)="onKeydown($event.key)" [(ngModel)]="pagedList.searchText" type="text" name="search" id="search" placeholder="Search"/>
 </div>
-<table class="table">
+<table class="table" matSort (matSortChange)="sortData($event)" matSortActive="id" matSortDirection="asc">
   <thead class="thead-light">
-    <th scope="col">Department ID</th>
-    <th scope="col">Name</th>
-    <th scope="col">Description</th>
+    <th scope="col" mat-sort-header="id">Department ID</th>
+    <th scope="col" mat-sort-header="name">Name</th>
+    <th scope="col" mat-sort-header="description">Description</th>
     <th scope="col">Actions</th>
   </thead>
   <tbody>

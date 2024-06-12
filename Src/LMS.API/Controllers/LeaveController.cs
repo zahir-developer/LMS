@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
 using AutoMapper;
-using LMS.Application.Interfaces;
 
 namespace LMS.API.Controllers;
 
@@ -60,8 +59,17 @@ public class LeaveController : ControllerBase
     [Authorize("Leave_Apply")]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
-        var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
-        await _userLeaveService.AddAsync(userLeaveDto);
+        UserLeaveAddDto leave;
+        DateTime fromDate = dto.FromDate;
+        DateTime toDate = dto.ToDate;
+        for (DateTime date = fromDate; date <= toDate; date = date.AddDays(1))
+        {
+            leave = dto;
+            leave.FromDate = date;
+            leave.ToDate = date;
+            var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
+            await _userLeaveService.AddAsync(userLeaveDto);
+        }
         return _userLeaveService.SaveChangesAsync();
     }
 
@@ -71,7 +79,7 @@ public class LeaveController : ControllerBase
     /// <param name="leaveStatusUpdateDto"></param>
     /// <returns></returns>
     [HttpPut]
-    [Route("StatusUpdate")]
+    [Route("statusUpdate")]
     [Authorize("Leave_Approve_Reject")]
     public async Task<ActionResult<bool>> LeaveStatusUpdate(LeaveStatusUpdateDto statusUpdateDto)
     {
@@ -87,7 +95,7 @@ public class LeaveController : ControllerBase
         return true;
     }
 
-    [HttpGet("Report/user/{userId}")]
+    [HttpGet("report/user/{userId}")]
     [Authorize("UserLeaveReport")]
     public async Task<List<UserLeaveReportDto>> LeaveReportByUserId(int userId)
     {
@@ -96,7 +104,7 @@ public class LeaveController : ControllerBase
         return leaveReport;
     }
 
-    [HttpGet("Report/department/{departmentId}")]
+    [HttpGet("report/department/{departmentId}")]
     [Authorize("LeaveReport")]
     public async Task<List<UserLeaveReportDto>> LeaveReportByDepartment(int departmentId)
     {

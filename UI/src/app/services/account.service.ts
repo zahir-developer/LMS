@@ -4,12 +4,12 @@ import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
-import { LoginUser } from '../model/login.user';
+import { AuthToken, LoginUser } from '../model/login.user';
 import { environment } from '../../environments/environment';
-import { NotifyMessageService } from './notify-message.service';
 import { AppText } from '../model/Enum/constEnum';
 import { Roles } from '../model/Enum/constEnum';
 import { PageListConfig } from '../model/paged.list';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class AccountService {
   constructor(
     private httpUtilService: HttpUtilsService,
     private http: HttpClient,
-    private _notify: NotifyMessageService,
+    private toastr: ToastrService,
 
   ) { }
 
@@ -46,7 +46,7 @@ export class AccountService {
   registerUser(userObj: User) {
     this.httpUtilService.post(apiEndPoint.Auth.signup, userObj).subscribe(
       result => {
-        this._notify.showMessage(AppText.UserCreatedSuccess);
+        this.toastr.success(AppText.UserCreatedSuccess, 'User');
       }
     );
   }
@@ -54,11 +54,16 @@ export class AccountService {
   getAllUser(pageConfig: PageListConfig, searchText: string) {
     var query = apiEndPoint.User.getAll.replace('{pgSize}', pageConfig.pageSize.toString())
       .replace('{pgNo}', pageConfig.pageNumber.toString())
+      .replace('{sortBy}', pageConfig.sortBy.toString())
+      .replace('{sortDir}', pageConfig.sortDir.toString())
 
     if (searchText != "" && searchText !== undefined)
       query = query.replace('{searchText}', searchText.toString());
+    else if(searchText == "" || searchText == undefined)
+      query = query.replace('{searchText}', '').replace('&SearchText=', '')
     else
-      query = query.replace('{searchText}', '').replace('&SearchText=', '');
+      query = query;
+
 
     return this.httpUtilService.get(query);
   }
@@ -90,6 +95,11 @@ export class AccountService {
       }
       )
     )
+  }
+
+  refreshToken(model: AuthToken)
+  {
+    return this.http.post<LoginUser>(environment.apiUrl + apiEndPoint.Auth.login, model);
   }
 
 

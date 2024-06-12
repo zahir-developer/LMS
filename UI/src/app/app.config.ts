@@ -11,6 +11,7 @@ import { PaginationConfig } from 'ngx-bootstrap/pagination';
 /* toaster - notification service */
 import { provideToastr } from 'ngx-toastr';
 import { MatDialogHelper } from './model/common/mat.dialog.helper';
+import { DatePipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideToastr(), // Toastr providers
     MatDialogHelper,
-    PaginationConfig
+    PaginationConfig,
+    DatePipe,
   ]
 };

@@ -17,7 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogConfirmationComponent } from '../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
 import { ConfirmDialogeResponse } from '../model/confirm.dialoge.response';
 import { User } from '../model/user.model';
-import { NotifyMessageService } from '../services/notify-message.service';
 import { ConfirmDialog } from '../model/common/mat.dialog.helper';
 import { MatDialogHelper } from '../model/common/mat.dialog.helper';
 
@@ -26,6 +25,9 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { PagedListResult } from '../model/paged.list';
 import { FormsModule } from '@angular/forms';
+
+import { Sort, MatSortModule } from '@angular/material/sort';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-user-list',
   standalone: true,
@@ -33,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatDialogModule,
     PaginationModule,
     FormsModule,
+    MatSortModule,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
@@ -47,6 +50,8 @@ export class UserListComponent {
       pageSize: 3,
       totalItems: 0,
       totalPages: 0,
+      sortBy: 'Id',
+      sortDir: 'asc'
     },
     searchText: '',
     items: [],
@@ -77,7 +82,7 @@ export class UserListComponent {
   constructor(private accountService: AccountService,
     private router: Router,
     public dialog: MatDialog,
-    private notify: NotifyMessageService,
+    private toastr: ToastrService,
     private matDialogHelper: MatDialogHelper,
   ) { }
 
@@ -97,8 +102,6 @@ export class UserListComponent {
     this.accountService.getAllUser(this.pagedList.pageListConfig, this.pagedList.searchText).subscribe({
       next: result => {
         this.pagedList = result;
-        console.log(this.pagedList.pageListConfig.pageSize);
-        console.log(this.pagedList.pageListConfig.totalItems);
       }
     });
   }
@@ -130,7 +133,7 @@ export class UserListComponent {
         next: result => {
           if (result) {
             this.getUsers();
-            this.notify.showMessage(AppText.DeleteSuccess);
+            this.toastr.success(AppText.DeleteSuccess, 'User delete');
           }
         }
       }
@@ -143,5 +146,18 @@ export class UserListComponent {
     }
   }
 
+  sortData(sort: Sort) {
+    const data = this.pagedList.items.slice();
+    if (!sort.active || sort.direction === '') {
+      this.pagedList.items = data;
+      return;
+    }
+    const isAsc = sort.direction === 'asc';
 
+    if (sort.active != '') {
+      this.pagedList.pageListConfig.sortBy = sort.active;
+      this.pagedList.pageListConfig.sortDir = sort.direction;
+      this.getUsers();
+    }
+  }
 }

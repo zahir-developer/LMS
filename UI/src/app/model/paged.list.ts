@@ -11,4 +11,6 @@ export interface PageListConfig
   pageSize: number;
   totalItems: number;
   totalPages: number;
+  sortBy: string;
+  sortDir: string;
 }

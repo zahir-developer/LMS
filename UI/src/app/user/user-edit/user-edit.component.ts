@@ -4,9 +4,10 @@ import { User } from '../../model/user.model';
 import { AccountService } from '../../services/account.service';
 import { CommonModule } from '@angular/common';
 import { AppText } from '../../model/Enum/constEnum';
-import { NotifyMessageService } from '../../services/notify-message.service';
 import { DepartmentModel } from '../../model/department/department.model';
 import { DepartmentService } from '../../services/department.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-user-edit',
   standalone: true,
@@ -18,8 +19,9 @@ export class UserEditComponent {
   submitted = false;
   constructor(
     private accService: AccountService,
-    private notify: NotifyMessageService,
     private department: DepartmentService,
+    private router: Router,
+    private toastr: ToastrService
   ) {
   }
   roles: any;
@@ -76,12 +78,15 @@ export class UserEditComponent {
     this.submitted = true;
     console.log(this.formEditUser.value);
     if (this.formEditUser.valid) {
-      const updateUser : User = this.formEditUser.value;
+      const updateUser: User = this.formEditUser.value;
       updateUser.id = this.editUserData.id;
       this.accService.updateUser(updateUser).subscribe(
         {
           next: result => {
-            if (result) this.notify.showMessage(AppText.UserUpdateSuccess)
+            if (result) {
+              this.toastr.success(AppText.UserUpdateSuccess, 'User update');
+              this.router.navigateByUrl('/user-list');
+            }
           }
         })
     }
@@ -97,7 +102,7 @@ export class UserEditComponent {
     this.department.getDepartments().subscribe(
       {
         next: result => {
-          if(result)
+          if (result)
             this.departments = result;
         }
       }

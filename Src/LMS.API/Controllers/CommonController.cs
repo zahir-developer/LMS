@@ -23,7 +23,7 @@ public class CommonController : ControllerBase
     }
 
     [HttpGet]
-    [Route("LeaveTypes")]
+    [Route("leaveTypes")]
     public async Task<ActionResult<List<LeaveTypeDto>>> LeaveType()
     {
         var result = await _leaveTypeService.GetAllAsync();
@@ -32,7 +32,7 @@ public class CommonController : ControllerBase
     }
 
     [HttpGet]
-    [Route("Roles")]
+    [Route("roles")]
     public async Task<ActionResult<List<RoleDto>>> Roles()
     {
         var result = await _roleService.GetAllAsync();

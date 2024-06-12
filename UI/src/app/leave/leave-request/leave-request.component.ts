@@ -2,12 +2,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LeaveService } from '../../services/leave.service';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule, DatePipe, JsonPipe } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { AccountService } from '../../services/account.service';
 import { UserLeaveAdd } from '../../model/leave/user.leave.add';
 import { Router } from '@angular/router';
@@ -17,8 +17,9 @@ import { LeaveReport } from '../../model/leave/leave.report';
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, CommonModule,
     MatFormFieldModule, MatInputModule, MatDatepickerModule, JsonPipe,
+    MatNativeDateModule
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(),],
   templateUrl: './leave-request.component.html',
   styleUrl: './leave-request.component.css'
 })
@@ -33,6 +34,7 @@ export class LeaveRequestComponent {
   };
   leaveType: any = [];
   leaveRemaining: LeaveReport[] = [];
+  remaingLeaveCount: number = 0;
 
   leaveBalance: LeaveReport = {
     name: '',
@@ -47,14 +49,16 @@ export class LeaveRequestComponent {
     private leaveService: LeaveService,
     private accountService: AccountService,
     private router: Router,
-    private notify: ToastrService
+    private notify: ToastrService,
+    private datePipe: DatePipe
   ) { }
 
   //leaveForm: FormGroup | undefined;
   leaveForm: FormGroup = new FormGroup({});
   initializeForm() {
     this.leaveForm = new FormGroup({
-      leaveType: new FormControl("", [Validators.required]),
+      userId: new FormControl(this.userId),
+      leaveTypeId: new FormControl(0, [Validators.required, Validators.min(1)]),
       fromDate: new FormControl<Date | null>(this.model?.fromDate, [Validators.required]),
       toDate: new FormControl<Date | null>(this.model?.toDate, [Validators.required]),
       dateRange: new FormControl(),
@@ -64,25 +68,31 @@ export class LeaveRequestComponent {
 
   ngOnInit() {
     this.getLeaveType();
-    this.initializeForm();
     this.getCurrentUser();
+    this.initializeForm();
     this.getLeaveAvailability();
   }
 
   onSubmit() {
-    console.log(this.model);
-    console.log(this.leaveForm.value);
     if (this.leaveForm.valid) {
-      this.model.userId = this.userId;
-      this.model.comments = this.leaveForm.value.comments;
-      this.model.leaveTypeId = this.leaveForm.value.leaveType;
-      this.addLeave(this.model);
+      this.addLeave(this.leaveForm.value);
     }
-
   }
 
   addLeave(objData: UserLeaveAdd) {
-    if (this.checkLeaveAvailability()) {
+
+    var days = 0;
+    var fromDay = Number(this.datePipe.transform(objData.fromDate, 'dd'));
+    var toDay = Number(this.datePipe.transform(objData.toDate, 'dd'));
+
+    if (+toDay > +fromDay)
+      days = toDay - fromDay;
+    else
+      days = fromDay - toDay;
+
+    days = days + 1;
+
+    if (this.remaingLeaveCount >= days) {
       this.leaveService.addLeave(objData).subscribe(
         result => {
           console.log('Leave applied successfully');
@@ -90,19 +100,23 @@ export class LeaveRequestComponent {
         }
       )
     } else {
-      this.notify.warning('Reached maximum available leave count', 'Apply leave restricted');
+      this.notify.warning('Not enough leaves remaining: ' + this.remaingLeaveCount, 'Apply leave restricted');
     }
 
   }
 
+  leaveTypeChanged()
+  {
+    this.remaingLeaveCount = this.checkLeaveAvailability();
+  }
+
   checkLeaveAvailability() {
-    var result = false;
+    var result = 0;
 
-
-    var leaveBalance = this.leaveRemaining.filter(s => s.leaveTypeId == this.leaveForm.value.leaveType);
+    var leaveBalance = this.leaveRemaining.filter(s => s.leaveTypeId == this.leaveForm.value.leaveTypeId);
 
     if (leaveBalance)
-      result = leaveBalance[0].totalLeaveRemaining > 0;
+      result = leaveBalance[0].totalLeaveRemaining;
 
     return result;
   }
@@ -114,7 +128,6 @@ export class LeaveRequestComponent {
         next: response => {
           if (response) {
             this.leaveRemaining = response;
-            console.log(response);
           }
         }
       })

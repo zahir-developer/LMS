@@ -1,5 +1,4 @@
 namespace LMS.Domain.Entities;
-using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
 public class User : BaseEntity

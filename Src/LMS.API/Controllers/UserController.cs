@@ -46,8 +46,11 @@ public class UserController : ControllerBase
     [Authorize("User_Edit_Update")]
     public async Task<ActionResult<bool>> UpdateUser(UserUpdateDto userUpdateDto)
     {
-        var userDto = _mapper.Map<UserDto>(userUpdateDto);
-        var user = _userService.UpdateAsync(userDto);
+        var user = await _userService.GetByIdAsync(userUpdateDto.Id);
+
+        var userUpdated = _mapper.Map(userUpdateDto, user);
+
+        await _userService.UpdateAsync(userUpdated);
         return _userService.SaveChangesAsync();
     }
 

@@ -45,14 +45,16 @@ public class AuthController : ControllerBase
     /// <param name="user"></param>
     /// <returns></returns>
     [HttpPost]
-    [Route("Signup")]
+    [Route("signup")]
     [Authorize("User_Signup")]
     public async Task<ActionResult<UserDto>> RegisterUser([FromBody] AddUserDto user)
     {
         _logger.LogInformation("User {0} create begins", user.Email);
 
         var userAuth = _authTokenService.RegisterAuthUser(user);
-        
+        if (userAuth != null)
+            _logger.LogInformation("User {0} created successfully ", user.Email);
+            
         return userAuth;
     }
 
@@ -63,12 +65,34 @@ public class AuthController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    [Route("Login")]
+    [Route("login")]
     public async Task<ActionResult<LoginResultDto>> Login(LoginDto login)
     {
         var result = _authTokenService.ValidateUser(login);
 
         if (result?.Id == 0)
+        {
+            return Unauthorized("Unauthorized user.");
+        }
+        else
+        {
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Validates token and generates token and refresh token
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("refreshToken")]
+    public async Task<ActionResult<AuthTokenDto>> RefreshToken(AuthTokenDto refreshToken)
+    {
+        var result = _authTokenService.RefreshToken(refreshToken);
+
+        if (result.RefreshToken == string.Empty)
         {
             return Unauthorized("Unauthorized user.");
         }

@@ -19,7 +19,7 @@ import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
 import { AppText, Confirm, LeaveStatus, LeaveStatusText } from '../../model/Enum/constEnum';
 import { LeaveUpdate } from '../../model/leave/leave.update';
 import { AccountService } from '../../services/account.service';
-import { NotifyMessageService } from '../../services/notify-message.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-leave',
@@ -50,7 +50,7 @@ export class UserLeaveComponent {
   constructor(private leaveService: LeaveService,
     private accountService: AccountService,
     public dialog: MatDialog,
-    private notify: NotifyMessageService
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -121,14 +121,14 @@ export class UserLeaveComponent {
       this.leaveService.updateLeaveStatus(this.leaveUpdate).subscribe({
         next: result => {
           if (result) {
-            this.notify.showMessage('Leave status updated successfully !');
+            this.toastr.success('Leave status updated successfully !', 'User Leave');
             this.getLeave();
           }
         }
       })
     }
     else
-      this.notify.showMessage(AppText.ForbiddenAction);
+      this.toastr.warning(AppText.ForbiddenAction, 'Restricted');
 
   }
 }

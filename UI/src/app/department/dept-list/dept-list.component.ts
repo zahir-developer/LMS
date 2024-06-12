@@ -13,13 +13,16 @@ import { PagedListResult } from '../../model/paged.list';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { FormsModule } from '@angular/forms';
 import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
+import { MatSortModule, Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-dept-list',
   standalone: true,
   imports: [CommonModule,
-    PaginationModule,
-    FormsModule],
+            PaginationModule,
+            FormsModule,
+            MatSortModule
+          ],
   templateUrl: './dept-list.component.html',
   styleUrl: './dept-list.component.css'
 })
@@ -40,6 +43,8 @@ export class DeptListComponent {
       pageSize: 3,
       totalItems: 0,
       totalPages: 0,
+      sortBy: 'Id',
+      sortDir: 'asc'
     },
     searchText: '',
     items: [],
@@ -106,6 +111,21 @@ export class DeptListComponent {
     )
   }
 
+  sortData(sort: Sort) {
+    const data = this.pagedList.items.slice();
+    if (!sort.active || sort.direction === '') {
+      this.pagedList.items = data;
+      return;
+    }
+    const isAsc = sort.direction === 'asc';
+
+    if (sort.active != '') {
+      this.pagedList.pageListConfig.sortBy = sort.active;
+      this.pagedList.pageListConfig.sortDir = sort.direction;
+      this.getDepartments();
+    }
+  }
+
   pageChanged(event: PageChangedEvent): void {
     // const startItem = (event.page - 1) * event.itemsPerPage;
     // const endItem = event.page * event.itemsPerPage;
@@ -118,4 +138,6 @@ export class DeptListComponent {
       this.getDepartments();
     }
   }
+
+
 }
