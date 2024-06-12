@@ -4,13 +4,13 @@
     <input class="float-right p-2 mr-2" (keydown)="onKeydown($event.key)" [(ngModel)]="pagedList.searchText" type="text" name="search" id="search" placeholder="Search"/>
 
 </div>
-<table class="table">
+<table class="table" matSort (matSortChange)="sortData($event)" matSortActive="id" matSortDirection="asc">
     <thead class="thead-light">
         <tr>
-            <th scope="col">User Id</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email Id</th>
+            <th scope="col" mat-sort-header="id">User Id</th>
+            <th scope="col" mat-sort-header="firstname">First Name</th>
+            <th scope="col" mat-sort-header="lastname">Last Name</th>
+            <th scope="col" mat-sort-header="email">Email Id</th>
             <th scope="col">Role</th>
             <th scope="col">Department</th>
             <th scope="col" class="text-center">Actions</th>

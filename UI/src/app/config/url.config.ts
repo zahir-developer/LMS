@@ -8,7 +8,7 @@ export const apiEndPoint =
     },
     User:
     {
-        getAll: `user/users?pageNumber={pgNo}&pageSize={pgSize}&SearchText={searchText}`,
+        getAll: `user/users?pageNumber={pgNo}&pageSize={pgSize}&sortBy={sortBy}&sortDir={sortDir}&SearchText={searchText}`,
         update: `user/`,
         delete: `user/{userId}`,
         emailExists: `user/`
@@ -29,7 +29,7 @@ export const apiEndPoint =
     },
     Department:
     {
-      search: 'department/search?pageNumber={pgNo}&pageSize={pgSize}&SearchText={searchText}',
+      search: 'department/search?pageNumber={pgNo}&pageSize={pgSize}&sortBy={sortBy}&sortDir={sortDir}&SearchText={searchText}',
       get: 'department',
       add: 'department',
       update: 'department',

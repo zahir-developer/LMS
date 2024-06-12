@@ -28,6 +28,8 @@ export class DepartmentService {
 
     query = query.replace('{pgSize}', pageConfig.pageSize.toString())
       .replace('{pgNo}', pageConfig.pageNumber.toString())
+      .replace('{sortBy}', pageConfig.sortBy.toString())
+      .replace('{sortDir}', pageConfig.sortDir.toString())
 
     if (searchText != "" && searchText !== undefined)
       query = query.replace('{searchText}', searchText.toString());

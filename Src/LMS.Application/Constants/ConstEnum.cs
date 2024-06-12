@@ -22,6 +22,12 @@ namespace LMS.Application.Constants
             Approved = 1,
             Rejected = 2
         }
+
+        public enum SortDirection
+        {
+            ASC = 0,
+            DESC = 1,
+        }
     }
 
 }

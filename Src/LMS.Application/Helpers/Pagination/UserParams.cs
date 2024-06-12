@@ -1,3 +1,5 @@
+using static LMS.Application.Constants.ConstEnum;
+
 namespace LMS.Application.Helpers.Pagination;
 
 public class UserParams
@@ -7,6 +9,10 @@ public class UserParams
     private int _pageSize = 10;
     public string SearchText { get; set; } = string.Empty;
 
+    public string SortBy { get; set; } = string.Empty;
+    
+    public SortDirection SortDir { get; set; }
+     
     public int PageSize
     {
         get => _pageSize;

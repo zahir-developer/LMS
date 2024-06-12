@@ -54,11 +54,16 @@ export class AccountService {
   getAllUser(pageConfig: PageListConfig, searchText: string) {
     var query = apiEndPoint.User.getAll.replace('{pgSize}', pageConfig.pageSize.toString())
       .replace('{pgNo}', pageConfig.pageNumber.toString())
+      .replace('{sortBy}', pageConfig.sortBy.toString())
+      .replace('{sortDir}', pageConfig.sortDir.toString())
 
     if (searchText != "" && searchText !== undefined)
       query = query.replace('{searchText}', searchText.toString());
+    else if(searchText == "" || searchText == undefined)
+      query = query.replace('{searchText}', '').replace('&SearchText=', '')
     else
-      query = query.replace('{searchText}', '').replace('&SearchText=', '');
+      query = query;
+
 
     return this.httpUtilService.get(query);
   }

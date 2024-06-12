@@ -2,18 +2,12 @@
 using LMS.Domain.Entities;
 using LMS.Application.Interfaces;
 using LMS.Application.IServiceMappings;
-using LMS.Application.Interfaces.IServices;
-using LMS.Application.Interfaces.IRepository;
 using LMS.Application.Services;
 using LMS.Application.DTOs;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using AutoMapper;
 using LMS.Application.Helpers.Pagination;
+using static LMS.Application.Constants.ConstEnum;
 
 
 namespace LMS.Application.ServiceMappings
@@ -52,7 +46,7 @@ namespace LMS.Application.ServiceMappings
 
         public async Task<PagedListResult<UserListDto>> GetAllUserListAsync(UserParams userParams)
         {
-            PagedListResult<UserListDto> paginationHeader;
+            PageListConfig pageConfig = new PageListConfig();
             var userList = _unitOfWork.UserRepository.GetAllUserAsync().Result;
 
             var usersResult = (from u in userList
@@ -80,10 +74,55 @@ namespace LMS.Application.ServiceMappings
                                .AsQueryable();
             }
 
+            if (userParams.SortBy != null)
+            {
+                if (userParams.SortDir.Equals(SortDirection.ASC))
+                {
+                    switch (userParams.SortBy.ToLower())
+                    {
+                        case "firstname":
+                            usersResult = usersResult.OrderBy(s => s.FirstName);
+                            break;
+                        case "lastname":
+                            usersResult = usersResult.OrderBy(s => s.LastName);
+                            break;
+                        case "email":
+                            usersResult = usersResult.OrderBy(s => s.Email);
+                            break;
+                        default:
+                            usersResult = usersResult.OrderBy(s => s.Id);
+                            break;
+                    }
+                }
+                else if (userParams.SortDir.Equals(SortDirection.DESC))
+                {
+                    switch (userParams.SortBy.ToLower())
+                    {
+                        case "firstname":
+                            usersResult = usersResult.OrderByDescending(s => s.FirstName);
+                            break;
+                        case "lastname":
+                            usersResult = usersResult.OrderByDescending(s => s.LastName);
+                            break;
+                        case "email":
+                            usersResult = usersResult.OrderByDescending(s => s.Email);
+                            break;
+                        default:
+                            usersResult = usersResult.OrderByDescending(s => s.Id);
+                            break;
+                    }
+                }
+            }
 
             var pagedList = PagedList<UserListDto>.CreateAsync(usersResult, userParams.PageNumber, userParams.PageSize).Result;
 
-            return new PagedListResult<UserListDto>(pagedList, pagedList.CurrentPage, pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages, userParams.SearchText);
+            pageConfig.PageNumber = userParams.PageNumber;
+            pageConfig.PageSize = userParams.PageSize;
+            pageConfig.TotalItems = pagedList.TotalCount;
+            pageConfig.TotalPages = pagedList.TotalPages;
+            pageConfig.SortBy = userParams.SortBy;
+            pageConfig.SortDir = userParams.SortDir.ToString();
+            return new PagedListResult<UserListDto>(pagedList, pageConfig, userParams.SearchText);
         }
     }
 }
