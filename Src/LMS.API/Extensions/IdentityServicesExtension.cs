@@ -1,4 +1,3 @@
-
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -13,13 +12,19 @@ namespace LMS.API.Extensions
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(option =>
             {
-                option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                option.SaveToken = true;
+                option.TokenValidationParameters = 
+                //JWTValidationParameter.GetTokenValidationParameters(config["JwtTokenKey"]);
+                new TokenValidationParameters
                 {
+                    ValidateIssuer = false, 
+                    ValidateAudience = false, 
+                    ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(config["JwtTokenKey"])),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                    //ValidIssuer = config["Issuer"],
+                    //ValidAudience = config["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtTokenKey"])),
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
@@ -27,5 +32,7 @@ namespace LMS.API.Extensions
 
             return services;
         }
+
+        
     }
 }
