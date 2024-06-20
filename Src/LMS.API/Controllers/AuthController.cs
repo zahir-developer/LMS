@@ -12,33 +12,14 @@ namespace LMS.API.Controllers;
 [Authorize]
 public class AuthController : ControllerBase
 {
-    private readonly IUserServiceMapping _userService;
     private readonly ILogger<AuthController> _logger;
-    private readonly IConfiguration _config;
     private readonly IAuthTokenService _authTokenService;
 
-    public AuthController(ILogger<AuthController> logger, IUserServiceMapping userService, IConfiguration config, IAuthTokenService authTokenService)
+    public AuthController(ILogger<AuthController> logger, IAuthTokenService authTokenService)
     {
         _logger = logger;
-        _userService = userService;
-        _config = config;
         _authTokenService = authTokenService;
     }
-
-    /*
-    [HttpPost]
-    [Route("AddAdmin")]
-    [AllowAnonymous]
-    public async Task<ActionResult<UserDto>> RegisterAdmin([FromBody] AddUserDto user)
-    {
-        _logger.LogInformation("Resister Admin begins {0} create begins", user.Email);
-
-        user.RoleId = (int)ConstEnum.Roles.Admin;
-        var userAuth = _authTokenService.RegisterAuthUser(user);
-        
-        return userAuth;
-    }
-    */
     /// <summary>
     /// Register user detail for signup 
     /// </summary>

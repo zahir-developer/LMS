@@ -11,13 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lms.domain", "lms.domain\lm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lms.infrastructure", "lms.infrastructure\lms.infrastructure.csproj", "{C76DB011-0CA6-474F-B6F9-B281297748F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lms.tests", "lms.tests\lms.tests.csproj", "{BEBA8259-72E4-494E-AFBF-35591211CCB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6894AB95-A733-4056-AEFA-9A5616173A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +35,12 @@ Global
 		{C76DB011-0CA6-474F-B6F9-B281297748F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C76DB011-0CA6-474F-B6F9-B281297748F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C76DB011-0CA6-474F-B6F9-B281297748F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBA8259-72E4-494E-AFBF-35591211CCB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBA8259-72E4-494E-AFBF-35591211CCB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBA8259-72E4-494E-AFBF-35591211CCB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBA8259-72E4-494E-AFBF-35591211CCB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
