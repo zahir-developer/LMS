@@ -2,6 +2,7 @@ namespace LMS.Application.Constants
 {
     public static class ConstEnum
     {
+        public const string DATE_FORMAT = "dd-mm-yyy";
         public enum LeaveTypeEnum
         {
             Personal = 1,
@@ -28,6 +29,12 @@ namespace LMS.Application.Constants
         {
             ASC = 0,
             DESC = 1,
+        }
+
+        public enum EmailHtmlTemplate
+        {
+            LeaveApplied = 1,
+            LeaveStatusUpdate = 2
         }
     }
 

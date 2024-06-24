@@ -9,17 +9,22 @@ using LMS.Application.Interfaces.IServices;
 using LMS.Application.Interfaces.IRepository;
 using LMS.Application.IServiceMappings;
 using Microsoft.EntityFrameworkCore;
+using LMS.Application;
+using LMS.Application.Config;
 
 namespace LMS.API.Extensions
 {
     public static class ApplicationServicesExtension
     {
-        
+
         public static IServiceCollection AddApplicationServices(this IServiceCollection services,
         IConfiguration config)
         {
+            EmailConfig emailConfig = new();
+            config.GetSection("EmailConfig").Bind(emailConfig);
+            
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
+            
             services.AddDbContext<LMSDbContext>(options =>
             options.UseSqlite(config.GetConnectionString("SqliteConnection"))
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
@@ -57,9 +62,15 @@ namespace LMS.API.Extensions
             services.AddScoped(typeof(IDepartmentServiceMapping), typeof(DepartmentServiceMapping));
             services.AddScoped(typeof(IRoleService), typeof(RoleService));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-                 
+
+            //Email service
+            services.AddScoped(typeof(IEmailService), typeof(EmailService));
+            services.AddScoped(typeof(ILeaveNotificationService), typeof(LeaveNotificationService));
+
+            services.AddSingleton<EmailConfig>(emailConfig);
+
             //services.AddScoped(typeof(IRoleServiceMapping), typeof(RoleServiceMapping));
-                    
+
             return services;
         }
     }

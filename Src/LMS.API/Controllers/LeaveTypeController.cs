@@ -4,6 +4,7 @@ using LMS.Application.Helpers.Pagination;
 using LMS.Application.Interfaces.IServiceMappings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 
 namespace LMS.API;
 
@@ -24,9 +25,9 @@ public class LeaveTypeController : ControllerBase
     [Authorize("LeaveType_Get")]
     public async Task<List<LeaveTypeDto>> GetLeaveTypeList()
     {
-        var departements = await _leaveTypeService.GetAllAsync();
+        var departments = await _leaveTypeService.GetAllAsync();
 
-        var leaveTypeResultDto = _mapper.Map<List<LeaveTypeDto>>(departements);
+        var leaveTypeResultDto = _mapper.Map<List<LeaveTypeDto>>(departments);
 
         return leaveTypeResultDto.ToList();
     }
