@@ -1,0 +1,32 @@
+<div class="pb-3">
+  <button type="button" class="btn btn-info" (click)="onAdd()">Add Leave Type</button>
+  <button class="btn btn-primary float-right" (click)="getLeaveTypes()">Search</button>
+  <input class="float-right p-2 mr-2" (keydown)="onKeydown($event.key)" [(ngModel)]="pagedList.searchText" type="text" name="search" id="search" placeholder="Search"/>
+</div>
+<table class="table" matSort (matSortChange)="sortData($event)" matSortActive="id" matSortDirection="asc">
+  <thead class="thead-light">
+    <th scope="col" mat-sort-header="id">LeaveType ID</th>
+    <th scope="col" mat-sort-header="name">Name</th>
+    <th scope="col" mat-sort-header="maxLeaveCount">Max Leave Count</th>
+    <th scope="col" mat-sort-header="description">Description</th>
+    <th scope="col">Actions</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of pagedList.items">
+      <td>{{ d.id }}</td>
+      <td>{{ d.leaveTypeName }}</td>
+      <td>{{ d.maxLeaveCount }}</td>
+      <td>{{ d.description }}</td>
+      <td class="text-center">
+        <button class="btn btn-warning mr-2" (click)="edit(d)">Edit</button>
+        <button class="btn btn-danger mr-2" (click)="openDeleteDialog(d.id)">Delete</button>
+    </td>
+    </tr>
+    <tr *ngIf="pagedList.items[0]?.id == undefined" class="text-center"><td colspan="7">No data available</td></tr>
+  </tbody>
+</table>
+<pagination class="float-right" [boundaryLinks]="showBoundaryLinks"
+         [directionLinks]="showDirectionLinks"
+         [totalItems]="this.pagedList.pageListConfig.totalItems"
+         [itemsPerPage]="this.pagedList.pageListConfig.pageSize"
+         (pageChanged)="pageChanged($event)"></pagination>

@@ -16,7 +16,7 @@ export class HttpUtilsService {
     return this.http.post(this.apiBaseUrl + url, data, optional);
   }
   public get(url: string, optional?: any): Observable<any> {
-    return this.http.get( this.apiBaseUrl + url, optional);
+    return this.http.get(this.apiBaseUrl + url, optional);
   }
   public put(url: string, data?: any): Observable<any> {
     return this.http.put(this.apiBaseUrl + url, data);

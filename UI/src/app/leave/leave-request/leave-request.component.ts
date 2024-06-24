@@ -12,6 +12,7 @@ import { AccountService } from '../../services/account.service';
 import { UserLeaveAdd } from '../../model/leave/user.leave.add';
 import { Router } from '@angular/router';
 import { LeaveReport } from '../../model/leave/leave.report';
+import { LeaveTypeModel } from '../../model/leave/leave.type.model';
 @Component({
   selector: 'app-leave-request',
   standalone: true,
@@ -32,7 +33,7 @@ export class LeaveRequestComponent {
     toDate: new Date(),
     comments: ''
   };
-  leaveType: any = [];
+  leaveType: LeaveTypeModel[] = [];
   leaveRemaining: LeaveReport[] = [];
   remaingLeaveCount: number = 0;
 
@@ -92,21 +93,18 @@ export class LeaveRequestComponent {
 
     days = days + 1;
 
-    if (this.remaingLeaveCount >= days) {
-      this.leaveService.addLeave(objData).subscribe(
-        result => {
-          console.log('Leave applied successfully');
-          this.router.navigateByUrl('/user-leave');
-        }
-      )
-    } else {
-      this.notify.warning('Not enough leaves remaining: ' + this.remaingLeaveCount, 'Apply leave restricted');
-    }
+    //if (this.remaingLeaveCount >= days) {
+    this.leaveService.addLeave(objData).subscribe(result => {
+      console.log('Leave applied successfully');
+      this.router.navigateByUrl('/user-leave');
+    })
+    //} else {
+    //  this.notify.warning('Not enough leaves remaining: ' + this.remaingLeaveCount, 'Apply leave restricted');
+    //}
 
   }
 
-  leaveTypeChanged()
-  {
+  leaveTypeChanged() {
     this.remaingLeaveCount = this.checkLeaveAvailability();
   }
 
@@ -135,7 +133,10 @@ export class LeaveRequestComponent {
   getLeaveType() {
     this.leaveService.getLeaveType().subscribe(
       result => {
-        this.leaveType = result;
+        if (result) {
+          this.leaveType = result.filter(q => q.isEnabled == true);
+        }
+
       }
     )
   }

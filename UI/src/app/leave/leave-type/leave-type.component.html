@@ -1,0 +1,2 @@
+<app-leave-type-list (editEvent)="onEdit($event)" (cancelEvent)="onEditCancelEvent()" *ngIf="action == 'list'"></app-leave-type-list>
+<app-leave-type-add-edit [leaveTypeModel]="modelLeaveType" *ngIf="action == 'edit' || action == 'add'"></app-leave-type-add-edit>

@@ -61,6 +61,12 @@ namespace LMS.Application.Services
             await _unitOfWork.Repository<TEntity>().AddAsync(_mapper.Map<TEntity>(dto));
         }
 
+        public async Task AddRangeAsync(List<TDto> dtos, CancellationToken cancellationToken = default)
+        {
+            await _unitOfWork.Repository<TEntity>().AddRangeAsync(_mapper.Map<List<TEntity>>(dtos), cancellationToken);
+        }
+
+
         public async Task DeleteByIdAsync(int id)
         {
             await _unitOfWork.Repository<TEntity>().DeleteByIdAsync(id);

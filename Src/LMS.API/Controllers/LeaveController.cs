@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
 using AutoMapper;
+using static LMS.Application.Constants.ConstEnum;
 
 namespace LMS.API.Controllers;
 
@@ -16,11 +17,14 @@ public class LeaveController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IUserLeaveServiceMapping _userLeaveService;
 
-    public LeaveController(IUserLeaveServiceMapping userLeaveService, IMapper mapper, ILogger<LeaveController> logger)
+    private readonly ILeaveTypeServiceMapping _leaveTypeService;
+
+    public LeaveController(IUserLeaveServiceMapping userLeaveService, ILeaveTypeServiceMapping leaveTypeService, IMapper mapper, ILogger<LeaveController> logger)
     {
         _logger = logger;
         _mapper = mapper;
         _userLeaveService = userLeaveService;
+        _leaveTypeService = leaveTypeService;
     }
 
     /// <summary>
@@ -45,7 +49,7 @@ public class LeaveController : ControllerBase
     [Route("user/{userId}")]
     public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeaves(int userId)
     {
-        var result = _userLeaveService.GetAllUserLeaveList(departmentId: 0 , userId: userId);
+        var result = _userLeaveService.GetAllUserLeaveList(departmentId: 0, userId: userId);
 
         return Ok(result);
     }
@@ -59,18 +63,56 @@ public class LeaveController : ControllerBase
     [Authorize("Leave_Apply")]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
-        UserLeaveAddDto leave;
+        int appliedLeaveCount = 0;
+        int currentLeaveCount = 0;
+        var userLeaves = new List<UserLeaveDto>();
+        int lopLeaveTypeId = 0;
         DateTime fromDate = dto.FromDate;
         DateTime toDate = dto.ToDate;
+
+        if (fromDate.Day < toDate.Day)
+            appliedLeaveCount = (toDate - fromDate).Days;
+        else
+            appliedLeaveCount = (fromDate - toDate).Days;
+
+        var userReport = _userLeaveService.GetUserLeaveReport(userId: dto.UserId);
+        var leaveTypes = _leaveTypeService.GetAllAsync().Result;
+
+        if(leaveTypes != null)
+        {
+            var lopLeaveType = leaveTypes.FirstOrDefault(s=>s.LeaveTypeName == LeaveTypeEnum.LOP.ToString());
+
+            if(lopLeaveType != null)
+            {
+                lopLeaveTypeId = lopLeaveType.Id;
+            }
+        }
+        int? leaveRemainingCount = 0;
+
+        if (userReport != null)
+        {
+            var leaveDetail = userReport.Where(s => s.LeaveTypeId == dto.LeaveTypeId).FirstOrDefault();
+            leaveRemainingCount = leaveDetail?.TotalLeaveRemaining;
+            currentLeaveCount = leaveDetail.TotalLeaveTaken;
+        }
+
+        
         for (DateTime date = fromDate; date <= toDate; date = date.AddDays(1))
         {
+            UserLeaveAddDto leave = new ();
             leave = dto;
             leave.FromDate = date;
             leave.ToDate = date;
-            var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
-            await _userLeaveService.AddAsync(userLeaveDto);
+            if (currentLeaveCount > leaveRemainingCount)
+            {
+                leave.LeaveTypeId = lopLeaveTypeId;
+            }
+            userLeaves.Add(_mapper.Map<UserLeaveDto>(dto));
+            currentLeaveCount++;
         }
+        await _userLeaveService.AddRangeAsync(userLeaves);
         return _userLeaveService.SaveChangesAsync();
+        //return true;
     }
 
     /// <summary>

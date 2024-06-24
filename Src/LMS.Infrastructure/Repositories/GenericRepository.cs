@@ -68,6 +68,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await dbContext.Set<T>().AddAsync(entity, cancellationToken);
     }
 
+    public async Task AddRangeAsync(List<T> entities, CancellationToken cancellationToken = default)
+    {
+        await dbContext.Set<T>().AddRangeAsync(entities, cancellationToken);
+    }
+
     public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         dbContext.Entry(entity).State = EntityState.Modified;

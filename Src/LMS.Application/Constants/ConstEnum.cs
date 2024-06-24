@@ -2,11 +2,12 @@ namespace LMS.Application.Constants
 {
     public static class ConstEnum
     {
-        public enum LeaveType
+        public enum LeaveTypeEnum
         {
             Personal = 1,
             Sick = 2,
-            Privilege = 3
+            Privilege = 3,
+            LOP = 4
         }
 
         public enum Roles

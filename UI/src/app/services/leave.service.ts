@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/user.model';
 import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map } from 'rxjs';
 import { UserLeaveAdd } from '../model/leave/user.leave.add';
 import { LeaveUpdate } from '../model/leave/leave.update';
-import { LeaveReport } from '../model/leave/leave.report';
+import { LeaveTypeModel } from '../model/leave/leave.type.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +27,7 @@ export class LeaveService {
   }
 
   getLeaveType() {
-    return this.httpUtilService.get(apiEndPoint.Leave.getType);
+    return this.http.get<LeaveTypeModel[]>(environment.apiUrl + apiEndPoint.Leave.getType);
   }
 
   updateLeaveStatus(obj: LeaveUpdate) {

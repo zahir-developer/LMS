@@ -34,6 +34,16 @@ export const apiEndPoint =
       add: 'department',
       update: 'department',
       delete: 'department/{departmentId}'
+    },
+    LeaveType:
+    {
+      search: 'leaveType/search?pageNumber={pgNo}&pageSize={pgSize}&sortBy={sortBy}&sortDir={sortDir}&SearchText={searchText}',
+      get: 'leaveType',
+      add: 'leaveType',
+      update: 'leaveType',
+      delete: 'leaveType/{leaveTypeId}'
     }
+
+
 
 }

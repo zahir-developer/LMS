@@ -17,6 +17,9 @@
       <li class="nav-item" *ngIf="isAdmin">
         <a class="nav-link" [routerLink]="'/dept'">Department<span class="sr-only"></span></a>
       </li>
+      <li class="nav-item" *ngIf="isAdmin">
+        <a class="nav-link" [routerLink]="'/leave-type'">Leave Type<span class="sr-only"></span></a>
+      </li>
       <li class="nav-item" *ngIf="isEmployee">
         <a class="nav-link" [routerLink]="'/user-leave'">Leaves<span class="sr-only"></span></a>
       </li>
