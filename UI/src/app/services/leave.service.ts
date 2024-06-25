@@ -27,7 +27,7 @@ export class LeaveService {
   }
 
   getLeaveType() {
-    return this.http.get<LeaveTypeModel[]>(environment.apiUrl + apiEndPoint.Leave.getType);
+    return this.http.get<LeaveTypeModel[]>(environment.apiUrl + apiEndPoint.LeaveType.get);
   }
 
   updateLeaveStatus(obj: LeaveUpdate) {

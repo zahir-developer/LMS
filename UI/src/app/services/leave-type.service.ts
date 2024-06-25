@@ -11,12 +11,6 @@ import { PageListConfig, PagedListResult } from '../model/paged.list';
 })
 export class LeaveTypeService {
 
-  modelDept = {
-    id: 0,
-    departmentName: '',
-    description: ''
-  }
-
   private cancelEventSource = new BehaviorSubject<string>('list');
 
   cancelEdit$ = this.cancelEventSource.asObservable();
@@ -55,7 +49,7 @@ export class LeaveTypeService {
 
   deleteLeaveType(leaveTypeId: number)
   {
-    return this.http.delete(environment.apiUrl + apiEndPoint.LeaveType.delete.replace('{departmentId}', leaveTypeId.toString()))
+    return this.http.delete(environment.apiUrl + apiEndPoint.LeaveType.delete.replace('{leaveTypeId}', leaveTypeId.toString()))
   }
 
 

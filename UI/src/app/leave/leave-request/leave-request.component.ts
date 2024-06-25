@@ -28,6 +28,7 @@ export class LeaveRequestComponent {
   userId: number = 0;
   model: UserLeaveAdd = {
     userId: 0,
+    departmentId: 0,
     leaveTypeId: 0,
     fromDate: new Date(),
     toDate: new Date(),
@@ -63,7 +64,8 @@ export class LeaveRequestComponent {
       fromDate: new FormControl<Date | null>(this.model?.fromDate, [Validators.required]),
       toDate: new FormControl<Date | null>(this.model?.toDate, [Validators.required]),
       dateRange: new FormControl(),
-      comments: new FormControl(this.model?.comments, [Validators.required])
+      comments: new FormControl(this.model?.comments, [Validators.required]),
+      departmentId: new FormControl(this.model?.departmentId)
     })
   }
 
@@ -143,6 +145,7 @@ export class LeaveRequestComponent {
 
   getCurrentUser() {
     this.userId = this.accountService.getUserId();
+    this.model.departmentId = this.accountService.loggedInUserDepartmentId;
   }
 
 }

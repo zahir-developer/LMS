@@ -21,7 +21,7 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         this._notification = notification;
     }
 
-    
+
     public List<UserLeaveListDto> GetAllUserLeaveList(int departmentId = 0, int userId = 0)
     {
         var result = this._unitOfWork.UserLeaveRepository.GetAllUserLeaveList(departmentId).Result;
@@ -57,6 +57,8 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
 
         if (fromDate.Day < toDate.Day)
             appliedLeaveCount = (toDate - fromDate).Days;
+        else if (fromDate.Day == toDate.Day)
+            appliedLeaveCount = 1;
         else
             appliedLeaveCount = (fromDate - toDate).Days;
 
@@ -104,12 +106,12 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
 
     public void LeaveStatusUpdateNofication(int userLeaveId)
     {
-        LeaveStatusNotificationDto statusDto = new (); 
+        LeaveStatusNotificationDto statusDto = new();
         var userLeave = _unitOfWork.UserLeaveRepository.GetUserLeaveDetail(userLeaveId).Result;
         statusDto = _mapper.Map<LeaveStatusNotificationDto>(userLeave);
 
         _notification.LeaveStatusUpdateNofication(statusDto);
     }
 
-    
+
 }

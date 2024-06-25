@@ -74,17 +74,17 @@ public class LeaveController : ControllerBase
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
         bool result = false;
-        /*
+
         var userReport = _userLeaveService.GetUserLeaveReport(userId: dto.UserId);
         var leaveTypes = _leaveTypeService.GetAllAsync().Result;
         var userLeaves = _userLeaveService.ApplyLeave(dto, userReport, leaveTypes);
         await _userLeaveService.AddRangeAsync(userLeaves);
         result = _userLeaveService.SaveChangesAsync();
-        */
 
-        if (true)
+        if (result)
+        {
             _userLeaveService.SendLeaveAppliedNotification(dto);
-            
+        }
 
         return result;
     }
@@ -108,7 +108,7 @@ public class LeaveController : ControllerBase
             await _userLeaveService.UpdateAsync(userLeave);
             result = _userLeaveService.SaveChangesAsync();
 
-            if(result)
+            if (result)
             {
                 _userLeaveService.LeaveStatusUpdateNofication(statusUpdateDto.Id);
             }
