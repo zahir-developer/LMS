@@ -84,30 +84,9 @@ public class LeaveController : ControllerBase
 
         if (true)
             _userLeaveService.SendLeaveAppliedNotification(dto);
+            
 
         return result;
-    }
-
-    /// <summary>
-    /// Send email notification
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    [HttpPost]
-    [Route("SendEmail")]
-    [AllowAnonymous]
-    public async Task<ActionResult<bool>> SendEmailNotification()
-    {
-        EmailDto email = new();
-        email.From = "zahir.aspire@gmail.com";
-        email.To = "zahir.aspire@gmail.com";
-        //zahir.aspire@gmail.com
-        //zahir.developer@live.com
-        email.Subject = "Test";
-        email.DisplayNameSender = "LMS Admin";
-        _emailService.SendEmail(email);
-
-        return true;
     }
 
     /// <summary>
@@ -131,7 +110,7 @@ public class LeaveController : ControllerBase
 
             if(result)
             {
-                _userLeaveService.LeaveStatusUpdateNofication(statusUpdateDto);
+                _userLeaveService.LeaveStatusUpdateNofication(statusUpdateDto.Id);
             }
         }
 

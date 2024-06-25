@@ -1,4 +1,6 @@
-﻿namespace LMS.Application.Interfaces.IServices;
+﻿using LMS.Application.DTOs;
+
+namespace LMS.Application.Interfaces.IServices;
 
 public interface ILeaveNotificationService
 {

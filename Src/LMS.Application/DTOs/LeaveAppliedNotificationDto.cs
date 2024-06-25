@@ -1,6 +1,6 @@
 ﻿using static LMS.Application.Constants.ConstEnum;
 
-namespace LMS.Application;
+namespace LMS.Application.DTOs;
 
 public class LeaveAppliedNotificationDto
 {

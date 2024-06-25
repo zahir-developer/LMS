@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
+using LMS.Application;
 
 namespace LMS.API.Controllers;
 
@@ -29,5 +30,28 @@ public class CommonController : ControllerBase
         var result = await _roleService.GetAllAsync();
         return result.ToList();
     }
+
+    /*
+    /// <summary>
+    /// Send email notification
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
+    [HttpPost]
+    [Route("SendEmail")]
+    public async Task<ActionResult<bool>> SendEmailNotification()
+    {
+        EmailDto email = new();
+        email.From = "zahir.aspire@gmail.com";
+        email.To = "zahir.aspire@gmail.com";
+        //zahir.aspire@gmail.com
+        //zahir.developer@live.com
+        email.Subject = "Test";
+        email.DisplayNameSender = "LMS Admin";
+        _emailService.SendEmail(email);
+
+        return true;
+    }
+    */
 
 }

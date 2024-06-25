@@ -38,6 +38,7 @@ public class AutoMappingProfile : Profile
         //Email notification
         CreateMap<UserLeaveAddDto, LeaveAppliedNotificationDto>();
         CreateMap<LeaveAppliedNotificationDto, EmailDto>();
-        CreateMap<LeaveStatusNotificationDto, EmailDto>();       
+        CreateMap<LeaveStatusNotificationDto, EmailDto>();  
+        CreateMap<UserLeaveDto, LeaveStatusNotificationDto>();  
     }
 }

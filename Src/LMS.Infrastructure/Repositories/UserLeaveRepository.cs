@@ -23,7 +23,7 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
     public async Task<List<UserLeaveReportDto>> GetUserLeaveReport(int departmentId = 0)
     {
         var userLeaveReport = dbContext.UserLeave.Include(s => s.LeaveType).Include(s => s.User).AsQueryable()
-          .Where(s=>s.Status != (int)LeaveStatus.Rejected).AsQueryable();
+          .Where(s => s.Status != (int)LeaveStatus.Rejected).AsQueryable();
 
         if (departmentId > 0)
             userLeaveReport = userLeaveReport.Where(s => s.User.DepartmentId == departmentId).AsQueryable();
@@ -39,7 +39,7 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
             TotalLeave = s.Max(g => g.LeaveType.MaxLeaveCount)
         }).ToList();
 
-        var users = dbContext.User.Include(s=>s.Role).Where(s=> s.DepartmentId == departmentId && s.Role.RoleName != Roles.Manager.ToString() || departmentId == 0).Select(s => new { s.Id, s.FirstName, s.LastName }).ToList();
+        var users = dbContext.User.Include(s => s.Role).Where(s => s.DepartmentId == departmentId && s.Role.RoleName != Roles.Manager.ToString() || departmentId == 0).Select(s => new { s.Id, s.FirstName, s.LastName }).ToList();
 
         foreach (var user in users)
         {
@@ -61,4 +61,24 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
 
         return userLeaveGroup.OrderBy(s => s.UserId).ToList();
     }
+
+    public async Task<UserLeaveDto?> GetUserLeaveDetail(int userLeaveId)
+    {
+        var userLeave = await dbContext.UserLeave
+            .Include(s => s.LeaveType)
+            .Include(u => u.User)
+            .Where(s => s.Id == userLeaveId)
+            .Select(s => new UserLeaveDto()
+            {
+                FirstName = s.User.FirstName,
+                Email = s.User.Email,
+                FromDate = s.FromDate,
+                ToDate = s.ToDate,
+                LeaveTypeName = s.LeaveType.LeaveTypeName,
+                Status = s.Status
+            }).FirstOrDefaultAsync();
+
+        return userLeave;
+    }
+
 }

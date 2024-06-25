@@ -10,6 +10,6 @@ namespace LMS.Application.Interfaces.IServiceMappings
         List<UserLeaveListDto> GetAllUserLeaveList(int departmentId = 0, int userId = 0);
         List<UserLeaveReportDto> GetUserLeaveReport(int departmentId = 0, int userId = 0);
         void SendLeaveAppliedNotification(UserLeaveAddDto dto);
-        void LeaveStatusUpdateNofication(LeaveStatusUpdateDto statusUpdateDto);
+        void LeaveStatusUpdateNofication(int userLeaveId);
     }
 }

@@ -1,14 +1,15 @@
 ﻿using static LMS.Application.Constants.ConstEnum;
 
-namespace LMS.Application;
+namespace LMS.Application.DTOs;
 
 public class LeaveStatusNotificationDto
 {
     public int UserId { get; set; }
-    public string UserName { get; set; }
-    public string EmailId { get; set; }
-    public string Date { get; set; }
-    public LeaveTypeEnum LeaveType { get; set; }
-    public LeaveStatus LeaveStatus { get; set; }
+    public string FirstName { get; set; }
+    public string Email { get; set; }
+    public DateTime FromDate { get; set; }
+    public DateTime ToDate { get; set; }
+    public string LeaveTypeName { get; set; }
+    public LeaveStatus Status { get; set; }
     
 }

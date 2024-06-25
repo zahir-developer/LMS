@@ -2,7 +2,7 @@ namespace LMS.Application.Constants
 {
     public static class ConstEnum
     {
-        public const string DATE_FORMAT = "dd-mm-yyy";
+        public const string DATE_FORMAT = "dd-MMM-yyy";
         public enum LeaveTypeEnum
         {
             Personal = 1,

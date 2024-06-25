@@ -102,8 +102,14 @@ public class UserLeaveServiceMapping : GenericServiceAsync<UserLeave, UserLeaveD
         _notification.LeaveAppliedNotification(notificationDto);
     }
 
-    public void LeaveStatusUpdateNofication(LeaveStatusUpdateDto statusUpdateDto)
+    public void LeaveStatusUpdateNofication(int userLeaveId)
     {
-        var userLeave = base.GetByIdAsync(statusUpdateDto.Id);
+        LeaveStatusNotificationDto statusDto = new (); 
+        var userLeave = _unitOfWork.UserLeaveRepository.GetUserLeaveDetail(userLeaveId).Result;
+        statusDto = _mapper.Map<LeaveStatusNotificationDto>(userLeave);
+
+        _notification.LeaveStatusUpdateNofication(statusDto);
     }
+
+    
 }

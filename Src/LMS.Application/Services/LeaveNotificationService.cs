@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LMS.Application.Constants;
+using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
 using LMS.Application.Interfaces.IServices;
 using LMS.Application.IServiceMappings;
@@ -31,19 +32,18 @@ public class LeaveNotificationService : ILeaveNotificationService
 
         var leaveType = _leaveTypeService.GetByIdAsync(notificationDto.LeaveTypeId).Result;
 
-        if(leaveType != null)
+        if (leaveType != null)
         {
             leaveTypeName = leaveType.LeaveTypeName;
         }
-        
+
         if (manager != null)
             notificationDto.FirstName = manager.FirstName;
 
         var emailDto = _mapper.Map<EmailDto>(notificationDto);
         emailDto.EmailType = EmailHtmlTemplate.LeaveApplied;
         emailDto.Subject = "LMS - " + EmailHtmlTemplate.LeaveApplied;
-        emailDto.Email = "izahirhussain@live.com";
-
+        
         emailDto.EmailKeyValues = new Dictionary<string, string>(){
             {"USER_NAME", notificationDto.FirstName },
             {"LEAVE_FROM", notificationDto.FromDate.ToString(ConstEnum.DATE_FORMAT)},
@@ -55,7 +55,16 @@ public class LeaveNotificationService : ILeaveNotificationService
 
     public void LeaveStatusUpdateNofication(LeaveStatusNotificationDto leaveStatusDto)
     {
-        var user = _userService.GetByIdAsync(leaveStatusDto.UserId).Result;
         var emailDto = _mapper.Map<EmailDto>(leaveStatusDto);
+        emailDto.EmailType = EmailHtmlTemplate.LeaveStatusUpdate;
+        emailDto.Subject = "LMS - " + emailDto.EmailType;
+        emailDto.EmailKeyValues = new Dictionary<string, string>(){
+            {"USER_NAME", leaveStatusDto.FirstName },
+            {"LEAVE_FROM", leaveStatusDto.FromDate.ToString(ConstEnum.DATE_FORMAT)},
+            {"LEAVE_TO", leaveStatusDto.ToDate.ToString(ConstEnum.DATE_FORMAT)},
+            {"LEAVE_TYPE", leaveStatusDto.LeaveTypeName},
+            {"LEAVE_STATUS", leaveStatusDto.Status.ToString()}
+        };
+        _emailService.SendEmail(emailDto);
     }
 }
