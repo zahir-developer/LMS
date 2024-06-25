@@ -1,6 +1,6 @@
 import { Component, Input, input } from '@angular/core';
-import { LeaveService } from '../../services/leave.service';
-import { UserLeave } from '../../model/leave/user.leave';
+import { LeaveService } from '../../../services/leave.service';
+import { UserLeave } from '../../../model/leave/user.leave';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -14,11 +14,11 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogConfirmationComponent } from '../../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
-import { ConfirmDialogeResponse } from '../../model/confirm.dialoge.response';
-import { AppText, Confirm, LeaveStatus, LeaveStatusText } from '../../model/Enum/constEnum';
-import { LeaveUpdate } from '../../model/leave/leave.update';
-import { AccountService } from '../../services/account.service';
+import { MatDialogConfirmationComponent } from '../../../shared/mat-dialog-confirmation/mat-dialog-confirmation.component';
+import { ConfirmDialogeResponse } from '../../../model/confirm.dialoge.response';
+import { AppText, Confirm, LeaveStatus, LeaveStatusText } from '../../../model/Enum/constEnum';
+import { LeaveUpdate } from '../../../model/leave/leave.update';
+import { AccountService } from '../../../services/account.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

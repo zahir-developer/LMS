@@ -27,7 +27,8 @@ export enum LeaveStatusText
 
 export enum AppModule
 {
-    Department = "Department"
+    Department = "Department",
+    LeaveType = "Leave Type"
 }
 
 export enum AppText
@@ -51,6 +52,11 @@ export enum AppText
     /*Department*/
     AddDepartmentSuccess = 'Department added successfully !',
     UpdateDepartmentSuccess = 'Department updated successfully !',
-    DeleteDepartmentSuccess = 'Department deleted successfully !'
+    DeleteDepartmentSuccess = 'Department deleted successfully !',
+
+    /*Leave Type*/
+    AddLeaveTypeSuccess = 'LeaveType added successfully !',
+    UpdateLeaveTypeSuccess = 'LeaveType updated successfully !',
+    DeleteLeaveTypeSuccess = 'LeaveType deleted successfully !'
 }
 

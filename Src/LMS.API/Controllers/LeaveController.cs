@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using LMS.Application.DTOs;
 using LMS.Application.Interfaces.IServiceMappings;
 using AutoMapper;
+using static LMS.Application.Constants.ConstEnum;
+using LMS.Application;
+using LMS.Application.Config;
 
 namespace LMS.API.Controllers;
 
@@ -15,12 +18,22 @@ public class LeaveController : ControllerBase
     private readonly ILogger<LeaveController> _logger;
     private readonly IMapper _mapper;
     private readonly IUserLeaveServiceMapping _userLeaveService;
+    private readonly ILeaveTypeServiceMapping _leaveTypeService;
+    private readonly IEmailService _emailService;
 
-    public LeaveController(IUserLeaveServiceMapping userLeaveService, IMapper mapper, ILogger<LeaveController> logger)
+
+    public LeaveController(
+        IUserLeaveServiceMapping userLeaveService,
+        ILeaveTypeServiceMapping leaveTypeService,
+        IEmailService emailService,
+        IMapper mapper,
+        ILogger<LeaveController> logger)
     {
         _logger = logger;
         _mapper = mapper;
         _userLeaveService = userLeaveService;
+        _leaveTypeService = leaveTypeService;
+        _emailService = emailService;
     }
 
     /// <summary>
@@ -45,7 +58,7 @@ public class LeaveController : ControllerBase
     [Route("user/{userId}")]
     public async Task<ActionResult<List<UserLeaveListDto>>> GetUserLeaves(int userId)
     {
-        var result = _userLeaveService.GetAllUserLeaveList(departmentId: 0 , userId: userId);
+        var result = _userLeaveService.GetAllUserLeaveList(departmentId: 0, userId: userId);
 
         return Ok(result);
     }
@@ -56,21 +69,24 @@ public class LeaveController : ControllerBase
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost]
-    [Authorize("Leave_Apply")]
+    //[Authorize("Leave_Apply")]
+    [AllowAnonymous]
     public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
     {
-        UserLeaveAddDto leave;
-        DateTime fromDate = dto.FromDate;
-        DateTime toDate = dto.ToDate;
-        for (DateTime date = fromDate; date <= toDate; date = date.AddDays(1))
+        bool result = false;
+
+        var userReport = _userLeaveService.GetUserLeaveReport(userId: dto.UserId);
+        var leaveTypes = _leaveTypeService.GetAllAsync().Result;
+        var userLeaves = _userLeaveService.ApplyLeave(dto, userReport, leaveTypes);
+        await _userLeaveService.AddRangeAsync(userLeaves);
+        result = _userLeaveService.SaveChangesAsync();
+
+        if (result)
         {
-            leave = dto;
-            leave.FromDate = date;
-            leave.ToDate = date;
-            var userLeaveDto = _mapper.Map<UserLeaveDto>(dto);
-            await _userLeaveService.AddAsync(userLeaveDto);
+            _userLeaveService.SendLeaveAppliedNotification(dto);
         }
-        return _userLeaveService.SaveChangesAsync();
+
+        return result;
     }
 
     /// <summary>
@@ -83,13 +99,19 @@ public class LeaveController : ControllerBase
     [Authorize("Leave_Approve_Reject")]
     public async Task<ActionResult<bool>> LeaveStatusUpdate(LeaveStatusUpdateDto statusUpdateDto)
     {
+        bool result = false;
         var userLeave = _userLeaveService.GetByIdAsync(statusUpdateDto.Id).Result;
 
         if (userLeave != null)
         {
             userLeave.Status = (int)statusUpdateDto.Status;
             await _userLeaveService.UpdateAsync(userLeave);
-            return _userLeaveService.SaveChangesAsync();
+            result = _userLeaveService.SaveChangesAsync();
+
+            if (result)
+            {
+                _userLeaveService.LeaveStatusUpdateNofication(statusUpdateDto.Id);
+            }
         }
 
         return true;

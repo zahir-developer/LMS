@@ -46,7 +46,7 @@ public class AuthTokenService : IAuthTokenService
         if (login != null)
         {
 
-            var user = _userService.GetUserByEmail(login.Email);
+            var user = _userService.GetUserByEmail(login.Email).Result;
 
             if (user != null && user?.PasswordSalt != null)
             {

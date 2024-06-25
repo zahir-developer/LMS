@@ -7,4 +7,5 @@ public interface IUserLeaveRepository
 {
     Task<IEnumerable<UserLeave>> GetAllUserLeaveList(int departmentId);
     Task<List<UserLeaveReportDto>> GetUserLeaveReport(int departmentId);
+    Task<UserLeaveDto?> GetUserLeaveDetail(int userLeaveId);
 }

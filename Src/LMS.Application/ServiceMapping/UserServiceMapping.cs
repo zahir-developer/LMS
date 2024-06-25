@@ -22,15 +22,22 @@ namespace LMS.Application.ServiceMappings
             _mapper = mapper;
         }
 
-        public UserDto GetUserByEmail(string emailId)
+        public async Task<UserDto> GetManagerByDepartment(int departmentId)
+        {
+            var user = await _unitOfWork.UserRepository.GetManagerByDepartmentId(departmentId);
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> GetUserByEmail(string emailId)
         {
             List<UserDto> userList = new List<UserDto>();
 
             Expression<Func<User, bool>> exp = s => s.Email == emailId;
 
-            var user = _unitOfWork.UserRepository.GetAsync(exp).Result.ToList().FirstOrDefault();
+            var user = await _unitOfWork.UserRepository.GetAsync(exp);
 
-            var result = _mapper.Map<UserDto>(user);
+            var result = _mapper.Map<UserDto>(user.ToList().FirstOrDefault());
 
             return result;
         }

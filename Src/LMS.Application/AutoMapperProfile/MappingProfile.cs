@@ -34,6 +34,11 @@ public class AutoMappingProfile : Profile
         //Department
         CreateMap<Department, DepartmentDto>();
         CreateMap<DepartmentDto, Department>();
-       
+
+        //Email notification
+        CreateMap<UserLeaveAddDto, LeaveAppliedNotificationDto>();
+        CreateMap<LeaveAppliedNotificationDto, EmailDto>();
+        CreateMap<LeaveStatusNotificationDto, EmailDto>();  
+        CreateMap<UserLeaveDto, LeaveStatusNotificationDto>();  
     }
 }

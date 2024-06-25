@@ -12,6 +12,7 @@ using LMS.Infrastructure.Database;
 using LMS.Infrastructure.Repository;
 using LMS.Domain.Entities;
 using AutoMapper;
+using static LMS.Application.Constants.ConstEnum;
 
 namespace LMS.Infrastructure.Repository;
 
@@ -28,8 +29,6 @@ public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRep
         var userRoleDetails = dbContext.User.Include(s => s.Role).Include(s => s.Department).AsQueryable();
         return userRoleDetails;
     }
-
-
 
     public async Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>>? filter = null, IOrderedQueryable<User> orderBy = null, string includeProperties = "")
     {
@@ -51,5 +50,12 @@ public class UserRepository(LMSDbContext dbContext, IMapper mapper) : GenericRep
         }
 
         return await query.ToListAsync();
+    }
+
+    public async Task<User> GetManagerByDepartmentId(int departmentId)
+    {
+        var user = dbContext.User.Include(s=>s.Role).Where(s=>s.DepartmentId == departmentId && s.Role.RoleName == Roles.Manager.ToString()).FirstOrDefault();
+
+        return user;
     }
 }

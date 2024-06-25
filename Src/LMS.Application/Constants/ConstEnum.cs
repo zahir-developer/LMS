@@ -2,11 +2,13 @@ namespace LMS.Application.Constants
 {
     public static class ConstEnum
     {
-        public enum LeaveType
+        public const string DATE_FORMAT = "dd-MMM-yyy";
+        public enum LeaveTypeEnum
         {
             Personal = 1,
             Sick = 2,
-            Privilege = 3
+            Privilege = 3,
+            LOP = 4
         }
 
         public enum Roles
@@ -27,6 +29,12 @@ namespace LMS.Application.Constants
         {
             ASC = 0,
             DESC = 1,
+        }
+
+        public enum EmailHtmlTemplate
+        {
+            LeaveApplied = 1,
+            LeaveStatusUpdate = 2
         }
     }
 
