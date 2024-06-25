@@ -25,9 +25,9 @@ public class LeaveTypeController : ControllerBase
     [Authorize("LeaveType_Get")]
     public async Task<List<LeaveTypeDto>> GetLeaveTypeList()
     {
-        var departments = await _leaveTypeService.GetAllAsync();
+        var leaveTypes = await _leaveTypeService.GetAllAsync();
 
-        var leaveTypeResultDto = _mapper.Map<List<LeaveTypeDto>>(departments);
+        var leaveTypeResultDto = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 
         return leaveTypeResultDto.ToList();
     }
