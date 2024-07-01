@@ -77,6 +77,12 @@ export class UserLeaveComponent {
 
   }
 
+  openCancelLeaveDialog(id: number) {
+    this.dialogData.title = LeaveStatusText.Cancel.toString();
+    this.dialogData.description = AppText.CancelConfirmation.toString();
+    this.openDialog(id);
+  }
+
   openApproveDialog(id: number) {
     this.dialogData.title = LeaveStatusText.Approved.toString();
     this.dialogData.description = AppText.ApproveConfirmation.toString();
@@ -99,25 +105,27 @@ export class UserLeaveComponent {
     });
 
     dialog.afterClosed().subscribe((obj: ConfirmDialogeResponse) => {
-      console.log(obj);
       var status: number = 0;
 
       if (obj.action === Confirm.Yes.toString()) {
         if (obj.type === LeaveStatus[LeaveStatus.Approved])
           status = LeaveStatus.Approved;
-        else
+        else if (obj.type === LeaveStatus[LeaveStatus.Rejected])
           status = LeaveStatus.Rejected;
+        else if (obj.type === LeaveStatus[LeaveStatus.Cancelled])
+          status = LeaveStatus.Cancelled;
 
         this.leaveUpdate.Id = obj.data;
         this.leaveUpdate.status = status;
 
-        this.updateleaveStatus();
+        this.updateleaveStatus(status);
       }
     });
   }
 
-  updateleaveStatus() {
-    if (this.isManager) {
+  updateleaveStatus(leaveStatus: LeaveStatus) {
+
+    if (this.isManager && (leaveStatus == LeaveStatus.Approved || leaveStatus == LeaveStatus.Rejected)) {
       this.leaveService.updateLeaveStatus(this.leaveUpdate).subscribe({
         next: result => {
           if (result) {
@@ -127,8 +135,20 @@ export class UserLeaveComponent {
         }
       })
     }
+    else if (this.isEmployee && (leaveStatus == LeaveStatus.Cancelled)) {
+      this.leaveService.cancelLeave(this.leaveUpdate.Id).subscribe({
+        next: result => {
+          if (result) {
+            this.toastr.success('Leave status updated successfully !', 'User Leave');
+            this.getLeave();
+          }
+        }
+      })
+    }
     else
+    {
       this.toastr.warning(AppText.ForbiddenAction, 'Restricted');
+    }
 
   }
 }

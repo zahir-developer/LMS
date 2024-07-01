@@ -117,6 +117,34 @@ public class LeaveController : ControllerBase
         return true;
     }
 
+    /// <summary>
+    /// Updates leave status: Approve/Reject
+    /// </summary>
+    /// <param name="leaveStatusUpdateDto"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [Route("CancelLeave/{userleaveId}")]
+    [Authorize("Leave_Cancel")]
+    public async Task<ActionResult<bool>> LeaveStatusUpdate(int userleaveId)
+    {
+        bool result = false;
+        var userLeave = _userLeaveService.GetByIdAsync(userleaveId).Result;
+
+        if (userLeave != null)
+        {
+            userLeave.Status = (int)LeaveStatus.Cancelled;
+            await _userLeaveService.UpdateAsync(userLeave);
+            result = _userLeaveService.SaveChangesAsync();
+
+            if (result)
+            {
+                _userLeaveService.LeaveStatusUpdateNofication(userleaveId);
+            }
+        }
+
+        return true;
+    }
+
     [HttpGet("report/user/{userId}")]
     [Authorize("UserLeaveReport")]
     public async Task<List<UserLeaveReportDto>> LeaveReportByUserId(int userId)

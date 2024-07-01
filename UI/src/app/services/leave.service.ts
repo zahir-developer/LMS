@@ -34,6 +34,10 @@ export class LeaveService {
     return this.httpUtilService.put(apiEndPoint.Leave.updateStatus, obj);
   }
 
+  cancelLeave(userLeaveId: number) {
+    return this.httpUtilService.put(apiEndPoint.Leave.cancelLeave.replace('{userLeaveId}', userLeaveId.toString()));
+  }
+
   getLeaveReport(departmentId: number) {
     return this.httpUtilService.get(apiEndPoint.Leave.report.replace('{departmentId}', departmentId.toString()), );
   }
