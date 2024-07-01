@@ -80,7 +80,7 @@ public class UserController : ControllerBase
     [HttpGet("{emailId}")]
     public async Task<ActionResult<bool>> checkEmailExists(string emailId)
     {
-        var user = _userService.GetUserByEmail(emailId);
+        var user = _userService.GetUserByEmail(emailId).Result;
 
         return user != null;
     }

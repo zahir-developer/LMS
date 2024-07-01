@@ -15,14 +15,16 @@ export enum LeaveStatus
 {
     Pending = 0,
     Approved = 1,
-    Rejected = 2
+    Rejected = 2,
+    Cancelled = 3
 }
 
 export enum LeaveStatusText
 {
     Pending = "Pending",
     Approved = "Approved",
-    Rejected = "Rejected"
+    Rejected = "Rejected",
+    Cancel = "Cancelled"
 }
 
 export enum AppModule
@@ -36,6 +38,7 @@ export enum AppText
     /*Manage leaves: Begin*/
     ApproveConfirmation = "Confirm leave approve action.!",
     RejectConfirmation = "Confirm leave reject action.!",
+    CancelConfirmation = "Confirm leave cancel action.!",
     /*Manage leaves: Ends*/
 
     /*Common*/

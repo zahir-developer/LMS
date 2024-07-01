@@ -12,7 +12,7 @@
       <th scope="col">Leave Type</th>
       <th scope="col">Status</th>
       <th scope="col">Comments</th>
-      <th *ngIf="isManager" scope="col" class="text-center">Actions</th>
+      <th *ngIf="isManager || isEmployee" scope="col" class="text-center">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -31,15 +31,16 @@
           <button class="btn btn-primary mr-2" (click)="openApproveDialog(i.id)">Approve</button>
           <button class="btn btn-warning mr-2" (click)="openRejectDialog(i.id)">Reject</button>
         </div>
-        <div>
+        <div class="text-center">
           <h3 *ngIf="i.statusName !=='Pending'" class="badge badge-secondary"> No Actions
-            <!-- <span *ngIf="i.statusName !=='Pending'" class="badge"
-                            [ngClass]="{'badge-warning': i.statusName === 'Pending',
-                            'badge-success' : i.statusName === 'Approved',
-                            'badge-danger' : i.statusName === 'Rejected'
-                                }">{{ i.statusName }} </span> -->
           </h3>
         </div>
+      </td>
+      <td *ngIf="isEmployee" class="text-center">
+          <button *ngIf="i.statusName=='Pending'" class="btn btn-warning mr-2" (click)="openCancelLeaveDialog(i.id)">Cancel Leave</button>
+          <div>
+            <h3 *ngIf="i.statusName=='Cancelled'" class="badge badge-secondary"> {{ i.statusName =='Cancelled' ? 'Cancelled' : 'No action' }} </h3>
+          </div>
       </td>
     </tr>
   </tbody>
