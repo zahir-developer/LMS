@@ -23,7 +23,7 @@ public class UserLeaveRepository(LMSDbContext dbContext, IMapper mapper) : IUser
     public async Task<List<UserLeaveReportDto>> GetUserLeaveReport(int departmentId = 0)
     {
         var userLeaveReport = dbContext.UserLeave.Include(s => s.LeaveType).Include(s => s.User).AsQueryable()
-          .Where(s => s.Status != (int)LeaveStatus.Rejected).AsQueryable();
+          .Where(s => s.Status != (int)LeaveStatus.Rejected && s.Status != (int)LeaveStatus.Cancelled).AsQueryable();
 
         if (departmentId > 0)
             userLeaveReport = userLeaveReport.Where(s => s.User.DepartmentId == departmentId).AsQueryable();
