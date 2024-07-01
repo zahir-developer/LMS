@@ -66,6 +66,7 @@ namespace LMS.API.Extensions
             //Email service
             services.AddScoped(typeof(IEmailService), typeof(EmailService));
             services.AddScoped(typeof(ILeaveNotificationService), typeof(LeaveNotificationService));
+            services.AddScoped(typeof(IHolidayServiceMapping), typeof(HolidayServiceMapping));
 
             services.AddSingleton<EmailConfig>(emailConfig);
 

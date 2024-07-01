@@ -40,5 +40,8 @@ public class AutoMappingProfile : Profile
         CreateMap<LeaveAppliedNotificationDto, EmailDto>();
         CreateMap<LeaveStatusNotificationDto, EmailDto>();  
         CreateMap<UserLeaveDto, LeaveStatusNotificationDto>();  
+
+        //Holiday
+        CreateMap<Holiday, HolidayDto>();
     }
 }

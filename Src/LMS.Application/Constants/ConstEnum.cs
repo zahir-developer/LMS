@@ -37,6 +37,11 @@ namespace LMS.Application.Constants
             LeaveApplied = 1,
             LeaveStatusUpdate = 2
         }
+
+        public enum ErrorMessage
+        {
+            Holiday = 1
+        }
     }
 
 }
