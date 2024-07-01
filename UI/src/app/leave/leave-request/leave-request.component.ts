@@ -1,3 +1,4 @@
+import { ResultModel } from './../../model/common/result.model';
 import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -13,6 +14,7 @@ import { UserLeaveAdd } from '../../model/leave/user.leave.add';
 import { Router } from '@angular/router';
 import { LeaveReport } from '../../model/leave/leave.report';
 import { LeaveTypeModel } from '../../model/leave/leave.type.model';
+import { AppText } from '../../model/Enum/constEnum';
 @Component({
   selector: 'app-leave-request',
   standalone: true,
@@ -96,9 +98,14 @@ export class LeaveRequestComponent {
     days = days + 1;
 
     //if (this.remaingLeaveCount >= days) {
-    this.leaveService.addLeave(objData).subscribe(result => {
-      console.log('Leave applied successfully');
-      this.router.navigateByUrl('/user-leave');
+    this.leaveService.addLeave(objData).subscribe(res => {
+
+      if (res.result) {
+        console.log('Leave applied successfully');
+        this.router.navigateByUrl('/user-leave');
+      }
+      else
+        this.notify.warning(AppText.LeaveCanNotBeAppliedOnHoliday, 'Apply leave restricted');
     })
     //} else {
     //  this.notify.warning('Not enough leaves remaining: ' + this.remaingLeaveCount, 'Apply leave restricted');

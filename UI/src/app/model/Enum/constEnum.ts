@@ -39,6 +39,7 @@ export enum AppText
     ApproveConfirmation = "Confirm leave approve action.!",
     RejectConfirmation = "Confirm leave reject action.!",
     CancelConfirmation = "Confirm leave cancel action.!",
+    LeaveCanNotBeAppliedOnHoliday = "Leaves can't be applied on holidays !",
     /*Manage leaves: Ends*/
 
     /*Common*/

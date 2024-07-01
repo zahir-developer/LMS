@@ -7,6 +7,7 @@ using AutoMapper;
 using static LMS.Application.Constants.ConstEnum;
 using LMS.Application;
 using LMS.Application.Config;
+using System.Net;
 
 namespace LMS.API.Controllers;
 
@@ -16,24 +17,21 @@ namespace LMS.API.Controllers;
 public class LeaveController : ControllerBase
 {
     private readonly ILogger<LeaveController> _logger;
-    private readonly IMapper _mapper;
     private readonly IUserLeaveServiceMapping _userLeaveService;
     private readonly ILeaveTypeServiceMapping _leaveTypeService;
-    private readonly IEmailService _emailService;
+    private readonly IHolidayServiceMapping _holidayService;
 
 
     public LeaveController(
         IUserLeaveServiceMapping userLeaveService,
         ILeaveTypeServiceMapping leaveTypeService,
-        IEmailService emailService,
-        IMapper mapper,
+        IHolidayServiceMapping holidayServiceMapping,
         ILogger<LeaveController> logger)
     {
         _logger = logger;
-        _mapper = mapper;
         _userLeaveService = userLeaveService;
         _leaveTypeService = leaveTypeService;
-        _emailService = emailService;
+        _holidayService = holidayServiceMapping;
     }
 
     /// <summary>
@@ -71,17 +69,25 @@ public class LeaveController : ControllerBase
     [HttpPost]
     //[Authorize("Leave_Apply")]
     [AllowAnonymous]
-    public async Task<ActionResult<bool>> AddUserLeave(UserLeaveAddDto dto)
+    public async Task<ActionResult<ResultDto>> AddUserLeave(UserLeaveAddDto dto)
     {
-        bool result = false;
+        ResultDto result = new();
+
+        if (!_holidayService.ValidateLeaveDate(dto.FromDate, dto.ToDate))
+        {
+            result.StatusCode = HttpStatusCode.Forbidden;
+            result.Result = false;
+            result.ErrorMessage = "Leaves can't be applied on holiday's";
+            return result;
+        }
 
         var userReport = _userLeaveService.GetUserLeaveReport(userId: dto.UserId);
         var leaveTypes = _leaveTypeService.GetAllAsync().Result;
         var userLeaves = _userLeaveService.ApplyLeave(dto, userReport, leaveTypes);
         await _userLeaveService.AddRangeAsync(userLeaves);
-        result = _userLeaveService.SaveChangesAsync();
+        result.Result = _userLeaveService.SaveChangesAsync();
 
-        if (result)
+        if (result.Result)
         {
             _userLeaveService.SendLeaveAppliedNotification(dto);
         }

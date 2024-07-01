@@ -1,3 +1,4 @@
+import { ResultModel } from './../model/common/result.model';
 import { Injectable } from '@angular/core';
 import { HttpUtilsService } from '../Util/http-utils.service';
 import { apiEndPoint } from '../config/url.config';

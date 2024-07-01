@@ -15,5 +15,6 @@ namespace LMS.Infrastructure.Database
         public DbSet<LeaveType> LeaveType { get; set; }
         public DbSet<UserLeave> UserLeave { get; set; }
         public DbSet<Department> Department { get; set; }
+        public DbSet<Holiday> Holiday { get; set; }
     }
 }
