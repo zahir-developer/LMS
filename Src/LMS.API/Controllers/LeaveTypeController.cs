@@ -4,7 +4,6 @@ using LMS.Application.Helpers.Pagination;
 using LMS.Application.Interfaces.IServiceMappings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
 
 namespace LMS.API;
 

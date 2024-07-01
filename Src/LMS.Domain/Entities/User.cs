@@ -13,10 +13,10 @@ public class User : BaseEntity
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Password is required.")]
-    public byte[] PasswordHash { get; set; } = new byte[32];
+    public byte[] PasswordHash { get; set; }
 
     [Required(ErrorMessage = "PasswordSalt is required.")]
-    public byte[] PasswordSalt {get; set; } = new byte[32];
+    public byte[] PasswordSalt {get; set; }
 
     [Required(ErrorMessage = "RoleId is required.")]
     public int RoleId { get; set; }
