@@ -1,0 +1,121 @@
+[{
+    "HolidayName": "New Year Day",
+    "Date": "2024-01-01",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Pongal",
+    "Date": "2024-01-15",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Republic Day",
+    "Date": "2024-01-26",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Good Friday",
+    "Date": "2024-03-29",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Ramzan",
+    "Date": "2024-04-11",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Tamil New year",
+    "Date": "2024-04-14",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Mayday",
+    "Date": "2024-05-01",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Independence Day",
+    "Date": "2024-08-15",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Krishna Jayanthi",
+    "Date": "2024-08-26",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Vinayakar Chathurthi",
+    "Date": "2024-09-07",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Gandhi Jayanthi",
+    "Date": "2024-10-01",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Ayutha Pooja",
+    "Date": "2024-10-11",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Deepavali",
+    "Date": "2024-10-31",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Special Holiday - Deepavali",
+    "Date": "2024-11-01",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+},
+{
+    "HolidayName": "Christmas",
+    "Date": "2024-12-25",
+    "Region": "IND",    
+    "IsEnabled": true,
+    "CreatedOn": "2024-06-28",
+    "CreatedBy": "Admin"
+}]
+

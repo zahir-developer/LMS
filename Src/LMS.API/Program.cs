@@ -53,7 +53,7 @@ try {
     await Seed.Department(context);
     await Seed.UserData(context);
     await Seed.LeaveType(context);
-    
+    await Seed.Holiday(context);
 }
 catch (Exception)
 {  }

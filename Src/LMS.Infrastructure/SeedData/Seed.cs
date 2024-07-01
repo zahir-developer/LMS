@@ -118,5 +118,23 @@ namespace LMS.Infrastructure.SeedData
             }
             await context.SaveChangesAsync();
         }
+
+        public static async Task Holiday(LMSDbContext context)
+        {
+            if (await context.Holiday.AnyAsync()) return;
+
+            var data = await File.ReadAllTextAsync("Data/HolidaySeedData.json");
+
+            var records = JsonSerializer.Deserialize<List<Holiday>>(data);
+
+            if (records?.Count > 0)
+            {
+                foreach (var r in records)
+                {
+                    context.Holiday.Add(r);
+                }
+            }
+            await context.SaveChangesAsync();
+        }
     }
 }
